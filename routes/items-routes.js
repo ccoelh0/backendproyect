@@ -17,7 +17,6 @@ let items = [
     },
 ]
 
-
 const api = '/productos';
 
 router.get(api, (req, res) => {
