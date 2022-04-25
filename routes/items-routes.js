@@ -1,50 +1,33 @@
+// ROUTER 
+// Here only routes
+
 const express = require('express');
 const {Router} = express;
 let router = new Router(); 
 
-let items = [
-    {
-        "name": "billetera",
-        "price": 125,
-        "img": null,
-        "id": 1
-    },
-    {
-        "name": "cartera",
-        "price": 100,
-        "img": null,
-        "id": 2
-    },
-]
+// Methods from items.js
+const methodsItem = require('../api/items');
 
-const api = '/productos';
+const url = '/items';
 
-router.get(api, (req, res) => {
-    res.send(items)
+router.get(url, (req, res) => {
+    methodsItem.getItems(res);
 });
 
-router.get(api + '/:id', (req, res) => {
-    const id = req.params.id;
-    const itemToShow = items.filter(i => parseInt(i.id, 10) === parseInt(id, 10));
-    itemToShow.length !== 0 ? res.send(itemToShow) : res.send({err: 'producto no encontrado'});
+router.get(url + '/:id', (req, res) => {
+    methodsItem.getItemById(req, res);
 });
 
-router.post(api, (req, res) => {
-    let {name, price, img} = req.body;
-    let newItem = {
-        name: name, 
-        price: price, 
-        img: img, 
-        id: (items[items.length - 1].id) + 1
-    }
-    items.push(newItem)
-    res.send(`Item ${name} creado, su id es ${(items[items.length - 1].id) + 1}!`)  
+router.post(url, (req, res) => {
+    methodsItem.postItem(req, res);
 })
 
-router.delete(api + '/:id', (req, res) => {
-    const id = req.params.id;
-    const itemToShow = items.filter(i => parseInt(i.id, 10) !== parseInt(id, 10)) 
-    res.send(itemToShow)
+router.delete(url + '/:id', (req, res) => {
+    methodsItem.deleteItem(req, res);
+})
+
+router.put(url + '/edit/:id', (req, res) => {
+    methodsItem.editItem(req, res)
 })
 
 module.exports = router;

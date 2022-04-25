@@ -1,39 +1,38 @@
 const fs = require('fs');
+const { parse } = require('path');
 
 class Item {
     constructor(path) {
         this.path = path;
     }
 
-    save(object) {
-        fs.promises.readFile(`./${this.path}`, 'utf-8')
-            .then(data => {
+    async save(object) {
+        const items = await new Promise((resolve, reject) => {
+            return fs.readFile(`./${this.path}`, 'utf-8', (err, data) => {
+                if (err) {
+                    reject(err)
+                }
                 const array = JSON.parse(data);
-                const obj = { ...object, id: array.length + 1 };
+                const obj = { ...object, id: array.length !== 0 ? array[array.length - 1].id + 1 : 1 };
                 array.push(obj)
                 fs.writeFile(`./${this.path}`, JSON.stringify(array, null, 2), 'utf-8', (err) => err && console.log(err));
-                console.log(obj.id)
-                return obj.id;
+                return resolve(obj);
             })
-            .catch(err => {
-                if (err) {
-                    const obj = { ...object, id: 1 };
-                    fs.writeFile(`./${this.path}`, JSON.stringify([obj], null, 2), 'utf-8', err => err && console.log(err))
-                    console.log(obj.id)
-                    return obj.id;
-                }
-            })
+        })
+        return items;
     }
 
-    getById(id) {
-        fs.promises.readFile(`./${this.path}`, 'utf-8')
-            .then(data => {
+    async getById(id) {
+        const item = await new Promise((resolve, reject) => {
+            return fs.readFile(`./${this.path}`, 'utf-8', (err, data) => {
+                if (err) return reject(err);
+
                 const array = JSON.parse(data);
-                const find = array.find(a => a.id === id)
-                console.log(find !== undefined ? find : null)
-                return find !== undefined ? find : null
+                const find = array.find(x => x.id === parseInt(id, 10))
+                return resolve(find !== undefined ? find : null)
             })
-            .catch(err => console.log(err))
+        })
+        return item;
     }
 
     async getAll() {
@@ -46,15 +45,18 @@ class Item {
         return fileContent;
     }
 
-    deleteById(id) {
-        fs.promises.readFile(`./${this.path}`, 'utf-8')
-            .then(data => {
-                const array = JSON.parse(data);
-                const find = array.filter(a => a.id !== id)
-                fs.writeFile(`./${this.path}`, JSON.stringify(find, null, 2), 'utf-8', (err) => err && console.log(err));
+    async deleteById(id) {
+        const item = await new Promise((resolve, reject) => {
+            return fs.readFile(`./${this.path}`, 'utf-8', (err, data) => {
+                if (err) return reject(err);
 
+                const array = JSON.parse(data);
+                const newArray = array.filter(a => a.id !== parseInt(id, 10))
+                fs.writeFile(`./${this.path}`, JSON.stringify(newArray, null, 2), 'utf-8', (err) => err && console.log(err));
+                return resolve(JSON.stringify(newArray))
             })
-            .catch(err => console.log(err))
+        })
+        return item;
     }
 
     deleteAll() {
@@ -75,4 +77,11 @@ class Item {
     }
 }
 
-module.exports = Item; 
+module.exports = Item;
+
+// let item = new Item('./stock.json')
+
+// item.save({
+//     name: "billetera",
+//     img: null
+// }).then(response => console.log(response))

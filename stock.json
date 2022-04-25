@@ -1,17 +1,20 @@
 [
-    {
-        "id": 1,
-        "name": "billetera",
-        "price": 150
-    },
-    {
-        "id": 2,
-        "name": "bufanda",
-        "price": 150
-    },
-    {
-        "id": 3,
-        "name": "cartera",
-        "price": 250
-    }
+  {
+    "name": "Lapiz",
+    "price": 450,
+    "img": null,
+    "id": 3
+  },
+  {
+    "name": "Lapiz",
+    "price": 450,
+    "img": null,
+    "id": 4
+  },
+  {
+    "name": "Lapiz",
+    "price": 450,
+    "img": null,
+    "id": 5
+  }
 ]

@@ -1,6 +1,7 @@
+// Falta metodo put
+
 const express = require('express');
 const app = express();
-const Item = require('./ItemClass')
 const userRoutes = require('./routes/items-routes');
 const multer = require('multer')
 
@@ -40,4 +41,4 @@ app.post("/", upload.single('upload_file'), (req, res) => {
     res.send('archivo guardado')
 })
 
-app.listen(8080, () => console.log('running!'));
+app.listen(8080, () => console.log('server is running!'));
