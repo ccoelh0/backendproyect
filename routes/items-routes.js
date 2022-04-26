@@ -1,9 +1,8 @@
 // ROUTER 
 // Here only routes
-
 const express = require('express');
-const {Router} = express;
-let router = new Router(); 
+const { Router } = express;
+let router = new Router();
 
 // Methods from items.js
 const methodsItem = require('../api/items');
@@ -26,8 +25,8 @@ router.delete(url + '/:id', (req, res) => {
     methodsItem.deleteItem(req, res);
 })
 
-router.put(url + '/edit/:id', (req, res) => {
-    methodsItem.editItem(req, res)
+router.put(url + '/:id', (req, res) => {
+    methodsItem.editItem(req, res);
 })
 
 module.exports = router;

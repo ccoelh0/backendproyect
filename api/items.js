@@ -29,16 +29,7 @@ const deleteItem = (req, res) => {
     `))
 }
 
-const editItem = (req, res) => {
-    const id = req.params.id;
-    const newBD = bd.filter(x => parseInt(x.id, 10) !== parseInt(id, 10))
-    let itemEdited = {
-        id: (bd[bd.length - 1].id) + 1,
-        name: req.body.name,
-        price: req.body.price,
-    };
-    newBD.push(itemEdited)
-    res.send(`El item ${itemEdited.name} fue actualizado!`)
-}
+const editItem = (req, res) => item.editById(req.params.id, req.body).then(r => res.send(r))
+
 
 module.exports = { getItems, getItemById, postItem, deleteItem, editItem };

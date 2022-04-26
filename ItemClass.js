@@ -59,12 +59,6 @@ class Item {
         return item;
     }
 
-    deleteAll() {
-        fs.promises.unlink(`./${this.path}`)
-            .then(data => data)
-            .catch(err => err)
-    }
-
     async getRandom() {
         const fileContent = await new Promise((resolve, reject) => {
             return fs.readFile(`./${this.path}`, 'utf-8', (err, data) => {
@@ -75,13 +69,27 @@ class Item {
         const randomPosition = (min, max) => Math.floor(Math.random() * (max - min)) + min;
         return fileContent[randomPosition(0, 3)];
     }
+
+    async editById(id, object) {
+        const itemEdited = await new Promise((resolve, reject) => {
+            return fs.readFile(`./${this.path}`, 'utf-8', (err, data) => {
+                if (err) return reject(err);
+
+                const array = JSON.parse(data);
+                const newArray = array.filter(x => x.id !== parseInt(id, 10))
+                const itemEdited = {
+                    id: (newArray[newArray.length - 1].id) + 1,
+                    name: object.name,
+                    price: object.price,
+                    img: object.img
+                };
+                newArray.push(itemEdited)
+                fs.writeFile(`./${this.path}`, JSON.stringify(newArray, null, 2), 'utf-8', (err) => err && console.log(err));
+                return resolve(JSON.stringify(newArray))
+            })
+        })
+        return itemEdited;
+    }
 }
 
 module.exports = Item;
-
-// let item = new Item('./stock.json')
-
-// item.save({
-//     name: "billetera",
-//     img: null
-// }).then(response => console.log(response))
