@@ -1,5 +1,4 @@
 const fs = require('fs');
-const { parse } = require('path');
 
 class Item {
     constructor(path) {
@@ -7,7 +6,7 @@ class Item {
     }
 
     async save(object) {
-        const items = await new Promise((resolve, reject) => {
+        const item = await new Promise((resolve, reject) => {
             return fs.readFile(`./${this.path}`, 'utf-8', (err, data) => {
                 if (err) {
                     reject(err)
@@ -19,7 +18,7 @@ class Item {
                 return resolve(obj);
             })
         })
-        return items;
+        return item;
     }
 
     async getById(id) {
@@ -53,7 +52,7 @@ class Item {
                 const array = JSON.parse(data);
                 const newArray = array.filter(a => a.id !== parseInt(id, 10))
                 fs.writeFile(`./${this.path}`, JSON.stringify(newArray, null, 2), 'utf-8', (err) => err && console.log(err));
-                return resolve(JSON.stringify(newArray))
+                return resolve(newArray);
             })
         })
         return item;
@@ -85,7 +84,7 @@ class Item {
                 };
                 newArray.push(itemEdited)
                 fs.writeFile(`./${this.path}`, JSON.stringify(newArray, null, 2), 'utf-8', (err) => err && console.log(err));
-                return resolve(JSON.stringify(newArray))
+                return resolve(newArray)
             })
         })
         return itemEdited;

@@ -1,128 +1,14 @@
 [
   {
-    "name": "Lapiz",
-    "price": 450,
-    "img": null,
-    "id": 3
-  },
-  {
-    "name": "Lapiz",
-    "price": 450,
-    "img": null,
-    "id": 4
-  },
-  {
-    "id": 6,
-    "name": "Regla",
-    "price": 250,
-    "img": null
-  },
-  {
-    "id": 7,
-    "name": "Regla",
-    "price": 250,
-    "img": null
-  },
-  {
-    "id": 8,
-    "name": "Regla",
-    "price": 250,
-    "img": null
-  },
-  {
-    "id": 9,
-    "name": "Regla",
-    "price": 250,
-    "img": null
-  },
-  {
-    "id": 10,
-    "name": "Regla",
-    "price": 250,
-    "img": null
-  },
-  {
-    "name": "asd",
-    "price": "123",
-    "img": "C:\\Users\\Agus\\Desktop\\node\\proyecto.\\public\\images\\upload",
-    "id": 11
+    "name": "AOT VOL.1",
+    "price": "690",
+    "img": "C:\\Users\\Agus\\Desktop\\node\\proyecto\\public\\images\\upload1651172564388.jpg",
+    "id": 1
   },
   {
     "name": "Lapix",
-    "price": "2",
-    "img": "C:\\Users\\Agus\\Desktop\\node\\proyecto.\\public\\images\\upload",
-    "id": 12
-  },
-  {
-    "name": "Lapix",
-    "price": "2",
-    "img": "C:\\Users\\Agus\\Desktop\\node\\proyecto.\\public\\images\\upload",
-    "id": 13
-  },
-  {
-    "name": "Lapix",
-    "price": "2",
-    "img": "C:\\Users\\Agus\\Desktop\\node\\proyecto.\\public\\upload",
-    "id": 14
-  },
-  {
-    "name": "Lapix",
-    "price": "2",
-    "img": "C:\\Users\\Agus\\Desktop\\node\\proyecto.\\public\\upload",
-    "id": 15
-  },
-  {
-    "name": "Lapix",
-    "price": "2",
-    "img": "C:\\Users\\Agus\\Desktop\\node\\proyecto.\\public\\upload",
-    "id": 16
-  },
-  {
-    "name": "Lapix",
-    "price": "2",
-    "img": "C:\\Users\\Agus\\Desktop\\node\\proyecto.\\public\\img\\upload",
-    "id": 17
-  },
-  {
-    "name": "Lapix",
-    "price": "2",
-    "img": "C:\\Users\\Agus\\Desktop\\node\\proyecto..\\public\\img\\upload",
-    "id": 18
-  },
-  {
-    "name": "Lapix",
-    "price": "2",
-    "img": "C:\\Users\\Agus\\Desktop\\node\\proyecto\\public\\img\\upload",
-    "id": 19
-  },
-  {
-    "name": "Lapix",
-    "price": "2",
-    "img": "C:\\Users\\Agus\\Desktop\\node\\public\\img\\upload",
-    "id": 20
-  },
-  {
-    "name": "Lapix",
-    "price": "2",
-    "img": "C:\\Users\\Agus\\Desktop\\node\\public\\images\\upload1650943359348.webp",
-    "id": 21
-  },
-  {
-    "name": "Lapix",
-    "price": "2",
-    "img": "C:\\Users\\Agus\\Desktop\\node\\public\\images\\upload1650943368862.webp",
-    "id": 22
-  },
-  {
-    "name": "Lapix",
-    "price": "2",
-    "img": "C:\\Users\\Agus\\Desktop\\node\\proyecto\\public\\images\\upload1650943379757.webp",
-    "id": 23
-  },
-  {
-    "name": "Lapix",
-    "price": "2",
-    "img": "C:\\Users\\Agus\\Desktop\\node\\proyecto\\public\\images\\upload1650943389077.webp",
-    "id": 24
+    "price": "34",
+    "img": "C:\\Users\\Agus\\Desktop\\node\\proyecto\\public\\images\\upload1651185211866.jpg",
+    "id": 2
   }
 ]

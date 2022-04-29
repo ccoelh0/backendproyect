@@ -1,25 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Formulario de Ingreso de Productos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/estilos.css">
 </head>
+
 <body>
-    <h1>Cargar productos</h1>
-    <form action="/" enctype="multipart/form-data" method="post">
-        <label for="POST-name">Item</label>
-        <input type="text" name="name">
-        <br>
-        <label for="POST-name">Precio</label>
-        <input type="number" name="price">
-        <br>
-        <label for="POST-file">Img</label>
-        <input type="file" name="upload_file">
-        <div>
-            <input type="submit" value="save">
+    <div class="container mt-3">
+        <div class="jumbotron">
+            <h1>Ingrese Producto</h1>
+            <br>
+            <!--
+                La etiqueta form debe tener: 
+                * action con la url del metodo
+                * el enctype para poder mostrar el codigo
+                * el method al cual se le va a pegar
+            -->
+            <form action="api/form/crearProducto" enctype="multipart/form-data" method="post">
+                <div class="form-group">
+                    <label for="POST-name">Item</label>
+                    <input type="text" name="name">
+                </div>
+
+                <div class="form-group">
+                    <label for="POST-name">Precio</label>
+                    <input type="number" name="price">
+                </div>
+
+                <div class="form-group">
+                    <label for="POST-file">Img</label>
+                    <input type="file" name="upload_file">
+                </div>
+
+                <button class="btn btn-success mt-3">Enviar</button>
+                <br>
+                <br>
+                <a href="/api/items">Ver productos</a>
+            </form>
         </div>
-    </form>
+    </div>
 </body>
+
 </html>
