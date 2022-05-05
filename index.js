@@ -1,43 +1,49 @@
 const express = require('express');
 const app = express();
-const userRoutes = require('./routes/items-routes');
+const routes = require('./routes/items-routes');
 const path = require('path');
-const handlebars = require('express-handlebars')
+const stock = require('./stock.json')
+const methodsItemClass = require('./api/methods-items')
+
+//--------------------------------------------
+
+// SOCKET IO
+const http = require('http')
+const server = http.createServer(app)
+
+const { Server } = require('socket.io');
+const Chat = require('./ChatClass');
+const io = new Server(server);
+
+let chat = new Chat();
+let messages = require('./messages.json')
+
+io.on('connection', (socket) => {
+    // Stock
+    socket.emit('be-connection', stock)
+    socket.on('new-item', data => {
+        methodsItemClass.saveItemByWS(data);
+    })
+
+    // Chat
+    socket.emit('datachat', messages)
+    socket.on('msjFromChat', data => {
+        chat.save(data).then(res =>
+            io.sockets.emit('datachat', res)
+        )
+    })
+});
 
 //--------------------------------------------
 
 // MILDWARES
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use('/api', userRoutes)
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname + '/public')))
+app.use('/api', routes)
 
 //--------------------------------------------
 
-// EJS
-// app.set('views', './views');
-// app.set('view engine', 'ejs');
+const port = process.env.PORT || 8090
 
-// PUG
-// app.set('views', './views');
-// app.set('view engine', 'pug');
-
-// HANDLEBARS
-app.engine(
-    "hbs",
-    handlebars({
-        extname: ".hbs",
-        defaultLayout: 'index.hbs',
-    })
-);
-app.set("view engine", "hbs");
-app.set("views", "./views");
-
-//--------------------------------------------
-
-const PORT = 8080
-const server = app.listen(PORT, () => {
-    console.log(`server is running in ${PORT}!`)
-})
-
-server.on("error", error => console.log(`Error en servidor ${error}`));
+server.listen(port, () => console.log(`server running in ${port}`))

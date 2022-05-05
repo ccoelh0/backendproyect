@@ -1,14 +1,32 @@
 [
   {
-    "name": "AOT VOL.1",
+    "name": "AOT VOL 1",
     "price": "690",
-    "img": "C:\\Users\\Agus\\Desktop\\node\\proyecto\\public\\images\\upload1651172564388.jpg",
+    "img": "https://m.media-amazon.com/images/I/51QWSFImgvL._SY346_.jpg",
     "id": 1
   },
   {
-    "name": "Lapix",
-    "price": "34",
-    "img": "C:\\Users\\Agus\\Desktop\\node\\proyecto\\public\\images\\upload1651185211866.jpg",
+    "name": "AOT VOL 2",
+    "price": "700",
+    "img": "https://tap-multimedia-1172.nyc3.digitaloceanspaces.com/productimage/39452/9789877247206.jpg",
     "id": 2
+  },
+  {
+    "name": "AOT VOL 3",
+    "price": "800",
+    "img": "https://www.tornamesa.co/imagenes_grandes/9781612/978161262026.GIF",
+    "id": 3
+  },
+  {
+    "name": "AOT vol 1 panini",
+    "price": "234",
+    "img": "https://m.media-amazon.com/images/I/51QWSFImgvL._SY346_.jpg",
+    "id": 4
+  },
+  {
+    "name": "aot vol 1 bla bla bla ",
+    "price": "2342",
+    "img": "https://m.media-amazon.com/images/I/51QWSFImgvL._SY346_.jpg",
+    "id": 5
   }
 ]
