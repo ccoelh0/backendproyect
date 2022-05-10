@@ -77,14 +77,14 @@ class Item {
                 const array = JSON.parse(data);
                 const newArray = array.filter(x => x.id !== parseInt(id, 10))
                 const itemEdited = {
-                    id: (newArray[newArray.length - 1].id) + 1,
+                    id: parseInt(id, 10),
                     name: object.name,
                     price: object.price,
                     img: object.img
                 };
                 newArray.push(itemEdited)
                 fs.writeFile(`./${this.path}`, JSON.stringify(newArray, null, 2), 'utf-8', (err) => err && console.log(err));
-                return resolve(newArray)
+                return resolve(itemEdited)
             })
         })
         return itemEdited;

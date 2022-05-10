@@ -1,11 +1,5 @@
 [
   {
-    "name": "AOT VOL 1",
-    "price": "690",
-    "img": "https://m.media-amazon.com/images/I/51QWSFImgvL._SY346_.jpg",
-    "id": 1
-  },
-  {
     "name": "AOT VOL 2",
     "price": "700",
     "img": "https://tap-multimedia-1172.nyc3.digitaloceanspaces.com/productimage/39452/9789877247206.jpg",
@@ -24,9 +18,9 @@
     "id": 4
   },
   {
-    "name": "aot vol 1 bla bla bla ",
+    "name": "aot vol 8 ",
     "price": "2342",
     "img": "https://m.media-amazon.com/images/I/51QWSFImgvL._SY346_.jpg",
-    "id": 5
+    "id": 6
   }
 ]
