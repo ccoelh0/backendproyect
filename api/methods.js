@@ -1,13 +1,17 @@
 const ClassItem = require('../ItemClass')
+const Cart = require('../Class/Cart')
+
 const item = new ClassItem('./stock.json')
+const cart = new Cart('./carts.json')
+
+//--------------------------------------------------------
 
 // ITEMS
-
 const getItem = (res, id) => {
     if (id) {
         item.getById(id).then(response => res.send(response))
     } else {
-        item.getAll().then(response => res.send(response))
+        item.getAll().then(response => res.send(response)).catch(err => console.log(err))
     }
 }
 
@@ -45,11 +49,34 @@ const deleteItem = (res, id, isAdmin) => {
     
 }
 
+//--------------------------------------------------------
+
 // CART
+const createNewCart = (res) => {
+    cart.createNewCart().then(response => res.send(response))
+}
 
+const deleteCart = (res, id) => {
+    cart.deleteCartById(id).then(response => res.send('Carrito eliminado!'))
+}
 
+const getItemsFromCart = (id, res) => {
+    cart.getItemsFromCart(id).then(response => console.log(response))
+}
 
-module.exports = { getItem, saveItem, updateItem, deleteItem }
+const addItemsToCart = (req, res) => {
+    const idCart = req.params.id
+    const idProd = req.params.idProducto 
+    cart.addItemsToCart(idCart, idProd).then(response => res.send('item agregado!')).catch(err => err && {err: 'ocurrio un error!'})
+}
+
+const deleteItemFromCart = (req, res) => {
+    const idCart = req.params.id
+    const idProd = req.params.idProducto 
+    cart.deleteItemFromCart(idCart, idProd).then(response => res.send(response))
+}
+
+module.exports = { getItem, saveItem, updateItem, deleteItem, createNewCart, deleteCart, getItemsFromCart, addItemsToCart, deleteItemFromCart }
 
 // //--------------------------------------------
 

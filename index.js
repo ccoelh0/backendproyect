@@ -1,10 +1,9 @@
 const express = require('express');
 const app = express();
+const path = require('path');
+
 const routesItem = require('./routes/items');
 const routesCart = require('./routes/cart');
-
-const path = require('path');
-const stock = require('./stock.json')
 
 //--------------------------------------------
 
@@ -19,4 +18,4 @@ app.use('/api/cart', routesCart)
 
 const port = process.env.PORT || 8090
 
-app.listen(port, () => console.log(`server running in ${port}`))
+app.listen(port, () => console.log(`Server is running in ${port}!`))

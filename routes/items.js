@@ -1,7 +1,7 @@
 const express = require('express');
 const { Router } = express;
 const router = new Router();
-const methods = require('../api/methods-items');
+const methods = require('../api/methods');
 
 router.get('/', (req, res) => {
     methods.getItem(res, false)
