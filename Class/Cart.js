@@ -12,9 +12,10 @@ class Cart {
                 if (err) reject(err)
                 const array = JSON.parse(data)
                 const time = new Date()
-
+                const ids = array.map(x => x.id)
+               
                 const newCart = {
-                    id: array.length !== 0 ? array[array.length - 1].id + 1 : 1,
+                    id: array.length !== 0 ? Math.max(...ids) + 1 : 1,
                     timestamp: `${time.getDay()}/${time.getMonth()}/${time.getFullYear()} || ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`,
                     productos: []
                 }
@@ -33,8 +34,9 @@ class Cart {
 
                 const array = JSON.parse(data);
                 const newArray = array.filter(a => a.id !== parseInt(id, 10))
+                console.log(newArray)
                 fs.writeFile(`${this.path}`, JSON.stringify(newArray, null, 2), 'utf-8', (err) => err && console.log(err));
-                return resolve(newArray);
+                return resolve({ msj: 'El carrito ha sido eliminado' });
             })
         })
         return newCart;
