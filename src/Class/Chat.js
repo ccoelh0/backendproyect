@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 class Chat {
     constructor() {
         this.path = './messages.json'

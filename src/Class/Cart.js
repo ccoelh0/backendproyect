@@ -3,7 +3,7 @@ const fs = require('fs');
 class Cart {
     constructor(path) {
         this.path = path;
-        this.stock = require('../stock.json')
+        this.stock = require('../../stock.json')
     }
 
     async createNewCart() {
