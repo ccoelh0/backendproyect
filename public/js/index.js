@@ -1,10 +1,11 @@
 const socket = io();
 
-// socket.on('be-connection', (data) => {
-//     console.log(data)
-//     // showItems(data)
-// });
+socket.on('be-connection', (data) => {
+    console.log(data)
+    // showItems(data)
+});
 
+socket.emit('fe-connection', "user conectado")
 // const showItems = array => {
 //     let itemMapped = array.map(x => `
 //         <tr>

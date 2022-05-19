@@ -1,0 +1,11 @@
+-- create table items (
+-- 	id INT PRIMARY KEY AUTO_INCREMENT,
+-- 	name TEXT,
+-- 	description TEXT,
+--     price INT,
+--     image TEXT,
+--     stock INT, 
+--     timestamp TEXT, 
+--     code INT
+-- );
+

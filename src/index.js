@@ -1,7 +1,5 @@
 const express = require('express');
 const app = express();
-const path = require('path');
-// const server = require('./websockets/websockets')
 
 //--------------------------------------------
 
@@ -12,24 +10,11 @@ const server = http.createServer(app)
 const { Server } = require('socket.io');
 const io = new Server(server);
 
-// const methodsSocket = require('./websockets/websockets')
+const methodsSocket = require('./websockets/websockets')
 
 io.on('connection', (socket) => {
-    console.log('user conectado')
-    // // Stock
-    // socket.emit('be-connection', [])
-    // socket.on('new-item', data => {
-    //     methodsItemClass.saveItemByWS(data);
-    // })
-
-    // // Chat
-    // socket.emit('datachat', messages)
-    // socket.on('msjFromChat', data => {
-    //     chat.save(data).then(res =>
-    //         io.sockets.emit('datachat', res)
-    //     )
-    // })
-    // methodsSocket(socket)    
+    methodsSocket.sendStock(socket)
+    socket.on('fe-connection', (data) => console.log(data))
 });
 
 //--------------------------------------------
@@ -54,4 +39,4 @@ app.use('/api/chat', routesChat)
 
 const port = process.env.PORT || 8090
 
-server.listen(port, () => console.log(`Server is running in ${port}!`))
+server.listen(port, () => console.log(`>>> ✅ Server is running in localhost:${port}!`))
