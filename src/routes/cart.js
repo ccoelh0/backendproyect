@@ -1,16 +1,16 @@
-const express = require('express');
-const { Router } = express;
-const router = new Router();
-const methods = require('../api/item')
+// const express = require('express');
+// const { Router } = express;
+// const router = new Router();
+// const methods = require('../api/cart')
 
-router.post('/', (req, res) => methods.createNewCart(res))
+// router.post('/', (req, res) => methods.createNewCart(res))
 
-router.delete('/:id', (req, res) => methods.deleteCart(res, req.params.id))
+// router.delete('/:id', (req, res) => methods.deleteCart(res, req.params.id))
 
-router.get('/:id/productos', (req, res) => methods.getItemsFromCart(req.params.id, res))
+// router.get('/:id/productos', (req, res) => methods.getItemsFromCart(req.params.id, res))
 
-router.post('/:id/productos/:idProducto', (req, res) => methods.addItemsToCart(req, res))
+// router.post('/:id/productos/:idProducto', (req, res) => methods.addItemsToCart(req, res))
 
-router.delete('/:id/productos/:idProducto', (req, res) => methods.deleteItemFromCart(req, res))
+// router.delete('/:id/productos/:idProducto', (req, res) => methods.deleteItemFromCart(req, res))
 
-module.exports = router;
+// module.exports = router;

@@ -1,5 +1,6 @@
 const ClassItem = require('../Class/Item')
-const item = new ClassItem('./stock.json', 'items')
+const {knex} = require('../DB/databases')
+const item = new ClassItem(knex, 'items')
 const time = new Date()
 
 const getItem = (res, id) => {

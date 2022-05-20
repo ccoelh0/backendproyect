@@ -1,7 +1,6 @@
 class Item {
-    constructor(path, bdName) {
-        this.path = path;
-        this.knex = require('../databases');
+    constructor(knex, bdName) {
+        this.knex = knex;
         this.bdName = bdName;
     }
 
