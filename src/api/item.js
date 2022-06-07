@@ -1,5 +1,5 @@
-import Item from '../containers/items/Item.js'
-const item = new Item('items')
+import Item from '../daos/item/ItemDaoMongo.js'
+const item = new Item()
 const time = new Date()
 
 const getItem = (res, id) => {

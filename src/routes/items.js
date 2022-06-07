@@ -1,7 +1,7 @@
 import express from 'express'
 const { Router } = express;
 const router = new Router();
-import { getItem, saveItem, updateItem, deleteItem } from '../daos/item.js'
+import { getItem, saveItem, updateItem, deleteItem } from '../api/item.js'
 import { isAdmin } from '../utils/isAdmin.js'
 
 router.get('/', (req, res) => getItem(res, false))

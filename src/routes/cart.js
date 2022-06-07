@@ -1,16 +1,16 @@
-// const express = require('express');
-// const { Router } = express;
-// const router = new Router();
-// const methods = require('../api/cart')
+import express from 'express'
+const { Router } = express;
+const router = new Router();
+import {createNewCart, deleteCart, getItemsFromCart, addItemsToCart, deleteItemFromCart} from '../api/cart.js'
 
-// router.post('/', (req, res) => methods.createNewCart(res))
+router.post('/', (req, res) => createNewCart(res))
 
-// router.delete('/:id', (req, res) => methods.deleteCart(res, req.params.id))
+router.delete('/:id', (req, res) => deleteCart(res, req.params.id))
 
-// router.get('/:id/productos', (req, res) => methods.getItemsFromCart(req.params.id, res))
+router.get('/:id/items', (req, res) => getItemsFromCart(req.params.id, res))
 
-// router.post('/:id/productos/:idProducto', (req, res) => methods.addItemsToCart(req, res))
+router.post('/:id/item/:idItem', (req, res) => addItemsToCart(req, res))
 
-// router.delete('/:id/productos/:idProducto', (req, res) => methods.deleteItemFromCart(req, res))
+router.delete('/:id/productos/:idProducto', (req, res) => deleteItemFromCart(req, res))
 
-// module.exports = router;
+export {router}
