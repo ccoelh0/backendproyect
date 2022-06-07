@@ -1,6 +1,5 @@
-const ClassItem = require('../Class/Item')
-const {knex} = require('../DB/databases')
-const item = new ClassItem(knex, 'items')
+import Item from '../containers/items/Item.js'
+const item = new Item('items')
 const time = new Date()
 
 const getItem = (res, id) => {
@@ -26,10 +25,9 @@ const saveItem = (req, res) => {
         name: req.body.name,
         description: req.body.description,
         price: req.body.price,
-        image: req.body.img,
+        image: req.body.image,
         stock: req.body.stock,
         timestamp: `${time.getDay()}/${time.getMonth()}/${time.getFullYear()}`,
-        code: req.body.code
     }
 
     return item.save(newProduct).then(() => res.json({ data: 'guardado!' })).catch(err => console.log(err))
@@ -54,10 +52,10 @@ const updateItem = (req, res) => {
 const deleteItem = (res, id) =>
     item.deleteById(id)
         .then(response => {
-            if (response === 1) return res.json({ data: `item ${id} eliminado` })
-            return res.json({ data: 'id no encontrado' })
+            if (response !== null) return res.json({data: `${response.name} eliminado`})
+            if (response === null) return res.json({data: 'id no encontrado'})
         })
         .catch(err => err && { err: 'ocurrio un error!' })
 
 
-module.exports = { getItem, saveItem, updateItem, deleteItem }
+export { getItem, saveItem, updateItem, deleteItem }

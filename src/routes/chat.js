@@ -1,7 +1,7 @@
 const express = require('express');
 const { Router } = express;
 const router = new Router();
-const methods = require('../api/chat')
+const methods = require('../containers/chat')
 
 const form = '/public/index.html'
 
