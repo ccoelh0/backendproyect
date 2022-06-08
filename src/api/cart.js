@@ -1,8 +1,4 @@
-import { response } from "express"
-import Cart from "../daos/cart/CartDaoMongo.js"
-import Item from '../daos/item/ItemDaoMongo.js'
-const cart = new Cart()
-const item = new Item()
+import {cart, item} from '../daos/index.js'
 const time = new Date()
 
 const createNewCart = async (res) => { 

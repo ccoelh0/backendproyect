@@ -1,5 +1,4 @@
-import Item from '../daos/item/ItemDaoMongo.js'
-const item = new Item()
+import {item} from '../daos/index.js'
 const time = new Date()
 
 const getItem = async (res, id) => {
