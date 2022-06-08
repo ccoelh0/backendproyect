@@ -3,12 +3,11 @@ const time = new Date()
 
 const createNewCart = async (res) => { 
     const newCart = {
-        timestamp: `${time.getDay()}/${time.getMonth()}/${time.getFullYear()}`,
+        timestamp: `${time.getDate()}/${time.getMonth() + 1}/${time.getFullYear()}`,
         items: []
     }
-    const created = cart.save(newCart)
+    const created = await cart.save(newCart)
     res.json(created)
-
 }
 
 const deleteCart = async (res, id) => {

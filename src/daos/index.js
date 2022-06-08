@@ -1,6 +1,6 @@
 let item
 let cart
-let db = 'mongodb'
+let db = 'firebase'
 
 if (db === 'mongodb') {
     const { default: Item } = await import('./item/ItemDaoMongo.js')
@@ -8,5 +8,12 @@ if (db === 'mongodb') {
     item = new Item()
     cart = new Cart()
 } 
+
+if (db === 'firebase') {
+    const { default: Item } = await import('./item/ItemDaoFirebase.js')
+    const { default: Cart } = await import('./cart/CartDaoFirebase.js')
+    item = new Item()
+    cart = new Cart()
+}
 
 export { item, cart }

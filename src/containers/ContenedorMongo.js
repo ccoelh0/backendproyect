@@ -9,7 +9,7 @@ class Container {
         this.collection = mongoose.model(collectionName, schema);
     }
 
-    async save (object) {
+    async save(object) {
         const obj = new this.collection(object)
         const objSaved = await obj.save()
         return objSaved
@@ -20,15 +20,15 @@ class Container {
     }
 
     async getById(id) {
-       return await this.collection.findOne({_id: id})
+        return await this.collection.findOne({ _id: id })
     }
 
     async deleteById(id) {
-            return await this.collection.findOneAndDelete({_id: id})  
+        return await this.collection.findOneAndDelete({ _id: id })
     }
 
     async updateById(id, edit) {
-       return await this.collection.findByIdAndUpdate({_id: id}, edit)
+        return await this.collection.findByIdAndUpdate({ _id: id }, edit)
     }
 }
 
