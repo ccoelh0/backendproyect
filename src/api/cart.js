@@ -1,42 +1,47 @@
+import { response } from "express"
 import Cart from "../daos/cart/CartDaoMongo.js"
+import Item from '../daos/item/ItemDaoMongo.js'
 const cart = new Cart()
+const item = new Item()
 const time = new Date()
 
-const createNewCart = (res) => { 
+const createNewCart = async (res) => { 
     const newCart = {
         timestamp: `${time.getDay()}/${time.getMonth()}/${time.getFullYear()}`,
         items: []
     }
-    cart.save(newCart)
-        .then(response => res.json(response))
-        .catch(err => err && { err: 'ocurrio un error!' }) 
+    const created = cart.save(newCart)
+    res.json(created)
+
 }
 
-const deleteCart = (res, id) =>
-    cart.deleteById(id)
-        .then(response => {
-            if (response !== null) return res.json({data: `cart con id ${response.id} eliminado`})
-            if (response === null) return res.json({data: 'id no encontrado'})
-        })
-        .catch(err => err && { err: 'ocurrio un error!' })
-
-const getItemsFromCart = (id, res) =>
-    cart.getById(id)
-        .then(response => res.json(response))
-        .catch(err => err && { err: 'ocurrio un error!' })
-
-const addItemsToCart = (req, res) => {
-    const idCart = req.params.id
-    const idItem = req.params.idItem
-    cart.editById(idCart, idItem).then(response => res.json({data: `item ${idItem} agregado`})).catch(err => err && { err: 'ocurrio un error!' })
+const deleteCart = async (res, id) => {
+    await cart.deleteById(id)
+    res.json({data: `cart ${id} eliminada`})
 }
 
-const deleteItemFromCart = (req, res) => {
-    const idCart = req.params.id
+const getItemsFromCart = async (id, res) => {
+    const cartSelected = await cart.getById(id)
+    res.json({data: cartSelected.items})
+}
+
+const addItemsToCart = async (req, res) => {
+    const cartId = req.params.id
+    const itemData = await item.getById(req.params.idItem)
+    const cartData = await cart.getById(cartId)
+    cartData.items.push(itemData)
+    await cart.updateById(cartId, cartData)
+    res.json({data: 'item agregado!'})
+}
+
+// No funciona
+const deleteItemFromCart = async (req, res) => {
+    const id = req.params.id
     const idItem = req.params.idItem
-    cart.deleteItemFromCart(idCart, idItem)
-        .then(response => res.send(response))
-        .catch(err => err && { err: 'ocurrio un error!' })
+    const cartSelected = await cart.getById(id)
+    const itemsFiltered = cartSelected.items.filter(x => x._id === idItem)
+    await cart.updateById(id, itemsFiltered)
+    res.json({data: `item ${idItem} eliminado`})
 }
 
 export { createNewCart, deleteCart, getItemsFromCart, addItemsToCart, deleteItemFromCart }

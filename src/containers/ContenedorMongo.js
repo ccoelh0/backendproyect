@@ -20,19 +20,15 @@ class Container {
     }
 
     async getById(id) {
-       return await this.collection.find({_id: id})
+       return await this.collection.findOne({_id: id})
     }
 
-    async deleteById(id, idCart) {
-       if (idCart === undefined) return await this.collection.findOneAndDelete({_id: id})  
-       return this.collection.findOneAndDelete({_id: idCart}, {$eq: {items: [{id: id}]}})  
+    async deleteById(id) {
+            return await this.collection.findOneAndDelete({_id: id})  
     }
 
-    async editById(id, newElement) {
-        if (typeof newElement === 'object') return await this.collection.findOneAndUpdate({_id: id}, newElement)
-        if (typeof newElement === 'string') {
-            return await this.collection.findOneAndUpdate({_id: id}, {$push: {items: {id: newElement}}})
-        }
+    async updateById(id, edit) {
+       return await this.collection.findByIdAndUpdate({_id: id}, edit)
     }
 }
 

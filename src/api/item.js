@@ -2,25 +2,17 @@ import Item from '../daos/item/ItemDaoMongo.js'
 const item = new Item()
 const time = new Date()
 
-const getItem = (res, id) => {
+const getItem = async (res, id) => {
     if (id) {
-        return item.getById(id)
-            .then(response => {
-                if (response.length !== 0) return res.json({ data: response })
-                return res.json({ data: 'item no encontrado' })
-            })
-            .catch(err => console.log(err))
+        const find = await item.getById(id)
+        res.json({ data: find })
     } else {
-        return item.getAll()
-            .then(response => {
-                if (response.length !== 0) return res.json({ data: response })
-                return res.json({ data: 'no hay items' })
-            })
-            .catch(err => console.log(err))
+        const find = await item.getAll()
+        res.json({data: find})
     }
 }
 
-const saveItem = (req, res) => {
+const saveItem = async (req, res) => {
     const newProduct = {
         name: req.body.name,
         description: req.body.description,
@@ -30,10 +22,15 @@ const saveItem = (req, res) => {
         timestamp: `${time.getDay()}/${time.getMonth()}/${time.getFullYear()}`,
     }
 
-    return item.save(newProduct).then(() => res.json({ data: 'guardado!' })).catch(err => console.log(err))
+    try {
+        await item.save(newProduct)
+        return res.json({ data: 'guardado!' })
+    } catch (err) {
+        return console.log(err)
+    }
 };
 
-const updateItem = (req, res) => {
+const updateItem = async (req, res) => {
     const id = req.params.id
 
     const update = {
@@ -46,16 +43,17 @@ const updateItem = (req, res) => {
         code: req.body.code
     }
 
-    return item.editById(id, update).then(() => res.json({ data: `item ${id} actualizado!` })).catch(err => err && { err: 'ocurrio un error!' })
+    await item.updateById(id, update)
+    res.json({data: `${id} actualizado`})
 }
 
-const deleteItem = (res, id) =>
-    item.deleteById(id)
-        .then(response => {
-            if (response !== null) return res.json({data: `${response.name} eliminado`})
-            if (response === null) return res.json({data: 'id no encontrado'})
-        })
-        .catch(err => err && { err: 'ocurrio un error!' })
-
+const deleteItem = async (res, id) => {
+   try {
+        await item.deleteById(id)
+        res.json({data: `${id} eliminado`})
+   } catch (err) {
+       res.json({data: err})
+    }
+}
 
 export { getItem, saveItem, updateItem, deleteItem }
