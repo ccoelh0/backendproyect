@@ -1,3 +1,4 @@
+import { Db } from 'mongodb';
 import mongoose from 'mongoose'
 import config from '../config.js'
 
@@ -19,19 +20,18 @@ class Container {
     }
 
     async getById(id) {
-        return await this.collection.find({_id: id})
+       return await this.collection.find({_id: id})
     }
 
-    async deleteById(id) {
-        return await this.collection.findOneAndDelete({_id: id})    
+    async deleteById(id, idCart) {
+       if (idCart === undefined) return await this.collection.findOneAndDelete({_id: id})  
+       return this.collection.findOneAndDelete({_id: idCart}, {$eq: {items: [{id: id}]}})  
     }
 
-    async editById(id, objectOrId) {
-        if (typeof objectOrId === 'object') return await this.collection.findOneAndUpdate({_id: id}, objectOrId)
-        if (typeof objectOrId === 'string') {
-            // const collection = await this.collection.insert({id: id}, {$set: {items: objectOrId}})
-            // return collection
-            return await this.collection.findById({_id: id})
+    async editById(id, newElement) {
+        if (typeof newElement === 'object') return await this.collection.findOneAndUpdate({_id: id}, newElement)
+        if (typeof newElement === 'string') {
+            return await this.collection.findOneAndUpdate({_id: id}, {$push: {items: {id: newElement}}})
         }
     }
 }

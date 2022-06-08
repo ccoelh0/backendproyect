@@ -20,21 +20,23 @@ const deleteCart = (res, id) =>
         })
         .catch(err => err && { err: 'ocurrio un error!' })
 
-//probar con items
 const getItemsFromCart = (id, res) =>
-    cart.getById(id).then(response => res.json(response.items)).catch(err => err && { err: 'ocurrio un error!' })
-
+    cart.getById(id)
+        .then(response => res.json(response))
+        .catch(err => err && { err: 'ocurrio un error!' })
 
 const addItemsToCart = (req, res) => {
     const idCart = req.params.id
     const idItem = req.params.idItem
-    cart.editById(idCart, idItem).then(response => res.json(response)).catch(err => err && { err: 'ocurrio un error!' })
+    cart.editById(idCart, idItem).then(response => res.json({data: `item ${idItem} agregado`})).catch(err => err && { err: 'ocurrio un error!' })
 }
 
 const deleteItemFromCart = (req, res) => {
     const idCart = req.params.id
-    const idProd = req.params.idProducto
-    cart.deleteItemFromCart(idCart, idProd).then(response => res.send(response)).catch(err => err && { err: 'ocurrio un error!' })
+    const idItem = req.params.idItem
+    cart.deleteItemFromCart(idCart, idItem)
+        .then(response => res.send(response))
+        .catch(err => err && { err: 'ocurrio un error!' })
 }
 
-export {createNewCart, deleteCart, getItemsFromCart, addItemsToCart, deleteItemFromCart}
+export { createNewCart, deleteCart, getItemsFromCart, addItemsToCart, deleteItemFromCart }
