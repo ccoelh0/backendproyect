@@ -1,4 +1,4 @@
-import {item} from '../daos/index.js'
+import { item } from '../daos/index.js'
 const time = new Date()
 
 const getItem = async (res, id) => {
@@ -7,7 +7,7 @@ const getItem = async (res, id) => {
         res.json({ data: find })
     } else {
         const find = await item.getAll()
-        res.json({data: find})
+        res.json({ data: find })
     }
 }
 
@@ -43,15 +43,15 @@ const updateItem = async (req, res) => {
     }
 
     await item.updateById(id, update)
-    res.json({data: `${id} actualizado`})
+    res.json({ data: `${id} actualizado` })
 }
 
 const deleteItem = async (res, id) => {
-   try {
+    try {
         await item.deleteById(id)
-        res.json({data: `${id} eliminado`})
-   } catch (err) {
-       res.json({data: err})
+        res.json({ data: `${id} eliminado` })
+    } catch (err) {
+        res.json({ data: err })
     }
 }
 
