@@ -10,14 +10,14 @@ const createNewCart = async (res) => {
     res.json(created)
 }
 
-const deleteCart = async (res, id) => {
-    await cart.deleteById(id)
-    res.json({data: `cart ${id} eliminada`})
-}
-
 const getItemsFromCart = async (id, res) => {
     const cartSelected = await cart.getById(id)
     res.json({data: cartSelected.items})
+}
+
+const deleteCart = async (res, id) => {
+    await cart.deleteById(id)
+    res.json({data: `cart ${id} eliminada`})
 }
 
 const addItemsToCart = async (req, res) => {
@@ -25,17 +25,16 @@ const addItemsToCart = async (req, res) => {
     const itemData = await item.getById(req.params.idItem)
     const cartData = await cart.getById(cartId)
     cartData.items.push(itemData)
-    await cart.updateById(cartId, cartData)
+    await cart.updateById(cartId, cartData.items)
     res.json({data: 'item agregado!'})
 }
 
-// No funciona
 const deleteItemFromCart = async (req, res) => {
     const id = req.params.id
     const idItem = req.params.idItem
     const cartSelected = await cart.getById(id)
-    const itemsFiltered = cartSelected.items.filter(x => x._id === idItem)
-    await cart.updateById(id, itemsFiltered)
+    const filter = cartSelected.items.filter(x => x.id !== idItem)
+    await cart.updateById(id, filter)
     res.json({data: `item ${idItem} eliminado`})
 }
 

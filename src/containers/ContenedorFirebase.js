@@ -51,18 +51,18 @@ class ContenedorFirebase {
     
     async deleteById(id) {
         try {
-            return await this.coleccion.doc(id).delete();
+            return await this.collection.doc(id).delete()
         } catch (error) {
             throw new Error(error)
         }
     }
 
-    async updateById(id, nuevoElem) {
+    async updateById(id, newElem) {
         try {
-            const actualizado = await this.coleccion.doc(id).set(nuevoElem);
+            const actualizado = await this.collection.doc(id).update({items: newElem});
             return actualizado
         } catch (error) {
-            throw new Error(`Error al actualizar: ${error}`)
+            throw new Error(error)
         }
     }
 }
