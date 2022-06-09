@@ -1,4 +1,4 @@
-import Container from '../../containers/ContenedorMongo.js'
+import Container from '../../containers/ContainerMongo.js'
 import { itemSchema } from '../../models/ItemSchema.js'
 
 class ItemDaoMongo extends Container {
