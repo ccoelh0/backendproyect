@@ -1,0 +1,11 @@
+#cards {
+    margin: 20px;
+}
+
+#cards .card{
+    width: 250px;
+}
+
+table #tbody img {
+    width: 120px;
+}

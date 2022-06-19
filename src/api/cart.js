@@ -10,6 +10,11 @@ const createNewCart = async (res) => {
     res.json(created)
 }
 
+const getCart = async (id, res) => {
+    const cartSelected = await cart.getById(id)
+    res.json({data: cartSelected})
+}
+
 const getItemsFromCart = async (id, res) => {
     const cartSelected = await cart.getById(id)
     res.json({data: cartSelected.items})
@@ -38,4 +43,4 @@ const deleteItemFromCart = async (req, res) => {
     res.json({data: `item ${idItem} eliminado`})
 }
 
-export { createNewCart, deleteCart, getItemsFromCart, addItemsToCart, deleteItemFromCart }
+export { createNewCart, getCart, deleteCart, getItemsFromCart, addItemsToCart, deleteItemFromCart }

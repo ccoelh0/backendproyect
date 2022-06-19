@@ -1,9 +1,11 @@
 import express from 'express'
 const { Router } = express;
 const router = new Router();
-import {createNewCart, deleteCart, getItemsFromCart, addItemsToCart, deleteItemFromCart} from '../api/cart.js'
+import {createNewCart, deleteCart, getCart, getItemsFromCart, addItemsToCart, deleteItemFromCart} from '../api/cart.js'
 
 router.post('/', (req, res) => createNewCart(res))
+
+router.get('/:id', (req, res) => getCart(req.params.id, res))
 
 router.delete('/:id', (req, res) => deleteCart(res, req.params.id))
 
