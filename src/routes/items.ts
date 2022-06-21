@@ -1,10 +1,10 @@
 import express from 'express'
-const { Router } = express;
-const router = new Router();
-import { getItem, saveItem, updateItem, deleteItem } from '../api/item.js'
-import { isAdmin } from '../utils/isAdmin.js'
+import { getItem, saveItem, updateItem, deleteItem } from '../api/item'
+import { isAdmin } from '../utils/isAdmin'
 
-router.get('/', (req, res) => getItem(res, false))
+const router  = express.Router() // aplicar next()
+
+router.get('/', (_req, res) => getItem(res, false))
 
 router.get('/:id', (req, res) => getItem(res, req.params.id))
 

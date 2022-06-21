@@ -1,10 +1,12 @@
-import { Db } from 'mongodb';
 import mongoose from 'mongoose'
-import config from '../config.js'
+import config from '../config'
 
-await mongoose.connect(config.mongobd.connection)
+const mongoConnection = async () => await mongoose.connect(config.mongobd.connection)
+mongoConnection()
 
 class Container {
+    collection: any
+
     constructor(collectionName, schema) {
         this.collection = mongoose.model(collectionName, schema);
     }
