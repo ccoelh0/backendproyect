@@ -1,6 +1,6 @@
 export default {
     mongobd: {
-        connection: 'mongodb://localhost:27017/mangabd'
+        connection: 'mongodb://localhost:27017/mangabd',
     },
     firebase: {
         "type": "service_account",

@@ -1,27 +1,26 @@
-import pkg from 'mongoose';
-const { Schema } = pkg;
+import { Schema } from 'mongoose';
 
 export const itemSchema = new Schema({
     name: {
-        type: String, 
+        type: String,
         required: true,
     },
     description: {
-        type: String, 
+        type: String,
         required: true,
     },
     price: {
-        type: Number, 
+        type: Number,
         required: true,
     },
     image: {
-        type: String, 
+        type: String,
         required: true,
     },
     stock: {
         type: Number,
-        required: true, 
-    }, 
+        required: true,
+    },
     timestamp: {
         type: String,
         required: true

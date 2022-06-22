@@ -1,8 +1,8 @@
-import Container from '../../containers/ContainerMongo.js'
-import { cartSchema } from '../../models/CartSchema.js'
+import Container from '../../containers/ContainerMongo'
+import { cartSchema } from '../../models/CartSchema'
 
 class CartDaoMongo extends Container {
-    
+
     constructor () {
         super('cart', cartSchema)
     }

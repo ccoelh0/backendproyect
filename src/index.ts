@@ -1,16 +1,17 @@
 import express from 'express'
-import {router as routerItem} from './routes/items'
-// import {router as routerCart} from './routes/cart.js'
-import {router as routerViews} from './routes/views'
+import {router as routesForItems} from './routes/items'
+import {router as routesForCart} from './routes/cart'
+import {router as routesForViews} from './routes/views'
 
 const app = express();
 
 app.use(express.json()) // midelware que transforma la req.body en json
 app.use(express.urlencoded({ extended: false }))
 app.use(express.static('public'))
-app.use('/api/items', routerItem)
-// app.use('/api/cart', routerCart)
-app.use('/', routerViews)
+
+app.use('/api/items', routesForItems)
+app.use('/api/cart', routesForCart)
+app.use('/', routesForViews)
 
 const port = process.env.PORT || 8090
 

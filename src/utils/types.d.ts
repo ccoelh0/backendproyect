@@ -19,3 +19,8 @@ export interface IUpdateItem {
     timestamp?: string;
     code?: code;
 }
+
+export interface INewCart {
+    timestamp: string,
+    items: any[]
+}
