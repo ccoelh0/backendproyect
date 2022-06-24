@@ -7,7 +7,6 @@ export interface INewItem {
     image: string;
     stock: number;
     timestamp: string;
-    code?: code;
 }
 
 export interface IUpdateItem {
@@ -20,7 +19,11 @@ export interface IUpdateItem {
     code?: code;
 }
 
+export interface IItem extends INewItem {
+    id: string;
+}
+
 export interface INewCart {
-    timestamp: string,
-    items: any[]
+    timestamp: string;
+    items: any[]; 
 }

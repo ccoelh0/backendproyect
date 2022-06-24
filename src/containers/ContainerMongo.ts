@@ -1,8 +1,7 @@
 import mongoose from 'mongoose'
 import config from '../utils/config'
-import {INewItem, INewCart} from '../utils/types'
 
-mongoose.connect(config.mongobd.connection).catch(err => console.log(err))
+mongoose.connect(config.mongobd.connectionAtlas).catch(err => console.log(err))
 
 class Container {
 	collection: any
@@ -29,7 +28,7 @@ class Container {
 	}
 
 	async updateById(id, edit) {
-		return await this.collection.findOneAndUpdate({ _id: id, items: edit})
+		return await this.collection.replaceOne({ _id: id }, edit)
 	}
 }
 

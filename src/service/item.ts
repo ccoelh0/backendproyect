@@ -13,12 +13,11 @@ const getItem = async (res, id: string | boolean) => {
 
 const saveItem = async (req, res) => {
   const newItem: INewItem = req.body
-
   try {
     await item.save(newItem)
-    return res.json({ data: 'guardado!' })
+    return res.json({ data: req.body.name + ' guardado!'})
   } catch (err) {
-    return res.json({ data: err })
+    return res.status(400).send({ data: err })
   }
 };
 

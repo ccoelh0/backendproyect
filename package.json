@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "tsc": "tsc",
-    "dev": "nodemon src/index.ts",
-    "start": "node build/index"
+    "build": "node build/index",
+    "start": "nodemon src/index.ts",
+    "tsc": "tsc"
   },
   "keywords": [],
   "author": "@coelhh0",

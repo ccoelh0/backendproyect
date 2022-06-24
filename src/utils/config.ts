@@ -1,6 +1,7 @@
 export default {
     mongobd: {
-        connection: 'mongodb://localhost:27017/mangabd',
+        connectionLocalHost: 'mongodb://localhost:27017/mangabd',
+        connectionAtlas: 'mongodb+srv://agustincoelho:alm43984122@cluster0.eersz.mongodb.net/mangadatabase?retryWrites=true&w=majority'
     },
     firebase: {
         "type": "service_account",

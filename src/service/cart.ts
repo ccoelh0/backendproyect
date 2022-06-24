@@ -49,7 +49,7 @@ const addItemsToCart = async (req, res) => {
 	cartData.items.push(itemData)
 
 	try {
-		await cart.updateById(cartId, cartData.items)
+		await cart.updateById(cartId, {items: cartData.items})
 		return res.json({ data: `${itemData._id} aniadido!` })
 	} catch (err) {
 		return res.status(400).send({ err })
@@ -60,14 +60,15 @@ const deleteItemFromCart = async (req, res) => {
 	const id = req.params.id
 	const idItem = req.params.idItem
 	const cartSelected = await cart.getById(id)
-	const filter = cartSelected.items.filter(x => x._id !== idItem)
-	
+	const filter = cartSelected.items.filter(x => x._id.valueOf() !== idItem)
+
 	try {
-		await cart.updateById(id, filter)
-		// return res.json({ data: `${idItem} eliminado` })
+		await cart.updateById(id, {items: filter})
+		return res.json({ data: `${idItem} eliminado` })
 	} catch (err) {
 		return res.status(400).send({err})
 	}
 }
 
+// todo ready
 export { createNewCart, getCart, deleteCart, getItemsFromCart, addItemsToCart, deleteItemFromCart }
