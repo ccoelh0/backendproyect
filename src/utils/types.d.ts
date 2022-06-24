@@ -25,5 +25,5 @@ export interface IItem extends INewItem {
 
 export interface INewCart {
     timestamp: string;
-    items: any[]; 
+    items: any[] | IItem; 
 }
