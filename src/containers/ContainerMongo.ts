@@ -28,7 +28,7 @@ class Container {
 	}
 
 	async updateById(id, edit) {
-		return await this.collection.update({ _id: id }, edit)
+		return await this.collection.updateOne({ _id: id }, edit)
 	}
 }
 
