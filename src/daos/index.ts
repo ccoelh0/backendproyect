@@ -1,20 +1,20 @@
 import ItemDaoMongo from './item/ItemDaoMongo'
 import CartDaoMongo from './cart/CartDaoMongo'
+import ItemDaoFirebase from './item/ItemDaoFirebase'
+import CartDaoFirebase from './cart/CartDaoFirebase'
 
 let item
 let cart
-let db = 'mongodb'
+let database = 'firebase'
 
-if (db === 'mongodb') {
+if (database === 'mongodb') {
     item = new ItemDaoMongo()
     cart = new CartDaoMongo()
 } 
 
-// if (db === 'firebase') {
-//     const { default: Item } = await import('./item/ItemDaoFirebase.js')
-//     const { default: Cart } = await import('./cart/CartDaoFirebase.js')
-//     item = new Item()
-//     cart = new Cart()
-// }
+if (database === 'firebase') {
+    item = new ItemDaoFirebase()
+    cart = new CartDaoFirebase()
+}
 
 export { item, cart }

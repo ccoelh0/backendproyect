@@ -1,4 +1,4 @@
-export type code = number | string; // ej de como crear types propios
+export type code = number | string; 
 
 export interface INewItem {
     name: string;

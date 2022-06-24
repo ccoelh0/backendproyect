@@ -1,4 +1,4 @@
-import ContainerFirebase from "../../containers/ContainerFirebase.js"
+import ContainerFirebase from "../../containers/ContainerFirebase"
 
 class ItemsDaoFirebase extends ContainerFirebase {
 
