@@ -16,9 +16,10 @@ const createNewCart = async (res) => {
 	}
 }
 
-const getCart = async (id: string, res) => {
+const getCart = async (id: string|boolean, res) => {
 	try {
-		return res.json({ data: await cart.getById(id) })
+		if (id) return res.json({ data: await cart.getById(id) })
+		return res.json({data: await cart.getAll()})
 	} catch (err) {
 		return res.status(400).send({ err })
 	}

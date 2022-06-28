@@ -1,6 +1,6 @@
 export type code = number | string; 
 
-export interface INewItem {
+export interface IItem {
     name: string;
     description: string;
     price: number;
@@ -16,11 +16,6 @@ export interface IUpdateItem {
     image?: string;
     stock?: number;
     timestamp?: string;
-    code?: code;
-}
-
-export interface IItem extends INewItem {
-    id: string;
 }
 
 export interface INewCart {

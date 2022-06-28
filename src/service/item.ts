@@ -1,26 +1,22 @@
 import { item } from '../daos/index'
-import { INewItem, IUpdateItem } from '../utils/types'
+import { IItem, IUpdateItem } from '../utils/types'
 
 const getItem = async (res, id: string | boolean) => {
-  if (id) {
-    try {
+  try {
+    if (id) {
       const find = await item.getById(id)
       return res.json({ data: find })
-    } catch (err) {
-      return res.status(400).send({ err })
-    }
-  } else {
-    try {
+    } else {
       const find = await item.getAll()
       return res.json({ data: find })
-    } catch (err) {
-      return res.status(400).send({ err })
     }
+  } catch (err) {
+    return res.send(err)
   }
 }
 
 const saveItem = async (req, res) => {
-  const newItem: INewItem = req.body
+  const newItem: IItem = req.body
   try {
     await item.save(newItem)
     return res.json({ data: req.body.name + ' guardado!' })
@@ -34,10 +30,10 @@ const updateItem = async (req, res) => {
   const update: IUpdateItem = req.body
 
   try {
-    await item.updateById(id, {$set: update})
+    await item.updateById(id, update)
     return res.json({ data: `${id} actualizado` })
   } catch (err) {
-    return res.status(400).send({err})
+    return res.status(400).send({ err })
   }
 }
 

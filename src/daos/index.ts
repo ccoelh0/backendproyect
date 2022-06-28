@@ -5,7 +5,7 @@ import CartDaoFirebase from './cart/CartDaoFirebase'
 
 let item
 let cart
-let database = 'firebase'
+let database = 'mongodb'
 
 if (database === 'mongodb') {
     item = new ItemDaoMongo()
