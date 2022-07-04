@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker';
 
 const items: any[] = [] 
 
-for(let i = 0; i < 5; i++) {
+for (let i = 0; i < 5; i++) {
   items.push({
     name: faker.vehicle.vehicle(),
     price: faker.commerce.price(1000, 10000),
