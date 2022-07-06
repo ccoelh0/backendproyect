@@ -5,9 +5,18 @@ const messageContent = document.getElementById('message')
 const avatar = document.getElementById('avatar')
 const age = document.getElementById('age')
 const form = document.getElementById('form')
+const chatContainer = document.getElementById('chat-container')
+
+const authorSchema = new normalizr.schema.Entity('authors')
+const commentSchema = new normalizr.schema.Entity('comments')
+
+const postSchema = new normalizr.schema.Entity('posts', {
+  comments: [commentSchema]
+});
+
+const socket = io();
 
 const url = '/api/chat/'
-
 
 const onSubmit = async (api) => {
   const message = {
@@ -34,5 +43,21 @@ const onSubmit = async (api) => {
 
 form.addEventListener('submit', e => {
   e.preventDefault()
-  onSubmit(url).then(res => console.log(res)).catch(err => console.log(err))
+  onSubmit(url).catch(err => console.log(err))
 })
+
+const compression = (norm, denorm) => ((denorm.length / norm.length) * 100).toFixed()
+
+const norm = async () => {
+  const res = await fetch('/api/chat/')
+  const data = await res.json()
+  const dataDesnormalize = normalizr.denormalize(data.result, postSchema, data.entities)
+
+  return document.getElementById('chat-compresion').innerHTML = 
+    `Compresion: ${compression(JSON.stringify(data), JSON.stringify(dataDesnormalize))}%`
+}
+
+norm()
+
+socket.on('data-chat', data => console.log(data) ) 
+

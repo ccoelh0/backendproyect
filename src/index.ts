@@ -4,6 +4,7 @@ import {router as routesForCart} from './routes/cart'
 import {router as routesForViews} from './routes/views'
 import {router as routerFakeItem} from './routes/product-test'
 import {router as routerChat} from './routes/chat'
+import http from 'http'
 
 const app = express();
 
@@ -15,8 +16,12 @@ app.use('/api/items', routesForItems)
 app.use('/api/cart', routesForCart)
 app.use('/api/items-test', routerFakeItem)
 app.use('/api/chat', routerChat)
-app.use('/', routesForViews)
+app.use(routesForViews)
+
+const server = http.createServer(app)
 
 const port = process.env.PORT || 8090
 
-app.listen(port, () => console.log(`>>> ✅ Server is running in localhost:${port}!`))
+server.listen(port, () => console.log(`>>> ✅ Server is running in localhost:${port}!`))
+
+export const s = server
