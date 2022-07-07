@@ -6,12 +6,14 @@ const avatar = document.getElementById('avatar')
 const age = document.getElementById('age')
 const form = document.getElementById('form')
 const chatContainer = document.getElementById('chat-container')
+const url = '/api/chat/'
 
+// Socket
 const socket = io();
-
 socket.on('data-chat', data => renderData(data))
 socket.on('update-chat', data => renderData(data))
 
+// Normalizr
 const authorSchema = new normalizr.schema.Entity('authors')
 const commentSchema = new normalizr.schema.Entity('comments')
 
@@ -19,7 +21,6 @@ const postSchema = new normalizr.schema.Entity('posts', {
   comments: [commentSchema]
 });
 
-const url = '/api/chat/'
 
 const getData = async (api) => {
   const data = await fetch(api)
@@ -61,6 +62,7 @@ const onSubmit = async (api) => {
   })
 
   socket.emit('new-message', true)
+  norm()
 }
 
 form.addEventListener('submit', e => {
