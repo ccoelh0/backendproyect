@@ -1,7 +1,7 @@
 import { chat } from '../daos/index'
 import { schema, normalize } from 'normalizr'
 
-const getAllMessage = async () => await chat.getAll()
+export const getAllMessage = async () => await chat.getAll()
 
 export const saveMessage = async (message, res) => {
   try {

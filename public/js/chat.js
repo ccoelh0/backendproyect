@@ -7,6 +7,11 @@ const age = document.getElementById('age')
 const form = document.getElementById('form')
 const chatContainer = document.getElementById('chat-container')
 
+const socket = io();
+
+socket.on('data-chat', data => renderData(data))
+socket.on('update-chat', data => renderData(data))
+
 const authorSchema = new normalizr.schema.Entity('authors')
 const commentSchema = new normalizr.schema.Entity('comments')
 
@@ -21,19 +26,17 @@ const getData = async (api) => {
   return await data.json()
 }
 
-const renderData = async () => {
-  const data = await getData(url)
-  const msg =  data.entities.messages
-
-  const render = data.entities.posts.mangaecommerce.messages.map(x => {
-    return `
+const renderData = data => {
+  const render = data?.map(x => {
+      return `
       <div>
-        <div>${msg[x].author.name} | ${msg[x].message}</div>
+        <div>${x.author.name} | ${x?.message}</div>
       </div>
     `
   }).join(' ')
 
   return chatContainer.innerHTML = render
+
 }
 
 const onSubmit = async (api) => {
@@ -57,8 +60,7 @@ const onSubmit = async (api) => {
     body: JSON.stringify(message)
   })
 
-  norm()
-  renderData()
+  socket.emit('new-message', true)
 }
 
 form.addEventListener('submit', e => {
