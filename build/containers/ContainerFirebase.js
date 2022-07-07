@@ -12,38 +12,51 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importDefault(require("mongoose"));
+const firebase_admin_1 = __importDefault(require("firebase-admin"));
 const config_1 = __importDefault(require("../utils/config"));
-mongoose_1.default.connect(config_1.default.mongobd.connectionAtlas).catch(err => console.log(err));
-class Container {
-    constructor(collectionName, schema) {
-        this.collection = mongoose_1.default.model(collectionName, schema);
+const serviceAccount = config_1.default.firebase;
+firebase_admin_1.default.initializeApp({ credential: firebase_admin_1.default.credential.cert(serviceAccount) });
+const db = firebase_admin_1.default.firestore();
+class ContainerFirebase {
+    constructor(collection) {
+        this.collection = db.collection(collection);
     }
     save(object) {
         return __awaiter(this, void 0, void 0, function* () {
-            const obj = new this.collection(object);
-            return yield obj.save();
+            const guardado = yield this.collection.add(object);
+            return Object.assign(Object.assign({}, object), { id: guardado.id });
         });
     }
     getAll() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.collection.find();
+            const result = [];
+            const data = yield this.collection.get();
+            data.forEach(doc => result.push(Object.assign({ id: doc.id }, doc.data())));
+            return result;
         });
     }
     getById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.collection.findOne({ _id: id });
+            const doc = yield this.collection.doc(id).get();
+            if (!doc.exists) {
+                throw new Error(`Error al listar por id: no se encontró`);
+            }
+            else {
+                const data = doc.data();
+                return Object.assign(Object.assign({}, data), { id });
+            }
         });
     }
     deleteById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.collection.findOneAndDelete({ _id: id });
+            return yield this.collection.doc(id).delete();
         });
     }
-    updateById(id, edit) {
+    updateById(id, newElem) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.collection.updateOne({ _id: id }, { $set: edit });
+            const actualizado = yield this.collection.doc(id).update({ items: newElem });
+            return actualizado;
         });
     }
 }
-exports.default = Container;
+exports.default = ContainerFirebase;
