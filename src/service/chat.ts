@@ -1,7 +1,5 @@
 import { chat } from '../daos/index'
 import { schema, normalize } from 'normalizr'
-import { Server } from 'socket.io'
-import { s as server } from '../index'
 
 const getAllMessage = async () => await chat.getAll()
 
@@ -32,7 +30,3 @@ const normMessage = async () => {
 
 export const renderMessagesNorm = (res) => normMessage().then(response => res.send(normalize(response, postSchema)))
 
-// SOCKET
-const io = new Server(server);
-
-io.on('connection', (socket) => getAllMessage().then(res => socket.emit('data-chat', res)).catch(err => console.log(err)))

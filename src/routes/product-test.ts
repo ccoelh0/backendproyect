@@ -1,18 +1,23 @@
 import express from 'express'
 import { faker } from '@faker-js/faker';
 
-const items: any[] = [] 
+let items: any[] = [] 
 
-for (let i = 0; i < 5; i++) {
-  items.push({
-    name: faker.vehicle.vehicle(),
-    price: faker.commerce.price(1000, 10000),
-    model: faker.vehicle.model()
-  })
-}
+const getItems = () => {
+  for (let i = 0; i < 5; i++) {
+    items.push({
+      name: faker.vehicle.vehicle(),
+      price: faker.commerce.price(1000, 10000),
+      model: faker.vehicle.model()
+    })
+}}
 
 const router = express.Router() 
 
-router.get('/', (_, res) => res.json(items))
+router.get('/', (_, res) => {
+  getItems()
+  res.json(items)
+  items = []
+})
 
 export {router}; 

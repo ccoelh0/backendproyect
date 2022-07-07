@@ -14,9 +14,27 @@ const postSchema = new normalizr.schema.Entity('posts', {
   comments: [commentSchema]
 });
 
-const socket = io();
-
 const url = '/api/chat/'
+
+const getData = async (api) => {
+  const data = await fetch(api)
+  return await data.json()
+}
+
+const renderData = async () => {
+  const data = await getData(url)
+  const msg =  data.entities.messages
+
+  const render = data.entities.posts.mangaecommerce.messages.map(x => {
+    return `
+      <div>
+        <div>${msg[x].author.name} | ${msg[x].message}</div>
+      </div>
+    `
+  }).join(' ')
+
+  return chatContainer.innerHTML = render
+}
 
 const onSubmit = async (api) => {
   const message = {
@@ -30,7 +48,7 @@ const onSubmit = async (api) => {
     message: messageContent.value
   }
 
-  const response = await fetch(api, {
+  await fetch(api, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -38,7 +56,9 @@ const onSubmit = async (api) => {
     },
     body: JSON.stringify(message)
   })
-  return response.json()
+
+  norm()
+  renderData()
 }
 
 form.addEventListener('submit', e => {
@@ -46,18 +66,16 @@ form.addEventListener('submit', e => {
   onSubmit(url).catch(err => console.log(err))
 })
 
-const compression = (norm, denorm) => ((denorm.length / norm.length) * 100).toFixed()
-
 const norm = async () => {
   const res = await fetch('/api/chat/')
   const data = await res.json()
   const dataDesnormalize = normalizr.denormalize(data.result, postSchema, data.entities)
 
-  return document.getElementById('chat-compresion').innerHTML = 
+  document.getElementById('chat-compresion').innerHTML = 
     `Compresion: ${compression(JSON.stringify(data), JSON.stringify(dataDesnormalize))}%`
 }
 
+const compression = (norm, denorm) => ((denorm.length / norm.length) * 100).toFixed()
+
 norm()
-
-socket.on('data-chat', data => console.log(data) ) 
-
+renderData()

@@ -71,5 +71,4 @@ const deleteItemFromCart = async (req, res) => {
 	}
 }
 
-// todo ready
 export { createNewCart, getCart, deleteCart, getItemsFromCart, addItemsToCart, deleteItemFromCart }

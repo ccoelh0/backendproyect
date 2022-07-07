@@ -16,4 +16,4 @@ const renderItems = async (api) => {
   return tbody.innerHTML = render
 }
 
-renderItems('api/items-test')
+renderItems('/api/item-test')
