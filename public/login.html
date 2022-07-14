@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+</head>
+
+<body>
+  <h1>Login</h1>
+  <form id="form">
+    <input id='username' placeholder="Ingrese su nombre">
+    <button type="submit">Ingresar</button>
+  </form>
+</body>
+
+<script>
+  const form = document.getElementById('form')
+  const username = document.getElementById('username')
+
+  const onSubmit = async () => {
+    const name = username.value
+
+    if (name.length === 0) return false
+    const data = await fetch('/login', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name })
+    })
+    return data.json()
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault()
+    onSubmit()
+      .then(res => {
+        if (!res) return console.log(err)
+        return window.location.href = res.data
+      })
+      .catch(err => console.log(err))
+  })
+</script>
+
+</html>
