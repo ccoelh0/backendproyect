@@ -1,0 +1,7 @@
+{
+  "yaml.disableDefaultProperties": false,
+  "workbench.editor.enablePreviewFromCodeNavigation": false,
+  "explorer.decorations.colors": true,
+  "explorer.excludeGitIgnore": false,
+  "explorer.fileNesting.enabled": false
+}

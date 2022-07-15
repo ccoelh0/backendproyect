@@ -7,17 +7,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Index</title>
 </head>
+
 <body>
   <div style="display: flex; justify-content: space-between; align-items: center;">
-    <h1>Bienvenido <span id="userName"></span></h1>
+    <h1><span id="msg">Bienvenido</span> <span id="userName"></span></h1>
     <button id="logout">Log out</button>
   </div>
 </body>
 <script>
   const username = document.getElementById('userName')
   const logout = document.getElementById('logout')
+  const msg = document.getElementById('msg')
+  const rootLogin = '/login'
 
-  const getUsernameOrRedirect = async () => {
+  const getUsername = async () => {
     const response = await fetch('/user')
     const res = await response.json()
     return res
@@ -29,20 +32,18 @@
     return res
   }
 
-  getUsernameOrRedirect()
+  getUsername()
     .then(res => {
-      if (res?.data.redirect) return window.location.href = res.data.redirect
+      if (res.data.logout) return window.location = rootLogin
       return username.innerHTML = res.data.username
     })
     .catch(err => console.log(err))
 
-    logout.addEventListener('click', (e) => {
-      e.preventDefault()
-      console.log('clickk')
-      onLogOut().then(res => {
-        window.location.href = res.data
-      }).catch(err => console.log(err))
-    })
-  
+  logout.addEventListener('click', (e) => {
+    e.preventDefault()
+    msg.innerHTML = 'Hasta luego'
+    setTimeout(() => onLogOut().then(res => window.location = rootLogin).catch(err => console.log(err)), 2000)
+  })
 </script>
+
 </html>

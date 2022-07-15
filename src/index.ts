@@ -6,6 +6,7 @@ import coockieParser from 'cookie-parser'
 import session from 'express-session'
 import MongoStore from 'connect-mongo';
 import configs from './utils/config'
+import mongoose from 'mongoose'
 import { router as routesForItems } from './routes/items'
 import { router as routesForCart } from './routes/cart'
 import { router as routesForViews } from './routes/views'
@@ -37,35 +38,34 @@ io.on('connection', async (socket) => {
 
 app.use(coockieParser())
 
-// Session setup
 app.use(session({
   store: MongoStore.create({
     mongoUrl: configs.mongobd.connectionAtlas,
-    collectionName: 'userLogin'
+    collectionName: 'userLogin',
   }),
   secret: 'secret',
   resave: true,
+  saveUninitialized: true,
   cookie: {
     maxAge: 60000
-  },
-  saveUninitialized: true
+  }
 }))
 
 app.get('/user', (req: any, res) => {
   if (req.session.name) return res.send({data: {username: req.session.name}})
-  return res.send({data: {redirect: '/login'}})
+  return res.send({data: {logout: true}})
 })
 
 app.post('/login', (req: any, res) => {
   if (!req.session.name) {
     req.session.name = req.body.name
-    return res.send({data: '/index'})
+    return res.send({submit: true})
   } else {
-    return res.send({data: '/index'})
+    return res.send({submit: true})
   }
 })
 
-app.get('/logout', (req: any, res: any) => req.session.destroy(() => res.send({data: '/login'})))
+app.get('/logout', (req: any, res: any) => req.session.destroy(() => res.send({data: {logout: true}})))
 
 const port = process.env.PORT || 8090
 

@@ -19,6 +19,7 @@
 <script>
   const form = document.getElementById('form')
   const username = document.getElementById('username')
+  const rootIndex = '/index'
 
   const onSubmit = async () => {
     const name = username.value
@@ -32,15 +33,15 @@
       },
       body: JSON.stringify({ name })
     })
-    return data.json()
+    return await data.json()
   }
 
   form.addEventListener('submit', (e) => {
     e.preventDefault()
     onSubmit()
       .then(res => {
-        if (!res) return console.log(err)
-        return window.location.href = res.data
+        if (!res) return false
+        window.location = rootIndex
       })
       .catch(err => console.log(err))
   })
