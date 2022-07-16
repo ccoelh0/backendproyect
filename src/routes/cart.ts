@@ -11,4 +11,6 @@ router.get('/:id/items', (req, res) => getItemsFromCart(req.params.id, res))
 router.post('/:id/items/:idItem', (req, res) => addItemsToCart(req, res))
 router.delete('/:id/items/:idItem', (req, res) => deleteItemFromCart(req, res))
 
-export {router}
+const routerItems = router;
+
+export default routerItems
