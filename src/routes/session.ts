@@ -1,11 +1,9 @@
 import express from 'express'
-import { getSessions, createUser, validateSession } from '../service/session'
+import { passport } from '../service/session'
 
 const router = express.Router()
 
-router.get('/', (_, res) => getSessions(res))
-router.post('/createUser', (req, res) => createUser(req, res))
-router.get('/login', (req, res) => validateSession(req, res))
+router.post('/login', passport.authenticate('login'), (_, res) => res.send({data: {userLogin: true}}))
 
 const routerSession = router
 
