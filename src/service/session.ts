@@ -5,7 +5,7 @@ import localStrategy from 'passport-local'
 
 const LocalStrategy = localStrategy.Strategy
 
-passport.use('login', new LocalStrategy(async (
+passport.use('createUser', new LocalStrategy(async (
   email, 
   password, 
   callback
@@ -24,14 +24,23 @@ passport.use('login', new LocalStrategy(async (
   }
 }))
 
+passport.use('validateLogin', new LocalStrategy(async (
+  email, 
+  password, 
+  callback
+) => {
+  const userdb = await session.getAll()
+  const user = userdb.find(u => u.email === email);
+  if (!user || !await bcrypt.compare(password.toString(), user.password)) return callback(new Error('User or password incorrect'));
+  callback(null, user);
+}))
+
 /*
   Candot engo que escribir una sesion, me pasan req.user y elijo
   que guardar en la sesion, en este caso es el username.
 */
 
-passport.serializeUser((usuario, callback) => {
-  callback(null, usuario.email);
-});
+passport.serializeUser((user, callback) => callback(null, user.email))
 
 /*
   Cuando tengo que leer una sesion, agarro lo que esta en la sesion
@@ -40,62 +49,9 @@ passport.serializeUser((usuario, callback) => {
 
 passport.deserializeUser(async (email, callback) => {
   const userdb = await session.getAll()
-  const user = userdb.find(usr => usr.email === email);
+  const user = userdb.find(user => user.email === email);
   callback(null, user);
 });
 
 
-export {passport}
-
-
-// export const getSessions = async (res) => {
-//   try {
-//     return res.send(await session.getAll())
-//   } catch (err) {
-//     return res.send({ err })
-//   }
-// }
-
-
-
-// export const validateSession = async (req, res) => {
-//   const email = req.body.email
-//   const passwordPlanned = req.body.password
-//   const dataSessions = await session.getAll()
-//   const userData = dataSessions.find(x => x.email === email)
-  
-//   if (userData !== undefined) {
-//     const passwordHash = userData.password
-//     bcrypt.compare(passwordPlanned, passwordHash, async (err, result) => {
-//       if (err) return err
-//       return res.send({data: {loginEnabled: result}})
-//     })
-//   } else {
-//     return res.send({data: 'user or password are incorrect'})
-//   }
-// }
-
-// const validatePassword = (email, password) => {
-//   return bcrypt.compare(password, email.password)
-// }
-
-// export const validatePrueba = (res) => {
-
-// }
-
-// passport.use('login', new LocalStrategy(
-//   async (email, password, done) => {
-//     await session.getAll().find(x => x.email === email), (err, user) => {
-//       if (err) return done(err)
-//       if (!user) {
-//         console.log('user not found ', user)
-//         return done(null, false)
-//       }
-//       // if (!validatePassword(email, password)) {
-
-//       // }
-//       return done(null, user)
-//     }
-
-//   }
-// )) 
+export default passport

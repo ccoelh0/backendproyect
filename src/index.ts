@@ -9,7 +9,7 @@ import routerChat from './routes/chat'
 import routerSession from './routes/session';
 import coockieParser from 'cookie-parser'
 import session from 'express-session'
-import { passport } from './service/session';
+import passport from './service/session';
 
 const app = express();
 
