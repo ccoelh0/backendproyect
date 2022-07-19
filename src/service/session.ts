@@ -53,5 +53,10 @@ passport.deserializeUser(async (email, callback) => {
   callback(null, user);
 });
 
+export const logout = (req, res) => {
+  req.session.destroy()
+  return res.send({data: true})
+}
+
 
 export default passport

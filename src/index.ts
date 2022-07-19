@@ -21,7 +21,8 @@ app.use(coockieParser())
 app.use(session({
   secret: 'secret',
   resave: true,
-  saveUninitialized: false
+  saveUninitialized: true,
+  maxAge: 60000
 }));
 
 app.use(passport.initialize());

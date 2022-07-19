@@ -10,41 +10,89 @@
 
 <body>
   <h1>Login</h1>
-  <form id="form">
-    <input id='username' placeholder="Ingrese su nombre">
+  <form id="login">
+    <input id='username' placeholder="Ingrese su email">
+    <br>
+    <input id='password' placeholder="Ingrese su contrasena">
+    <br>
+    <br>
     <button type="submit">Ingresar</button>
+    <br>
+  </form>
+
+  <button id="register">No tengo cuenta</button>
+
+  <form id="checkIn" style="display: none;">
+    <input id='username' placeholder="Ingrese su email">
+    <br>
+    <input id='password' placeholder="Ingrese su contrasena">
+    <br>
+    <br>
+    <button type="submit">Crear cuenta</button>
+    <br>
   </form>
 </body>
 
 <script>
-  const form = document.getElementById('form')
-  const username = document.getElementById('username')
   const rootIndex = '/index'
+  const login = document.getElementById('login')
+  const checkIn = document.getElementById('checkIn')
+  const username = document.getElementById('username')
+  const password = document.getElementById('password')
+  const register = document.getElementById('register')
 
   const onSubmit = async () => {
-    const name = username.value
-
-    if (name.length === 0) return false
-    const data = await fetch('/login', {
+    if (username.value.length === 0 && password.value.length === 0) return false
+    const data = await fetch('/api/sessions/validateLogin', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name })
+      body: JSON.stringify({ username: username.value, password: password.value })
     })
     return await data.json()
   }
 
-  form.addEventListener('submit', (e) => {
+  const onCheckIn = async () => {
+    const register = await fetch('api/sessions/createUser', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username: username.value, password: password.value })
+    })
+    return await register.json()
+  }
+
+  login.addEventListener('submit', (e) => {
     e.preventDefault()
     onSubmit()
       .then(res => {
-        if (!res) return false
+        if (!res.data) return false
         window.location = rootIndex
       })
       .catch(err => console.log(err))
   })
+
+  register.addEventListener('click', () => {
+    login.style.display = 'none'
+    checkIn.style.display = 'block'
+  })
+
+  checkIn.addEventListener('submit', e => {
+    e.preventDefault()
+    onCheckIn()
+      .then(res => {
+        if(res.data.userLogin) {
+          login.style.display = 'block'
+          checkIn.style.display = 'none'
+        }
+      })
+      .catch(err => console.log(err))
+  })
+
 </script>
 
 </html>
