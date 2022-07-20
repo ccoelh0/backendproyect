@@ -1,0 +1,26 @@
+.display-none {
+  display: none;
+}
+
+.display-block {
+  display: block;
+}
+
+.form-container {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  margin: 0 40px;
+  align-items: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.create-user-button {
+  margin: 0 auto;
+}
+
+.alert {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}

@@ -5,94 +5,117 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="./styles/login.css">
   <title>Login</title>
 </head>
 
 <body>
-  <h1>Login</h1>
-  <form id="login">
-    <input id='username' placeholder="Ingrese su email">
-    <br>
-    <input id='password' placeholder="Ingrese su contrasena">
-    <br>
-    <br>
-    <button type="submit">Ingresar</button>
-    <br>
-  </form>
+  <div class="form-container">
+    <div>
+      <h1 id="maintitle">Iniciar sesion</h1>
 
-  <button id="register">No tengo cuenta</button>
-
-  <form id="checkIn" style="display: none;">
-    <input id='username' placeholder="Ingrese su email">
-    <br>
-    <input id='password' placeholder="Ingrese su contrasena">
-    <br>
-    <br>
-    <button type="submit">Crear cuenta</button>
-    <br>
-  </form>
+      <form id="login" class="mb-3">
+        <div class="mb-3">
+          <label for="username" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="username" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password">
+        </div>
+        <div class="d-flex justify-content-between">
+          <button id="register" class="btn btn-primary loginButton">No tengo cuenta</button>
+          <button id="submit" type="submit" class="btn btn-primary loginButton">Submit</button>
+          <button id="createUserButton" type="submit" class="btn btn-primary display-none create-user-button">Crear
+            cuenta</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="alert alert-success display-none" id='alertInfo' role="alert"></div>
+  <div class="alert alert-danger display-none" id='alertInfoError' role="alert"></div>
 </body>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+  integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+  integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
 <script>
   const rootIndex = '/index'
   const login = document.getElementById('login')
-  const checkIn = document.getElementById('checkIn')
   const username = document.getElementById('username')
   const password = document.getElementById('password')
-  const register = document.getElementById('register')
+  const submitButton = document.getElementById('submit')
+  const registerButton = document.getElementById('register')
+  const createUserButton = document.getElementById('createUserButton')
+  const title = document.getElementById('maintitle')
+  const alertSuccess = document.getElementById('alertInfo')
+  const alertError = document.getElementById('alertInfoError')
 
-  const onSubmit = async () => {
-    if (username.value.length === 0 && password.value.length === 0) return false
-    const data = await fetch('/api/sessions/validateLogin', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username: username.value, password: password.value })
-    })
-    return await data.json()
-  }
-
-  const onCheckIn = async () => {
-    const register = await fetch('api/sessions/createUser', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username: username.value, password: password.value })
-    })
-    return await register.json()
-  }
-
-  login.addEventListener('submit', (e) => {
-    e.preventDefault()
-    onSubmit()
-      .then(res => {
-        if (!res.data) return false
-        window.location = rootIndex
+  const onSubmit = async loginOrCreateUser => {
+    if (loginOrCreateUser === 'login') {
+      const data = await fetch('/api/sessions/validateLogin', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username: username.value, password: password.value })
       })
-      .catch(err => console.log(err))
-  })
+      return await data.json()
+    }
 
-  register.addEventListener('click', () => {
-    login.style.display = 'none'
-    checkIn.style.display = 'block'
-  })
+    if (loginOrCreateUser === 'createUser') {
+      const register = await fetch('/api/sessions/createUser', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username: username.value, password: password.value })
+      })
+      return await register.json()
+    }
+  }
 
-  checkIn.addEventListener('submit', e => {
+  const activeAlert = (text, alert) => {
+    alert.innerHTML = text
+    alert.classList.remove('display-none')
+    setTimeout(() => alert.classList.add('display-none'), 4000)
+  }
+
+  login.addEventListener('submit', e => {
     e.preventDefault()
-    onCheckIn()
-      .then(res => {
-        if(res.data.userLogin) {
-          login.style.display = 'block'
-          checkIn.style.display = 'none'
+    username.value.length !== 0 && password.value.length !== 0 &&
+      onSubmit('login')
+        .then(() => window.location = rootIndex)
+        .catch((err) => activeAlert('Email o contrasena incorrecto', alertError))
+  })
+
+  registerButton.addEventListener('click', e => {
+    e.preventDefault()
+    title.innerHTML = 'Crear usuario'
+    registerButton.classList.add('display-none')
+    submitButton.classList.add('display-none')
+    createUserButton.classList.remove('display-none')
+  })
+
+  createUserButton.addEventListener('click', e => {
+    e.preventDefault()
+    onSubmit('createUser')
+      .then((res) => {
+        if (res.data) {
+          activeAlert('Usuario creado correctamente', alertSuccess)
+          registerButton.classList.remove('display-none')
+          submitButton.classList.remove('display-none')
+          createUserButton.classList.add('display-none')
         }
       })
-      .catch(err => console.log(err))
+      .catch(err => activeAlert('Email existente!', alertError))
   })
-
 </script>
 
 </html>
