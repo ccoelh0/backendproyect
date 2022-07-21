@@ -1,4 +1,6 @@
 .navbar {
-  margin: 10px 20px;
+  padding: 10px 20px;
   display: flex;
+  background-color: #000000e6;
+  color: white;
 }
