@@ -1,0 +1,13 @@
+.display-none {
+  display: none;
+}
+
+.display-block {
+  display: block;
+}
+
+.alert {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
