@@ -15,21 +15,21 @@
 <body>
   <div class="form-container">
     <div>
-      <h1 id="maintitle">Iniciar sesion</h1>
+      <h1 id="maintitle" class="mb-5">Iniciar sesión</h1>
 
       <form id="login" class="mb-3">
         <div class="mb-3">
-          <label for="username" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="username" aria-describedby="emailHelp">
+          <input type="email" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Email">
         </div>
         <div class="mb-3">
-          <label for="password" class="form-label">Password</label>
-          <input type="password" class="form-control" id="password">
+          <input type="password" class="form-control" id="password" placeholder="Contraseña">
         </div>
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between mt-5">
           <button id="register" class="btn btn-primary loginButton">No tengo cuenta</button>
-          <button id="submit" type="submit" class="btn btn-primary loginButton">Submit</button>
-          <button id="createUserButton" type="submit" class="btn btn-primary display-none create-user-button">
+          <button id="submit" type="submit" class="btn btn-primary loginButton">Ingresar</button>
+
+          <button id="comebackButton" class="btn btn-primary display-none">Ya tengo cuenta</button>
+          <button id="createUserButton" type="submit" class="btn btn-primary display-none">
             Crear cuenta
           </button>
         </div>
@@ -54,6 +54,7 @@
   const submitButton = document.getElementById('submit')
   const registerButton = document.getElementById('register')
   const createUserButton = document.getElementById('createUserButton')
+  const comebackButton = document.getElementById('comebackButton')
   const title = document.getElementById('maintitle')
   const alertSuccess = document.getElementById('alertInfo')
   const alertError = document.getElementById('alertInfoError')
@@ -104,6 +105,15 @@
     registerButton.classList.add('display-none')
     submitButton.classList.add('display-none')
     createUserButton.classList.remove('display-none')
+    comebackButton.classList.remove('display-none')
+  })
+
+  comebackButton.addEventListener('click', e => {
+    title.innerHTML = 'Iniciar sesión'
+    registerButton.classList.remove('display-none')
+    submitButton.classList.remove('display-none')
+    createUserButton.classList.add('display-none')
+    comebackButton.classList.add('display-none')
   })
 
   createUserButton.addEventListener('click', e => {
@@ -112,6 +122,7 @@
       .then((res) => {
         if (res.data) {
           activeAlert('Usuario creado correctamente', alertSuccess)
+          registerButton.classList.remove('display-none')
           registerButton.classList.remove('display-none')
           submitButton.classList.remove('display-none')
           createUserButton.classList.add('display-none')
