@@ -128,7 +128,10 @@
           createUserButton.classList.add('display-none')
         }
       })
-      .catch(err => activeAlert('Email existente!', alertError))
+      .catch(err => {
+        if (password.value.length === 0 || username.value.length === 0) return activeAlert('Debes completar todos los datos', alertError)
+        return activeAlert('Email existente!', alertError)
+      })
   })
 </script>
 
