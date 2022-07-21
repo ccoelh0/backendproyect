@@ -1,18 +1,17 @@
 body {
   background-image: url('../images/fondo.jpg');
-  display: grid;
-  grid-template-columns: 35% 65%;
+  display: flex;
   align-items: center;
-  align-items: center;
+  justify-content: center;
   height: 100vh;
 }
 
 .form-container {
   background-color: #000000e6;
+  width: 600px;
   color: white;
-  margin-left: 100px;
-  padding: 50px 100px;
-  border-radius: 20px;
+  padding: 80px 50px;
+  border-radius: 1rem;
   box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.75);
   -webkit-box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.75);
