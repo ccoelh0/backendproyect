@@ -8,12 +8,22 @@ body {
 
 .form-container {
   background-color: #000000e6;
-  width: 600px;
+  width: 700px;
   color: white;
-  padding: 80px 50px;
+  padding: 30px 100px 20px;
   border-radius: 1rem;
   box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.75);
   -webkit-box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.75);
+}
+
+.buttons-default {
+  width: 100%;
+  margin-bottom: 1rem;
+  border-radius: 50px;
+}
+
+input {
+  color: red;
 }
 
