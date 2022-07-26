@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import express from 'express'
 import http from 'http'
 import { Server } from 'socket.io';
@@ -11,7 +12,7 @@ import coockieParser from 'cookie-parser'
 import session from 'express-session'
 import passport from './service/session';
 
-const app = express();
+const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
@@ -19,7 +20,7 @@ app.use(express.static('public'))
 app.use(coockieParser())
 
 app.use(session({
-  secret: 'secret',
+  secret: process.env.COOKIE_SECRET,
   resave: true,
   saveUninitialized: true,
   maxAge: 60000

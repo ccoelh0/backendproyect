@@ -8,8 +8,6 @@ const ItemDaoMongo_1 = __importDefault(require("./item/ItemDaoMongo"));
 const CartDaoMongo_1 = __importDefault(require("./cart/CartDaoMongo"));
 const ChatDaoMongo_1 = __importDefault(require("./chat/ChatDaoMongo"));
 const SessionDao_1 = __importDefault(require("./Session/SessionDao"));
-const ItemDaoFirebase_1 = __importDefault(require("./item/ItemDaoFirebase"));
-const CartDaoFirebase_1 = __importDefault(require("./cart/CartDaoFirebase"));
 let item, cart, chat, session;
 exports.item = item;
 exports.cart = cart;
@@ -21,8 +19,4 @@ if (database === 'mongodb') {
     exports.cart = cart = new CartDaoMongo_1.default();
     exports.chat = chat = new ChatDaoMongo_1.default();
     exports.session = session = new SessionDao_1.default();
-}
-if (database === 'firebase') {
-    exports.item = item = new ItemDaoFirebase_1.default();
-    exports.cart = cart = new CartDaoFirebase_1.default();
 }

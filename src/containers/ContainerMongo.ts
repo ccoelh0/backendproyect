@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 import config from '../utils/config'
 
-mongoose.connect(config.mongobd.connectionAtlas).catch(err => console.log(err))
+mongoose.connect(`${config.mongobd.connectionAtlas}`).catch(err => console.log(err))
 
 class Container {
 	collection: any

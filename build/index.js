@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+require("dotenv/config");
 const express_1 = __importDefault(require("express"));
 const http_1 = __importDefault(require("http"));
 const socket_io_1 = require("socket.io");
@@ -30,7 +31,7 @@ app.use(express_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.static('public'));
 app.use((0, cookie_parser_1.default)());
 app.use((0, express_session_1.default)({
-    secret: 'secret',
+    secret: process.env.COOKIE_SECRET,
     resave: true,
     saveUninitialized: true,
     maxAge: 60000
