@@ -122,9 +122,9 @@
         if (res.data) {
           activeAlert('Usuario creado correctamente', alertSuccess)
           registerButton.classList.remove('display-none')
-          registerButton.classList.remove('display-none')
           submitButton.classList.remove('display-none')
           createUserButton.classList.add('display-none')
+          comebackButton.classList.add('display-none')
         }
       })
       .catch(err => {

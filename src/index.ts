@@ -7,6 +7,7 @@ import routesForItems from './routes/items'
 import routesForCart from './routes/cart'
 import routesForViews from './routes/views'
 import routerChat from './routes/chat'
+import routerDesafioFork from './routes/desafio';
 import routerSession from './routes/session';
 import coockieParser from 'cookie-parser'
 import session from 'express-session'
@@ -35,6 +36,7 @@ app.use('/api/items', routesForItems)
 app.use('/api/cart', routesForCart)
 app.use('/api/chat', routerChat)
 app.use('/', routesForViews)
+app.use('/', routerDesafioFork)
 
 const server = http.createServer(app)
 const io = new Server(server);
@@ -48,6 +50,6 @@ io.on('connection', async (socket) => {
   })
 })
 
-const port = process.env.PORT || 8090
+const port = process.argv[2] || process.env.PORT || 8080
 
 server.listen(port, () => console.log(`>>> ✅ Server is running in localhost:${port}!`))
