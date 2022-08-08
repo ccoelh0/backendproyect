@@ -1,5 +1,5 @@
 import express from 'express'
-import {getCant} from '../calculo'
+import calculoPesado, {getCant} from '../calculo'
 import { fork } from 'child_process'
 
 let contador = 0;
@@ -25,7 +25,8 @@ routerDesafio.get('/contador', (req, res) => {
 routerDesafio.get('/api/random', (req: any, res) => {
   const cant = req.query.cant !== undefined ? parseInt(req.query.cant, 10) : 100000000
   getCant(cant)
-  const forkeado = fork('../fork.js')
+  calculoPesado()
+  const forkeado = fork('/fork')
   forkeado.send('empezar')
   forkeado.on('message', (msj) => {
     if (msj === 'termine') res.send('Calculo terminado');

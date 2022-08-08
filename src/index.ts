@@ -17,7 +17,7 @@ const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(express.static('public'))
+// app.use(express.static('public')) // se debe comentar por nginx
 app.use(coockieParser())
 
 app.use(session({
@@ -51,5 +51,8 @@ io.on('connection', async (socket) => {
 })
 
 const port = process.argv[2] || process.env.PORT || 8080
+
+
+console.log(process.argv)
 
 server.listen(port, () => console.log(`>>> ✅ Server is running in localhost:${port}!`))

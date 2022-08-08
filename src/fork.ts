@@ -6,5 +6,3 @@ process.on('message', (msj) => {
     process.send && process.send('termine')
   }
 });
-
-export default {}
