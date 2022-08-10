@@ -5,9 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js",
-    
-    "start": "node build/index.js",
+    "start": "nodemon src/index.js",
     "tsc": "tsc"
   },
   "keywords": [],
