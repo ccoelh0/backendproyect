@@ -1,7 +1,7 @@
 import express from 'express'
 import { faker } from '@faker-js/faker';
 
-let items: any[] = [] 
+let items = [] 
 
 const getItems = () => {
   for (let i = 0; i < 5; i++) {

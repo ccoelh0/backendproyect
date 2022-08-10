@@ -21,7 +21,6 @@ const items_1 = __importDefault(require("./routes/items"));
 const cart_1 = __importDefault(require("./routes/cart"));
 const views_1 = __importDefault(require("./routes/views"));
 const chat_2 = __importDefault(require("./routes/chat"));
-const desafio_1 = __importDefault(require("./routes/desafio"));
 const session_1 = __importDefault(require("./routes/session"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const express_session_1 = __importDefault(require("express-session"));
@@ -31,7 +30,7 @@ const os_1 = __importDefault(require("os"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
-app.use(express_1.default.static('public'));
+// app.use(express.static('public')) // se debe comentar por nginx
 app.use((0, cookie_parser_1.default)());
 app.use((0, express_session_1.default)({
     secret: process.env.COOKIE_SECRET,
@@ -47,7 +46,7 @@ app.use('/api/items', items_1.default);
 app.use('/api/cart', cart_1.default);
 app.use('/api/chat', chat_2.default);
 app.use('/', views_1.default);
-app.use('/', desafio_1.default);
+// app.use('/', routerDesafioFork)
 const server = http_1.default.createServer(app);
 const io = new socket_io_1.Server(server);
 io.on('connection', (socket) => __awaiter(void 0, void 0, void 0, function* () {
@@ -58,16 +57,23 @@ io.on('connection', (socket) => __awaiter(void 0, void 0, void 0, function* () {
     }));
 }));
 const port = process.argv[2] || process.env.PORT || 8080;
-const numCPUs = os_1.default.cpus().length;
-if (cluster_1.default.isPrimary) {
-    // se crean los workers
-    for (let i = 0; i < numCPUs; i++) {
+const processId = process.pid;
+app.get('/info', (_, res) => {
+    res.send(`id: ${processId} - numero de procesadores: ${os_1.default.cpus().length}`);
+});
+// cluster
+if (process.argv[3] === 'cluster' && cluster_1.default.isPrimary) {
+    // workers
+    for (let i = 0; i < os_1.default.cpus().length; i++) {
         cluster_1.default.fork();
     }
-    cluster_1.default.on('exit', (worker, code, signal) => {
-        console.log(`worker ${worker.process.pid} died`);
-    });
+    cluster_1.default.on('exit', (worker, code, signal) => console.log(worker.process.pid, 'died'));
 }
 else {
-    server.listen(port, () => console.log(`>>> ✅ Server is running in localhost:${port}!`));
+    server.listen(port, () => {
+        console.log(`>>> ✅ Server is running in localhost:${port} - PID WORKER: ${process.pid}!`);
+    });
 }
+// server.listen(port, () => {
+//   console.log(`>>> ✅ Server is running in localhost:${port} - PID WORKER: ${process.pid}!`)
+// })
