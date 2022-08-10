@@ -3,17 +3,18 @@ import express from 'express'
 import http from 'http'
 import { Server } from 'socket.io';
 import { getAllMessage } from './service/chat.js'
-import {router} from './routes/product-test.js'
+import { router } from './routes/product-test.js'
 import coockieParser from 'cookie-parser'
 import session from 'express-session'
 import passport from './service/session.js';
+import args from './utils/args.js';
 // import cluster from 'cluster';
 // import os from 'os'
 
 //Routes
 import routesForItems from './routes/items.js'
 import routesForCart from './routes/cart.js'
-import routesForViews from './routes/views.js'
+// import routesForViews from './routes/views.js'
 import routerChat from './routes/chat.js'
 import routerSession from './routes/session.js';
 import routerFork from './routes/fork.js';
@@ -56,7 +57,7 @@ io.on('connection', async (socket) => {
   })
 })
 
-const port = process.argv[2] || process.env.PORT || 8080
+const port = args.port || 8080
 
 server.listen(port, () => console.log(`>>> ✅ Server is running in localhost:${port}!`))
 
