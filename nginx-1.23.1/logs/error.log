@@ -1,0 +1,51 @@
+2022/08/02 19:31:15 [emerg] 24556#24840: unknown "exa16244" variable
+2022/08/11 01:01:04 [emerg] 26920#44344: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:02:25 [emerg] 36068#30552: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:02:37 [emerg] 35592#38136: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:02:53 [emerg] 15276#44172: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:02:58 [emerg] 42204#19104: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:03:37 [emerg] 24980#41688: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:04:44 [emerg] 46024#43888: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:04:44 [emerg] 37220#41744: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:04:45 [emerg] 36288#37356: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:04:47 [emerg] 38232#612: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:05:51 [emerg] 41348#32336: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:05:53 [emerg] 45052#39468: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:05:54 [emerg] 34224#16672: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:05:55 [emerg] 43400#28108: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:05:57 [emerg] 43940#40152: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:06:00 [emerg] 46040#42228: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:06:02 [emerg] 44628#24952: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:06:02 [emerg] 44928#35568: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:06:04 [emerg] 35052#36596: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:06:06 [emerg] 43404#45200: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:06:57 [emerg] 45140#39760: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:06:58 [emerg] 36100#23092: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:06:59 [emerg] 39260#44472: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:07:00 [emerg] 44316#42012: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:07:01 [emerg] 3432#19680: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:07:02 [emerg] 33380#40240: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:38
+2022/08/11 01:08:26 [emerg] 31172#25868: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:52
+2022/08/11 01:08:29 [emerg] 41452#44264: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:52
+2022/08/11 01:09:16 [emerg] 30392#29040: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:52
+2022/08/11 01:09:17 [emerg] 34484#38660: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:52
+2022/08/11 01:10:37 [emerg] 38492#42880: unexpected "}" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:52
+2022/08/11 01:11:05 [notice] 38336#37412: signal process started
+2022/08/11 01:11:05 [error] 38336#37412: CreateFile() "C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/logs/nginx.pid" failed (2: The system cannot find the file specified)
+2022/08/11 01:11:37 [error] 32800#33288: *1 CreateFile() "C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/html/datos" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /datos HTTP/1.1", host: "localhost:8080"
+2022/08/11 01:12:32 [notice] 45756#11428: signal process started
+2022/08/11 01:13:30 [notice] 40048#42432: signal process started
+2022/08/11 01:23:23 [error] 772#40556: *62 "C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/html/api/randoms/index.html" is not found (3: The system cannot find the path specified), client: 127.0.0.1, server: localhost, request: "GET /api/randoms/ HTTP/1.1", host: "localhost:8080"
+2022/08/11 01:44:51 [notice] 30436#45748: signal process started
+2022/08/11 01:48:33 [notice] 42304#37492: signal process started
+2022/08/11 01:49:58 [notice] 36632#37252: signal process started
+2022/08/11 01:50:56 [notice] 40692#44684: signal process started
+2022/08/11 01:52:07 [notice] 31176#42056: signal process started
+2022/08/11 01:54:51 [notice] 40148#45708: signal process started
+2022/08/11 01:55:25 [error] 27260#44360: *63 "C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/html/info/index.html" is not found (3: The system cannot find the path specified), client: 127.0.0.1, server: localhost, request: "GET /info/ HTTP/1.1", host: "localhost:8081"
+2022/08/11 01:55:25 [error] 27260#44360: *63 CreateFile() "C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/html/favicon.ico" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost:8081", referrer: "http://localhost:8081/info/"
+2022/08/11 01:55:27 [error] 27260#44360: *63 CreateFile() "C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/html/info" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /info HTTP/1.1", host: "localhost:8081"
+2022/08/11 01:56:33 [emerg] 4072#38992: duplicate location "/api/randoms/" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:60
+2022/08/11 01:57:03 [emerg] 45160#27400: duplicate location "/api/random/" in C:\Users\Agus\Desktop\coderproyecto\nginx-1.23.1/conf/nginx.conf:60
+2022/08/11 01:57:50 [notice] 40348#33836: signal process started
+2022/08/11 01:58:49 [notice] 36888#30224: signal process started
