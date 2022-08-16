@@ -20,4 +20,6 @@ router.get('/', (_, res) => {
   items = []
 })
 
-export {router}; 
+const routerRandom = router
+
+export default routerRandom; 

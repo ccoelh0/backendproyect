@@ -15,6 +15,11 @@ routerInfo.get('/info', (_, res) => {
   res.send(`pid: ${process.pid} - numero de procesadores: ${os.cpus().length}`)
 })
 
+routerInfo.get('/infoBloqueante', (_, res) => {
+  console.log(`info: se visito la ruta /info a las ${now}`)
+  res.send(`pid: ${process.pid} - numero de procesadores: ${os.cpus().length}`)
+})
+
 routerInfo.get('/infoGzip', compression(), (_, res) => 
   res.send(`pid: ${process.pid} - numero de procesadores: ${os.cpus().length}`)
 )

@@ -3,7 +3,6 @@ import express from 'express'
 import http from 'http'
 import { Server } from 'socket.io';
 import { getAllMessage } from './service/chat.js'
-import { router } from './routes/product-test.js'
 import coockieParser from 'cookie-parser'
 import session from 'express-session'
 import passport from './service/session.js';
@@ -18,6 +17,7 @@ import logger from './utils/logger.js';
 // import routerChat from './routes/chat.js'
 // import routerSession from './routes/session.js';
 // import routerFork from './routes/fork.js';
+import routerRandom from './routes/product-test.js'
 import routerInfo from './routes/info.js';
 
 const app = express()
@@ -44,7 +44,7 @@ app.use(passport.session());
 // app.use('/api/chat', routerChat)
 // app.use('/', routesForViews)
 // app.use('/fork', routerFork)
-app.use('/api/random', router)
+app.use('/api/random', routerRandom)
 app.use('/api', routerInfo)
 app.use((_, res) => {
   logger.warn('Recurso invalido');
