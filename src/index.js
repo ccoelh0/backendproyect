@@ -9,15 +9,16 @@ import session from 'express-session'
 import passport from './service/session.js';
 import args from './utils/args.js';
 import cluster from 'cluster';
-import os from 'os'
+import logger from './utils/logger.js';
 
 //Routes
-import routesForItems from './routes/items.js'
-import routesForCart from './routes/cart.js'
+// import routesForItems from './routes/items.js'
+// import routesForCart from './routes/cart.js'
 // import routesForViews from './routes/views.js'
-import routerChat from './routes/chat.js'
-import routerSession from './routes/session.js';
-import routerFork from './routes/fork.js';
+// import routerChat from './routes/chat.js'
+// import routerSession from './routes/session.js';
+// import routerFork from './routes/fork.js';
+import routerInfo from './routes/info.js';
 
 const app = express()
 
@@ -41,9 +42,15 @@ app.use(passport.session());
 // app.use('/api/items', routesForItems)
 // app.use('/api/cart', routesForCart)
 // app.use('/api/chat', routerChat)
-// // app.use('/', routesForViews)
+// app.use('/', routesForViews)
 // app.use('/fork', routerFork)
 app.use('/api/random', router)
+app.use('/api', routerInfo)
+app.use((_, res) => {
+  logger.warn('Recurso invalido');
+  res.sendStatus(404);
+}) 
+
 
 const server = http.createServer(app)
 const io = new Server(server);
@@ -58,11 +65,6 @@ io.on('connection', async (socket) => {
 })
 
 const port = args.port || 8080
-
-// desafio
-app.get('/info/', (_, res) => {
-  res.send(`pid: ${process.pid} - numero de procesadores: ${os.cpus().length} - puerto: ${[port]}`)
-})
 
 if (args.mode === 'cluster' && cluster.isPrimary) {
   for (let i = 0; i <= os.cpus().length; i++) {
