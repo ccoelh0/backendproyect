@@ -64,7 +64,7 @@ io.on('connection', async (socket) => {
   })
 })
 
-const port = args.port || 8080
+const port = process.env.PORT || args.port || 8080
 
 if (args.mode === 'cluster' && cluster.isPrimary) {
   for (let i = 0; i <= os.cpus().length; i++) {
