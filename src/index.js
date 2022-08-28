@@ -11,20 +11,21 @@ import cluster from 'cluster';
 import logger from './utils/logger.js';
 
 //Routes
+import routerSession from './routes/session.js';
+import routesForViews from './routes/views.js'
+
 // import routesForItems from './routes/items.js'
 // import routesForCart from './routes/cart.js'
-// import routesForViews from './routes/views.js'
 // import routerChat from './routes/chat.js'
-// import routerSession from './routes/session.js';
 // import routerFork from './routes/fork.js';
-import routerRandom from './routes/product-test.js'
-import routerInfo from './routes/info.js';
+// import routerRandom from './routes/product-test.js'
+// import routerInfo from './routes/info.js';
 
 const app = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-// app.use(express.static('public')) // se debe comentar por nginx
+app.use(express.static('public')) // se debe comentar por nginx
 app.use(coockieParser())
 
 app.use(session({
@@ -38,14 +39,16 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes 
-// app.use('/api/sessions', routerSession)
+app.use('/api/sessions', routerSession)
+app.use('/', routesForViews)
+
 // app.use('/api/items', routesForItems)
 // app.use('/api/cart', routesForCart)
 // app.use('/api/chat', routerChat)
-// app.use('/', routesForViews)
 // app.use('/fork', routerFork)
-app.use('/api/random', routerRandom)
-app.use('/api', routerInfo)
+// app.use('/api/random', routerRandom)
+// app.use('/api', routerInfo)
+
 app.use((_, res) => {
   logger.warn('Recurso invalido');
   res.sendStatus(404);
@@ -64,7 +67,7 @@ io.on('connection', async (socket) => {
   })
 })
 
-const port = process.env.PORT || args.port || 8080
+const port = process.env.PORT || args.port || 8090
 
 if (args.mode === 'cluster' && cluster.isPrimary) {
   for (let i = 0; i <= os.cpus().length; i++) {
@@ -73,7 +76,5 @@ if (args.mode === 'cluster' && cluster.isPrimary) {
 
   cluster.on('exit', (worker, code, signal) => console.log(worker.process.pid, 'died'))
 } else {
-  server.listen(port, () => console.log(`>>> ✅ Server is running in localhost:${port} - worker ${process.pid} started!`))
+  server.listen(port, () => console.log(`>>> ✅ Server is running in localhost:${port}`))
 }
-
-// server.listen(port, () => console.log(`>>> ✅ Server is running in localhost:${port}!`))

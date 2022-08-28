@@ -23,8 +23,8 @@ const run = (url) => {
 }
 
 // van a ir a los endpoints de index
-run('http://localhost:8080/api/info') // no bloqueante
-run('http://localhost:8080/api/infoBloqueante') // bloqueante
+// run('http://localhost:8080/api/info') // no bloqueante
+// run('http://localhost:8080/api/infoBloqueante') // bloqueante
 
 // npm run start
 // npm run test > nos va a devolver los datos
