@@ -13,19 +13,19 @@ export const sessionSchema = new Schema({
   },
   adress: {
     type: String,
-    required: false
+    required: true
   }, 
   name: {
     type: String,
-    required:false
+    required: true
   }, 
   phone: {
     type: String,
-    required: false
+    required: true
   },
   age: {
     type: Number,
-    required: false
+    required: true
   }, 
   avatar: {
     type: String, 
