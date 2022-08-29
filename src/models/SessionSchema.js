@@ -10,6 +10,26 @@ export const sessionSchema = new Schema({
   password: {
     type: String, 
     required: true
+  },
+  adress: {
+    type: String,
+    required: false
+  }, 
+  name: {
+    type: String,
+    required:false
+  }, 
+  phone: {
+    type: String,
+    required: false
+  },
+  age: {
+    type: Number,
+    required: false
+  }, 
+  avatar: {
+    type: String, 
+    required: false
   }
 })
 
