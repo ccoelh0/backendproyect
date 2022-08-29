@@ -25,7 +25,6 @@ passport.use('createUser', new LocalStrategy({ passReqToCallback: true }, async 
       phone: req.body.phone,
       age: parseInt(req.body.age, 10)
     }
-    console.log(userSession)
     await session.save(userSession)
     return callback(null, userSession)
   } catch (error) {
