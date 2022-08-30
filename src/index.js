@@ -13,9 +13,8 @@ import logger from './utils/logger.js';
 //Routes
 import routerSession from './routes/session.js';
 import routesForViews from './routes/views.js'
-
-// import routesForItems from './routes/items.js'
-// import routesForCart from './routes/cart.js'
+import routesForItems from './routes/items.js'
+import routesForCart from './routes/cart.js'
 // import routerChat from './routes/chat.js'
 // import routerFork from './routes/fork.js';
 // import routerRandom from './routes/product-test.js'
@@ -32,7 +31,7 @@ app.use(session({
   secret: process.env.COOKIE_SECRET,
   resave: true,
   saveUninitialized: true,
-  maxAge: 60000
+  maxAge: 600000
 }));
 
 app.use(passport.initialize());
@@ -40,10 +39,9 @@ app.use(passport.session());
 
 // Routes 
 app.use('/api/sessions', routerSession)
+app.use('/api/items', routesForItems)
+app.use('/api/cart', routesForCart)
 app.use('/', routesForViews)
-
-// app.use('/api/items', routesForItems)
-// app.use('/api/cart', routesForCart)
 // app.use('/api/chat', routerChat)
 // app.use('/fork', routerFork)
 // app.use('/api/random', routerRandom)

@@ -10,15 +10,16 @@ const alertError = document.getElementById('alertInfoError')
 const maintitle = document.getElementById('main-title')
 
 const onSubmit = async () => {
-    const data = await fetch('/api/sessions/validateLogin', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username: username.value, password: password.value })
-    })
-    return await data.json()
+  const data = await fetch('/api/sessions/validateLogin', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ username: username.value, password: password.value })
+  })
+
+  return await data.json()
 }
 
 const activeAlert = (text, alert) => {
@@ -30,7 +31,7 @@ const activeAlert = (text, alert) => {
 login.addEventListener('submit', (e) => {
   e.preventDefault()
   username.value.length !== 0 && password.value.length !== 0 &&
-  onSubmit().then(() => window.location = rootIndex).catch(() => activeAlert('Email o contrasena incorrecto', alertError))
+    onSubmit().then(() => window.location = rootIndex).catch(() => activeAlert('Email o contrasena incorrecto', alertError))
 })
 
 registerButton.addEventListener('click', e => {

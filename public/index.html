@@ -13,8 +13,16 @@
 
 <body>
   <div class="navbar">
-    <h3><span id="msg">Bienvenido</span> <span id="userName"></span></h3>
     <button id="logout" class="btn btn-danger">Log out</button>
+  </div>
+  <h1><span id="msg">Bienvenido</span> <span id="userName"></span></h3>
+  <div>
+    <h3>Items</h3>
+    <div id="item-container"></div>
+  </div>
+  <div>
+    <h3>Carrito</h3>
+    <div id="cart-container"></div>
   </div>
 </body>
 
@@ -28,6 +36,8 @@
   const username = document.getElementById('userName')
   const logout = document.getElementById('logout')
   const msg = document.getElementById('msg')
+
+  let email  
 
   const rootLogin = '/login'
 
@@ -44,7 +54,8 @@
   getUsername()
     .then(res => {
       if (res.data === null) return window.location = rootLogin
-      return username.innerHTML = res.data.email
+      email = res.data.email
+      return username.innerHTML = email
     })
     .catch(err => console.log(err))
 
@@ -58,5 +69,6 @@
         , 2000)
   })
 </script>
+<script src="/js/home/items.js"></script>
 
 </html>

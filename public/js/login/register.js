@@ -36,12 +36,9 @@ const onSubmitNewUser = async () => {
 
 register.addEventListener('submit', e => {
   e.preventDefault()
-  // if (!isDataReady) {
-  //   activeAlert('Debes completar todos los datos', alertError)
-  //   return false
-  // }
+
   onSubmitNewUser()
-    .then((res) => {
+    .then((res) => {      
       res.data && activeAlert('Usuario creado correctamente', alertSuccess)
       maintitle.innerHTML = 'Iniciar sesión'
       register.classList.add('display-none')

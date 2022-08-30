@@ -2,8 +2,9 @@ import { cart, item } from '../daos/index.js'
 
 const time = new Date()
 
-const createNewCart = async (res) => {
+const createNewCart = async (req, res) => {
 	const newCart = {
+		email: req.body.email,
 		timestamp: `${time.getDate()}/${time.getMonth() + 1}/${time.getFullYear()}`,
 		items: []
 	}

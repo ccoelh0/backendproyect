@@ -13,4 +13,3 @@ router.delete('/:id', isAdmin, (req, res) => deleteItem(res, req.params.id))
 const routerItems = router
 
 export default routerItems;
-

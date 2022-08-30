@@ -4,3 +4,9 @@
   background-color: #000000e6;
   color: white;
 }
+
+#item-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
