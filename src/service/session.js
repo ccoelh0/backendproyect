@@ -72,7 +72,6 @@ export const newUserWasCreated = async (req, res) => {
     await transporter.sendMail(emailOptionsLogin(req.body))
     return res.send({ data: { userLogin: true } })
   } catch (err) {
-    console.log(err)
     return res.send({data: {userLogin: false, err}})
   }
 }

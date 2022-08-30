@@ -1,5 +1,5 @@
-import { cart, item } from '../daos/index.js'
-import {transporter, emailOptionsConfirmPurchase, sendWp} from '../utils/contact.js'
+import { cart, item, session } from '../daos/index.js'
+import {transporter, emailOptionsConfirmPurchase, sendWp, sendMsg} from '../utils/contact.js'
 
 const time = new Date()
 
@@ -73,15 +73,21 @@ const deleteItemFromCart = async (req, res) => {
 	}
 }
 
+const getUserPhone = async (email) => {
+	const data = await session.getAll()
+	const res = await data
+	return res.map(dato => dato.email).filter(e => e === email)
+}
+
 const buyCart = async (req, res) => {
 	try {
     await transporter.sendMail(emailOptionsConfirmPurchase(req.body.cart))
 		await sendWp(req.body.cart)
+		await sendMsg(req.body.cart, getUserPhone(req.body.cart.email))
     return res.send({purchaseFinished: true})
   } catch (err) {
     return res.send({purchaseFinished: false, err})
   }
-	
 } 
 
 export { createNewCart, getCart, deleteCart, getItemsFromCart, addItemsToCart, deleteItemFromCart, buyCart }

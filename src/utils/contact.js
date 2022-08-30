@@ -49,12 +49,19 @@ export const sendWp = (body) => {
   return client.messages.create({
     body: `
       Nuevo pedido de ${body.email}
-      Informacion:
-      ${body.items.map(x => x.name).join(' ')}
+      Informacion: ${body.items.map(x => x.name).join(' ')}
       `,
     from: 'whatsapp:+14155238886',
     to: 'whatsapp:+5491154618806'
   })
 }
 
-
+export const sendMsg = (body, phone) => {
+  return client.messages.create({
+    body: `
+      Nuevo pedido de ${body.email}
+      Informacion: ${body.items.map(x => x.name).join(' ')} `,
+    from: '+14155238886',
+    to: `+549${phone}`
+  })
+}
