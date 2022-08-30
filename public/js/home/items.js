@@ -1,7 +1,9 @@
 let userCart
 const itemContainer = document.getElementById('item-container')
 const cartContainer = document.getElementById('cart-container')
-
+const buyButton = document.getElementById('buy')
+const purchaseFinished = document.getElementById('purchaseFinished')
+const purchaseFinishedError = document.getElementById('purchaseFinishedError')
 ///////////// CART ////////////////
 
 // Traigo el email
@@ -95,10 +97,27 @@ const addItem = async () => {
   return renderCart(userCart._id)
 }
 
-const buy = () => {
-
+const buy = async () => {
+  if (userCart.items.length === 0) return false
+  const data = await fetch(`api/cart/buyCart/${userCart._id}`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({cart: userCart})
+  })
+  const response = await data.json()
+  if (!response.purchaseFinished) {
+    purchaseFinishedError.classList.remove('display-none')
+    return setTimeout(() => purchaseFinishedError.classList.add('display-none'), 4000)
+  }
+  purchaseFinished.classList.remove('display-none')
+  cartContainer.classList.add('display-none')
+  return setTimeout(() => purchaseFinished.classList.add('display-none'), 4000)
 }
 
+buyButton.addEventListener('click', () => buy())
 
 ///////////// FUNCIONES LLAMADO ////////////////
 getEmail()

@@ -11,7 +11,7 @@ export const transporter = createTransport({
   }
 });
 
-export const emailOptions = (body) => ({
+export const emailOptionsLogin = (body) => ({
   from: process.env.NODEMAILER_EMAIL_ADMIN,
   to: process.env.NODEMAILER_EMAIL_ADMIN,
   subject: 'Nuevo usuario dado de alta',
@@ -25,6 +25,19 @@ export const emailOptions = (body) => ({
         <li>Phone: ${body.phone}</li>
         <li>Adress: ${body.phone}</li>
       </ul>
+    </div>
+  `,
+})
+
+export const emailOptionsConfirmPurchase = (body) => ({
+  from: process.env.NODEMAILER_EMAIL_ADMIN,
+  to: process.env.NODEMAILER_EMAIL_ADMIN,
+  subject: `Nuevo pedido de ${body.email}`,
+  html: `
+    <h1>Nuevo pedido de ${body.email}</h1>
+    <div>
+      <h4>Informacion:</h4>
+      <ul>${body.items.map(x => `<li>${x.name}</li>`).join(' ')}</ul>
     </div>
   `,
 })

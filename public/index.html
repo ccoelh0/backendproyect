@@ -20,11 +20,13 @@
     <h3>Items</h3>
     <div id="item-container"></div>
   </div>
-  <div>
+  <div id="cart">
     <h3>Carrito</h3>
     <div id="cart-container"></div>
-    <button onclick='buy()'>Terminar compra</button>
+    <button id="buy">Terminar compra</button>
   </div>
+  <div class="alert alert-success display-none" id="purchaseFinished" role="alert">Compra terminada!</div>
+  <div class="alert alert-danger display-none" id='purchaseFinishedError' role="alert">Ocurrio un error al terminar la compra</div>
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"

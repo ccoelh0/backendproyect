@@ -2,7 +2,7 @@ import { session } from '../daos/index.js'
 import bcrypt from 'bcrypt'
 import passport from 'passport'
 import localStrategy from 'passport-local'
-import {transporter, emailOptions} from '../utils/nodemailer.js'
+import {transporter, emailOptionsLogin} from '../utils/contact.js'
 
 const LocalStrategy = localStrategy.Strategy
 
@@ -67,11 +67,13 @@ export const logout = (req, res) => {
   return res.send({ data: true })
 }
 
-export const newUserWasCreated = async (req) => {
+export const newUserWasCreated = async (req, res) => {
   try {
-    await transporter.sendMail(emailOptions(req.body))
+    await transporter.sendMail(emailOptionsLogin(req.body))
+    return res.send({ data: { userLogin: true } })
   } catch (err) {
-    return err
+    console.log(err)
+    return res.send({data: {userLogin: false, err}})
   }
 }
 
