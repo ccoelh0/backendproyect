@@ -109,6 +109,7 @@ const buy = async () => {
   })
   const response = await data.json()
   if (!response.purchaseFinished) {
+    console.log(response.err)
     purchaseFinishedError.classList.remove('display-none')
     return setTimeout(() => purchaseFinishedError.classList.add('display-none'), 4000)
   }

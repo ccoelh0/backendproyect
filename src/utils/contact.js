@@ -1,4 +1,5 @@
 import {createTransport} from 'nodemailer'
+import twilio from 'twilio';
 
 const password = "dxoocsplpxjfrjru"
 
@@ -41,3 +42,19 @@ export const emailOptionsConfirmPurchase = (body) => ({
     </div>
   `,
 })
+
+const client = twilio(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN)
+
+export const sendWp = (body) => {
+  return client.messages.create({
+    body: `
+      Nuevo pedido de ${body.email}
+      Informacion:
+      ${body.items.map(x => x.name).join(' ')}
+      `,
+    from: 'whatsapp:+14155238886',
+    to: 'whatsapp:+5491154618806'
+  })
+}
+
+
