@@ -1,6 +1,5 @@
 import { item } from '../daos/index.js'
 import logger from '../utils/logger.js'
-// import { IItem, IUpdateItem } from '../utils/types'
 
 const getItem = async (res, id) => {
   try {

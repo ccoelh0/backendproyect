@@ -4,14 +4,30 @@ const cartContainer = document.getElementById('cart-container')
 const buyButton = document.getElementById('buy')
 const purchaseFinished = document.getElementById('purchaseFinished')
 const purchaseFinishedError = document.getElementById('purchaseFinishedError')
+const userInfoContainer = document.getElementById('user')
 ///////////// CART ////////////////
 
 // Traigo el email
 const getEmail = async () => {
   const data = await fetch('/api/sessions/user', {method: 'GET'})
   const res = await data.json()
+  showDataUser(res.data)
   return userHasCart(res.data.email)
 }
+
+const showDataUser = (user) => {
+  const render = 
+  `
+    <h5>Usuario: ${user.name}</h5>
+    <ul>
+      <li>Edad: ${user.age}</li>
+      <li>Direccion: ${user.adress}</li>
+      <li>Tel: ${user.phone}</li>
+      <li>Contacto: ${user.email}</li>
+    </ul>
+  `
+  return userInfoContainer.innerHTML = render
+} 
 
 // El usuario tiene cart? 
 const userHasCart = async (email) => {
@@ -123,9 +139,3 @@ buyButton.addEventListener('click', () => buy())
 ///////////// FUNCIONES LLAMADO ////////////////
 getEmail()
 showItem('api/items/')
-
-
-
-
-
-

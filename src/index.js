@@ -9,6 +9,7 @@ import passport from './service/session.js';
 import args from './utils/args.js';
 import cluster from 'cluster';
 import logger from './utils/logger.js';
+import os from 'os'
 
 //Routes
 import routerSession from './routes/session.js';
@@ -66,9 +67,9 @@ io.on('connection', async (socket) => {
   })
 })
 
-const port = process.env.PORT || args.port || 8090
+const port = args.port || process.env.PORT || 8090
 
-if (args.mode === 'cluster' && cluster.isPrimary) {
+if ((args.mode === 'cluster' || process.env.MODE === 'CLUSTER') && cluster.isPrimary) {
   for (let i = 0; i <= os.cpus().length; i++) {
     cluster.fork()
   }
