@@ -1,5 +1,6 @@
 import { cart, item, session } from '../daos/index.js'
 import {transporter, emailOptionsConfirmPurchase, sendWp, sendMsg} from '../utils/contact.js'
+import logger from '../utils/logger.js'
 
 const time = new Date()
 
@@ -86,6 +87,7 @@ const buyCart = async (req, res) => {
 		await sendMsg(req.body.cart, getUserPhone(req.body.cart.email))
     return res.send({purchaseFinished: true})
   } catch (err) {
+		logger.error(err)
     return res.send({purchaseFinished: false, err})
   }
 } 

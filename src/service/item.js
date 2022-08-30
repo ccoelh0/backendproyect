@@ -1,4 +1,5 @@
 import { item } from '../daos/index.js'
+import logger from '../utils/logger.js'
 // import { IItem, IUpdateItem } from '../utils/types'
 
 const getItem = async (res, id) => {
@@ -11,6 +12,7 @@ const getItem = async (res, id) => {
       return res.json({ data: find })
     }
   } catch (err) {
+    logger.error(err)
     return res.send(err)
   }
 }
@@ -21,6 +23,7 @@ const saveItem = async (req, res) => {
     await item.save(newItem)
     return res.json({ data: req.body.name + ' guardado!' })
   } catch (err) {
+    logger.error(err)
     return res.status(400).send({ data: err })
   }
 };
@@ -33,6 +36,7 @@ const updateItem = async (req, res) => {
     await item.updateById(id, update)
     return res.json({ data: `${id} actualizado` })
   } catch (err) {
+    logger.error(err)
     return res.status(400).send({ err })
   }
 }
@@ -42,6 +46,7 @@ const deleteItem = async (res, id) => {
     await item.deleteById(id)
     return res.json({ data: `${id} eliminado` })
   } catch (err) {
+    logger.error(err)
     return res.json({ data: err })
   }
 }

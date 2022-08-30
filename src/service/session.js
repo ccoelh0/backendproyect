@@ -29,6 +29,7 @@ passport.use('createUser', new LocalStrategy({ passReqToCallback: true }, async 
     await session.save(userSession)
     return callback(null, userSession)
   } catch (error) {
+    logger.error(error)
     return callback(error)
   }
 }))
@@ -72,6 +73,7 @@ export const newUserWasCreated = async (req, res) => {
     await transporter.sendMail(emailOptionsLogin(req.body))
     return res.send({ data: { userLogin: true } })
   } catch (err) {
+    logger.error(err)
     return res.send({data: {userLogin: false, err}})
   }
 }

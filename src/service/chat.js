@@ -1,5 +1,6 @@
 import { chat } from '../daos/index.js'
 import { schema, normalize } from 'normalizr'
+import logger from '../utils/logger.js'
 
 export const getAllMessage = async () => await chat.getAll()
 
@@ -8,6 +9,7 @@ export const saveMessage = async (message, res) => {
     await chat.save(message)
     return res.send({ data: await chat.getAll() })
   } catch (err) {
+    logger.error(err)
     return res.send({ err })
   }
 }
