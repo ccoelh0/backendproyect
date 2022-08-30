@@ -2,6 +2,7 @@ import { session } from '../daos/index.js'
 import bcrypt from 'bcrypt'
 import passport from 'passport'
 import localStrategy from 'passport-local'
+import {transporter, emailOptions} from '../utils/nodemailer.js'
 
 const LocalStrategy = localStrategy.Strategy
 
@@ -64,6 +65,14 @@ passport.deserializeUser(async (email, callback) => {
 export const logout = (req, res) => {
   req.session.destroy()
   return res.send({ data: true })
+}
+
+export const newUserWasCreated = async (req) => {
+  try {
+    await transporter.sendMail(emailOptions(req.body))
+  } catch (err) {
+    return err
+  }
 }
 
 export default passport

@@ -95,6 +95,10 @@ const addItem = async () => {
   return renderCart(userCart._id)
 }
 
+const buy = () => {
+
+}
+
 
 ///////////// FUNCIONES LLAMADO ////////////////
 getEmail()
@@ -102,8 +106,6 @@ showItem('api/items/')
 
 
 
-// const buy = () => {
 
-// }
 
 
