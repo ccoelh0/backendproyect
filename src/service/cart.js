@@ -83,6 +83,7 @@ const getUserPhone = async (email) => {
 const buyCart = async (req, res) => {
 	try {
     await transporter.sendMail(emailOptionsConfirmPurchase(req.body.cart))
+		await cart.deleteById(req.body.cart._id.valueOf())
 		await sendWp(req.body.cart)
 		await sendMsg(req.body.cart, getUserPhone(req.body.cart.email))
     return res.send({purchaseFinished: true})
