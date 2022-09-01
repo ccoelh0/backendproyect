@@ -7,9 +7,11 @@ const routerSession = express.Router()
 routerSession.get('/user', (req,  res) => res.send({ data: req.user || null }))
 
 routerSession.post('/createUser', 
-upload.single('image'), // name of the input
+upload.single('avatar'), // name of the input
 // passport.authenticate('createUser'), 
 (req, res) => {
+  console.log(req.body)
+  console.log('llego')
   res.send({data: 'llego'})
   // newUserWasCreated(req, res)
 })
