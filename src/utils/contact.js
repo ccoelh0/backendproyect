@@ -52,16 +52,16 @@ export const sendWp = (body) => {
       Informacion: ${body.items.map(x => x.name).join(' ')}
       `,
     from: 'whatsapp:+14155238886',
-    to: 'whatsapp:+5491154618806'
+    to: `whatsapp:${process.env.ADMIN_PHONE}`
   })
 }
 
 export const sendMsg = (body, phone) => {
   return client.messages.create({
-    body: `
+    to: `+54${phone}`,
+    from: '+12512996293',
+      body: `
       Nuevo pedido de ${body.email}
-      Informacion: ${body.items.map(x => x.name).join(' ')} `,
-    from: '+14155238886',
-    to: `+549${phone}`
+      Informacion: ${body.items.map(x => x.name).join(' ')} `
   })
 }

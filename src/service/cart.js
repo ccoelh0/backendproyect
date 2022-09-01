@@ -77,15 +77,15 @@ const deleteItemFromCart = async (req, res) => {
 const getUserPhone = async (email) => {
 	const data = await session.getAll()
 	const res = await data
-	return res.map(dato => dato.email).filter(e => e === email)
+	return res.find(dato => dato.email === email).phone
 }
 
 const buyCart = async (req, res) => {
+	const phoneBuyer = await getUserPhone(req.body.cart.email)
 	try {
     await transporter.sendMail(emailOptionsConfirmPurchase(req.body.cart))
-		await cart.deleteById(req.body.cart._id.valueOf())
 		await sendWp(req.body.cart)
-		await sendMsg(req.body.cart, getUserPhone(req.body.cart.email))
+		await sendMsg(req.body.cart, phoneBuyer)
     return res.send({purchaseFinished: true})
   } catch (err) {
 		logger.error(err)
