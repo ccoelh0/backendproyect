@@ -7,7 +7,6 @@ const storage = multer.diskStorage({
     cb(null, join(dirname(fileURLToPath(import.meta.url)), '../../public/images')) // 
   },
   filename: (req, file, cb) => {
-    console.log(file)
     cb(null, Date.now() + extname(file.originalname))
   }
 })
