@@ -12,10 +12,10 @@ passport.use('createUser', new LocalStrategy({ passReqToCallback: true }, async 
   password,
   callback,
 ) => {
+
   const userdb = await session.getAll()
   const isUserInDB = userdb.find(u => u.email === email)
   if (isUserInDB) return callback(new Error('User in bd!'))
-
   try {
     const hash = bcrypt.hashSync(password.toString(), bcrypt.genSaltSync(10));
     const userSession = {
@@ -24,7 +24,8 @@ passport.use('createUser', new LocalStrategy({ passReqToCallback: true }, async 
       adress: req.body.adress,
       name: req.body.name,
       phone: req.body.phone,
-      age: parseInt(req.body.age, 10)
+      age: parseInt(req.body.age, 10),
+      avatar: req.file.filename
     }
     await session.save(userSession)
     return callback(null, userSession)

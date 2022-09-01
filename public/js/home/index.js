@@ -24,6 +24,7 @@ const showDataUser = (user) => {
       <li>Direccion: ${user.adress}</li>
       <li>Tel: ${user.phone}</li>
       <li>Contacto: ${user.email}</li>
+      <li><img src="/images/${user.avatar}"</li>
     </ul>
   `
   return userInfoContainer.innerHTML = render
