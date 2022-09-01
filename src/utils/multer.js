@@ -1,14 +1,15 @@
-import multer from 'multer'
+import multer, { diskStorage } from "multer";
+import {join, dirname, extname} from "path";
+import { fileURLToPath } from 'url';
 
 const storage = multer.diskStorage({
-  destination: function(req, file, callback) {
-    callback(null, '/src/my-images');
+  destination: (req, file, cb) => {
+    cb(null, join(dirname(fileURLToPath(import.meta.url)), '../../public/images')) // 
   },
-  filename: function (req, file, callback) {
-    callback(null, file.fieldname);
+  filename: (req, file, cb) => {
+    console.log(file)
+    cb(null, Date.now() + extname(file.originalname))
   }
-});
+})
 
-const upload = multer({ dest: "uploads/" });
-
-export default upload
+export const upload = multer({storage: storage})

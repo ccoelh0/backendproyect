@@ -24,8 +24,8 @@ import routesForCart from './routes/cart.js'
 const app = express()
 
 app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-app.use(express.static('public')) // se debe comentar por nginx
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static('public')) 
 app.use(coockieParser())
 
 app.use(session({

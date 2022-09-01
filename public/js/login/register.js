@@ -15,37 +15,40 @@ const comeback = document.getElementById('comebackButton')
 //   && age.value.length !== 0
 //   && adress.value.length !== 0
 
-const onSubmitNewUser = async () => {
-  const data = await fetch('/api/sessions/createUser', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      username: email.value,
-      password: newPassword.value,
-      adress: adress.value,
-      name: nameUser.value,
-      phone: phone.value,
-      age: age.value
-    })
-  })
-  return await data.json()
-}
+// const onSubmitNewUser = async () => {
+//   const data = await fetch('/api/sessions/createUser', {
+//     method: 'POST',
+//     // headers: {
+//     //   "Content-Type": "multipart/form-data"
+//     // },
+//     body: JSON.stringify({
+//       username: email.value,
+//       password: newPassword.value,
+//       adress: adress.value,
+//       name: nameUser.value,
+//       phone: phone.value,
+//       age: age.value,
+//       image: avatar
+//     })
+//   })
+//   return await data.json()
+// }
 
-register.addEventListener('submit', e => {
-  e.preventDefault()
+// register.addEventListener('submit', e => {
+//   e.preventDefault()
 
-  onSubmitNewUser()
-    .then((res) => {      
-      res.data && activeAlert('Usuario creado correctamente', alertSuccess)
-      maintitle.innerHTML = 'Iniciar sesión'
-      register.classList.add('display-none')
-      login.classList.remove('display-none')
-    })
-    .catch(() => activeAlert('Email ya registrado', alertError))
-})
+//   onSubmitNewUser()
+//     .then((res) => {      
+//       // res.data && activeAlert('Usuario creado correctamente', alertSuccess)
+//       // maintitle.innerHTML = 'Iniciar sesión'
+//       // register.classList.add('display-none')
+//       // login.classList.remove('display-none')
+//     })
+//     .catch((err) => {
+//       console.log(err)
+//       // activeAlert('Email ya registrado', alertError)
+//     })
+// })
 
 comeback.addEventListener('click', e => {
   e.preventDefault()
