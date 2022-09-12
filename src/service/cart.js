@@ -19,9 +19,9 @@ const createNewCart = async (req, res) => {
 	}
 }
 
-const getCart = async (id, res) => {
+const getCart = async (req, res) => {
 	try {
-		if (id) return res.json({ data: await cart.getById(id) })
+		if (req.params.id) return res.json({ data: await cart.getById(req.params.id) })
 		return res.json({data: await cart.getAll()})
 	} catch (err) {
 		return res.status(400).send({ err })
@@ -37,7 +37,8 @@ const getItemsFromCart = async (id, res) => {
 	}
 }
 
-const deleteCart = async (res, id) => {
+const deleteCart = async (req, res) => {
+	const id = req.params.id
 	try {
 		await cart.deleteById(id)
 		return res.json({ data: `cart ${id} eliminada` })
