@@ -1,4 +1,4 @@
-import { item } from '../dao/index.js'
+import { item } from '../containers/dao/index.js'
 import logger from '../utils/logger.js'
 
 const getItem = async (res, id) => {

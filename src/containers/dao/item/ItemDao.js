@@ -1,5 +1,5 @@
-import Container from '../../containers/Container.js'
-import { itemSchema } from '../../models/ItemSchema.js'
+import Container from '../../Container.js'
+import { itemSchema } from '../../../models/ItemSchema.js'
 
 class ItemDaoMongo extends Container {
     constructor () {

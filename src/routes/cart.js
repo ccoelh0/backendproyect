@@ -1,5 +1,5 @@
 import express from 'express'
-import { createNewCart, deleteCart, getCart, getItemsFromCart, addItemsToCart, deleteItemFromCart, buyCart } from '../service/cart.js'
+import { createNewCart, deleteCart, getCart, getItemsFromCart, addItemsToCart, deleteItemFromCart, buyCart } from '../containers/dao/cart/CartService.js'
 
 const router = express.Router();
 
