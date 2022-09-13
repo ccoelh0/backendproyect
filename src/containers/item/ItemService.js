@@ -1,7 +1,7 @@
 import ItemFactory from './ItemFactory.js'
 import ItemDTO from './ItemDTO.js'
-import logger from '../../../utils/logger.js'
-import config from '../../../utils/config.js'
+import logger from '../../utils/logger.js'
+import config from '../../utils/config.js'
 
 const item = ItemFactory.create(config.mongobd.persistence)
 

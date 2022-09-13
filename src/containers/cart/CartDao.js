@@ -1,5 +1,5 @@
-import Container from '../../Container.js'
-import { cartSchema } from '../../../models/CartSchema.js'
+import Container from '../Container.js'
+import { cartSchema } from '../../models/CartSchema.js'
 
 let instance = null
 

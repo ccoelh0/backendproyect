@@ -1,5 +1,5 @@
-import Container from '../../Container.js'
-import { itemSchema } from '../../../models/ItemSchema.js'
+import Container from '../Container.js'
+import { itemSchema } from '../../models/ItemSchema.js'
 
 let instance = null
 

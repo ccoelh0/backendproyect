@@ -1,9 +1,9 @@
 import CartFactory from './CartFactory.js'
 import { item, session } from '../index.js'
-import { transporter, emailOptionsConfirmPurchase, sendWp, sendMsg } from '../../../utils/contact.js'
-import logger from '../../../utils/logger.js'
+import { transporter, emailOptionsConfirmPurchase, sendWp, sendMsg } from '../../utils/contact.js'
+import logger from '../../utils/logger.js'
 import CartDTO from './CartDTO.js'
-import config from '../../../utils/config.js'
+import config from '../../utils/config.js'
 
 const cart = CartFactory.create(config.mongobd.persistence)
 

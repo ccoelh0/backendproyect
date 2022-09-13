@@ -1,5 +1,5 @@
-import Container from "../../Container.js"
-import sessionSchema from "../../../models/SessionSchema.js"
+import Container from "../Container.js"
+import sessionSchema from "../../models/SessionSchema.js"
 
 class SessionDao extends Container {
     constructor() {
