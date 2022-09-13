@@ -1,5 +1,8 @@
-import { item } from '../containers/dao/index.js'
-import logger from '../utils/logger.js'
+import ItemFactory from './ItemFactory.js'
+import logger from '../../../utils/logger.js'
+import config from '../../../utils/config.js'
+
+const item = ItemFactory.create(config.mongobd.persistence)
 
 const getItem = async (res, id) => {
   try {

@@ -1,5 +1,5 @@
 import express from 'express'
-import { getItem, saveItem, updateItem, deleteItem } from '../service/item.js'
+import { getItem, saveItem, updateItem, deleteItem } from '../containers/dao/item/ItemService.js'
 import { isAdmin } from '../utils/isAdmin.js'
 
 const router = express.Router() 
