@@ -26,11 +26,9 @@ const saveItem = async (req, res) => {
   const newItem = req.body
   try {
     const res = await item.save(newItem)
-    const newItemDTO = new ItemDTO(res)
-    console.log(newItemDTO)
-    return res.json({ data: newItemDTO })
+    return res.json({ data: true })
   } catch (err) {
-    // logger.error(err)
+    logger.error(err)
     return res.status(400).send({ data: err })
   }
 };
@@ -41,17 +39,17 @@ const updateItem = async (req, res) => {
 
   try {
     await item.updateById(id, update)
-    return res.json({ data: `${id} actualizado` })
+    return res.json({ data: true })
   } catch (err) {
     logger.error(err)
     return res.status(400).send({ err })
   }
 }
 
-const deleteItem = async (res, id) => {
+const deleteItem = async (req, res) => {
   try {
-    await item.deleteById(id)
-    return res.json({ data: `${id} eliminado` })
+    await item.deleteById(req.body.id)
+    return res.json({ data: true })
   } catch (err) {
     logger.error(err)
     return res.json({ data: err })
