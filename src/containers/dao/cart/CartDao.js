@@ -1,7 +1,7 @@
 import Container from '../../Container.js'
 import { cartSchema } from '../../../models/CartSchema.js'
 
-let instance = false
+let instance = null
 
 class CartDao extends Container {
     constructor () {
