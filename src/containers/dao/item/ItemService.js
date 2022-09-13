@@ -1,17 +1,20 @@
 import ItemFactory from './ItemFactory.js'
+import ItemDTO from './ItemDTO.js'
 import logger from '../../../utils/logger.js'
 import config from '../../../utils/config.js'
 
 const item = ItemFactory.create(config.mongobd.persistence)
 
-const getItem = async (res, id) => {
+const getItem = async (req, res) => {
   try {
-    if (id) {
-      const find = await item.getById(id)
-      return res.json({ data: find })
+    if (req.body.id) {
+      const find = await item.getById(req.body.id)
+      const itemDTO = new ItemDTO(find)
+      return res.json({ data: itemDTO })
     } else {
-      const find = await item.getAll()
-      return res.json({ data: find })
+      const data = await item.getAll()
+      const itemsDTO = data.map(x => new ItemDTO(x))
+      return res.json({ data: itemsDTO })
     }
   } catch (err) {
     logger.error(err)
@@ -22,10 +25,12 @@ const getItem = async (res, id) => {
 const saveItem = async (req, res) => {
   const newItem = req.body
   try {
-    await item.save(newItem)
-    return res.json({ data: req.body.name + ' guardado!' })
+    const res = await item.save(newItem)
+    const newItemDTO = new ItemDTO(res)
+    console.log(newItemDTO)
+    return res.json({ data: newItemDTO })
   } catch (err) {
-    logger.error(err)
+    // logger.error(err)
     return res.status(400).send({ data: err })
   }
 };
