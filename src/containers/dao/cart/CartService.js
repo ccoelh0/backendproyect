@@ -1,7 +1,11 @@
-import { cart, item, session } from '../index.js'
-import {transporter, emailOptionsConfirmPurchase, sendWp, sendMsg} from '../../../utils/contact.js'
+import CartFactory from './CartFactory.js'
+import { item, session } from '../index.js'
+import { transporter, emailOptionsConfirmPurchase, sendWp, sendMsg } from '../../../utils/contact.js'
 import logger from '../../../utils/logger.js'
 import CartDTO from './CartDTO.js'
+import config from '../../../utils/config.js'
+
+const cart = CartFactory.create(config.mongobd.persistence)
 
 const time = new Date()
 
@@ -30,7 +34,7 @@ const getCart = async (req, res) => {
 		}
 		const data = await cart.getAll()
 		const cartsDTO = data.map(x => new CartDTO(x))
-		return res.json({data: cartsDTO})
+		return res.json({ data: cartsDTO })
 	} catch (err) {
 		return res.status(400).send({ err })
 	}
@@ -66,7 +70,7 @@ const addItemsToCart = async (req, res) => {
 	cartData.items.push(itemData)
 
 	try {
-		await cart.updateById(cartId, {items: cartData.items})
+		await cart.updateById(cartId, { items: cartData.items })
 		return res.json({ data: `${itemData._id} aniadido!` })
 	} catch (err) {
 		return res.status(400).send({ err })
@@ -80,10 +84,10 @@ const deleteItemFromCart = async (req, res) => {
 	const filter = cartSelected.items.filter(x => x._id.valueOf() !== idItem)
 
 	try {
-		await cart.updateById(id, {items: filter})
+		await cart.updateById(id, { items: filter })
 		return res.json({ data: `${idItem} eliminado` })
 	} catch (err) {
-		return res.status(400).send({err})
+		return res.status(400).send({ err })
 	}
 }
 
@@ -97,14 +101,14 @@ const getUserPhone = async (req) => {
 const buyCart = async (req, res) => {
 	const phoneBuyer = await getUserPhone(req.body.cart.email)
 	try {
-    await transporter.sendMail(emailOptionsConfirmPurchase(req.body.cart))
+		await transporter.sendMail(emailOptionsConfirmPurchase(req.body.cart))
 		await sendWp(req.body.cart)
 		await sendMsg(req.body.cart, phoneBuyer)
-    return res.send({purchaseFinished: true})
-  } catch (err) {
+		return res.send({ purchaseFinished: true })
+	} catch (err) {
 		logger.error(err)
-    return res.send({purchaseFinished: false, err})
-  }
-} 
+		return res.send({ purchaseFinished: false, err })
+	}
+}
 
 export { createNewCart, getCart, deleteCart, getItemsFromCart, addItemsToCart, deleteItemFromCart, buyCart }
