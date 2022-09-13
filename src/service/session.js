@@ -1,4 +1,4 @@
-import { session } from '../daos/index.js'
+import { session } from '../dao/index.js'
 import bcrypt from 'bcrypt'
 import passport from 'passport'
 import localStrategy from 'passport-local'
@@ -47,7 +47,7 @@ passport.use('validateLogin', new LocalStrategy(async (
 }))
 
 /*
-  Candot engo que escribir una sesion, me pasan req.user y elijo
+  Cando tengo que escribir una sesion, me pasan req.user y elijo
   que guardar en la sesion, en este caso es el username.
 */
 
@@ -78,5 +78,12 @@ export const newUserWasCreated = async (req, res) => {
     return res.send({data: {userLogin: false, err}})
   }
 }
+
+export const getUser = (req, res) => {
+  const userEmail = req.user
+  return {data: userEmail}
+}
+
+export const validateLogin = async (req, res) => res.send({ data: { validate: true }})
 
 export default passport

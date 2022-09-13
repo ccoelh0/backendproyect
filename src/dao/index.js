@@ -1,7 +1,7 @@
 import ItemDaoMongo from './item/ItemDaoMongo.js'
-import CartDaoMongo from './cart/CartDaoMongo.js'
+import CartDaoMongo from './cart/CartDao.js'
 import ChatDaoMongo from './chat/ChatDaoMongo.js'
-import SessionDao from './Session/SessionDao.js'
+import SessionDao from './user/SessionDao.js'
 
 let item, cart, chat, session
 let database = 'mongodb'

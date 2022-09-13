@@ -1,4 +1,4 @@
-import { chat } from '../daos/index.js'
+import { chat } from '../dao/index.js'
 import { schema, normalize } from 'normalizr'
 import logger from '../utils/logger.js'
 

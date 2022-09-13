@@ -3,6 +3,7 @@ import config from '../utils/config.js'
 
 mongoose.connect(`${config.mongobd.connectionAtlas}`).catch(err => console.log(err))
 
+// todo: aplicar try and catch
 class Container {
 	constructor(collectionName, schema) {
 		this.collection = mongoose.model(collectionName, schema);

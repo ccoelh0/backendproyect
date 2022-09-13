@@ -1,4 +1,4 @@
-import { cart, item, session } from '../daos/index.js'
+import { cart, item, session } from '../dao/index.js'
 import {transporter, emailOptionsConfirmPurchase, sendWp, sendMsg} from '../utils/contact.js'
 import logger from '../utils/logger.js'
 
@@ -28,7 +28,9 @@ const getCart = async (req, res) => {
 	}
 }
 
-const getItemsFromCart = async (id, res) => {
+const getItemsFromCart = async (req, res) => {
+	const id = req.params.id
+
 	try {
 		const cartSelected = await cart.getById(id)
 		return res.json({ data: cartSelected.items })
@@ -39,6 +41,7 @@ const getItemsFromCart = async (id, res) => {
 
 const deleteCart = async (req, res) => {
 	const id = req.params.id
+
 	try {
 		await cart.deleteById(id)
 		return res.json({ data: `cart ${id} eliminada` })
@@ -75,7 +78,8 @@ const deleteItemFromCart = async (req, res) => {
 	}
 }
 
-const getUserPhone = async (email) => {
+const getUserPhone = async (req) => {
+	const email = req.params.email
 	const data = await session.getAll()
 	const res = await data
 	return res.find(dato => dato.email === email).phone
