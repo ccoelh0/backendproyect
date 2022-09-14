@@ -2,7 +2,7 @@ import 'dotenv/config'
 import express from 'express'
 import http from 'http'
 import { Server } from 'socket.io';
-import { getAllMessage } from './service/chat.js'
+import { getAllMessage } from './containers/chat/ChatService.js'
 import coockieParser from 'cookie-parser'
 import session from 'express-session'
 import passport from './service/session.js';
@@ -16,7 +16,7 @@ import routerSession from './routes/session.js';
 import routesForViews from './routes/views.js'
 import routesForItems from './routes/items.js'
 import routesForCart from './routes/cart.js'
-// import routerChat from './routes/chat.js'
+import routerChat from './containers/chat/ChatRoute.js'
 // import routerFork from './routes/fork.js';
 // import routerRandom from './routes/product-test.js'
 // import routerInfo from './routes/info.js';
@@ -44,7 +44,7 @@ app.use('/api/sessions', routerSession)
 app.use('/api/items', routesForItems)
 app.use('/api/cart', routesForCart)
 app.use('/', routesForViews)
-// app.use('/api/chat', routerChat)
+app.use('/api/chat', routerChat)
 // app.use('/fork', routerFork)
 // app.use('/api/random', routerRandom)
 // app.use('/api', routerInfo)

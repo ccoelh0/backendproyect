@@ -5,10 +5,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js",
-    "start": "node src/index.js",
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
     "test": "node src/utils/test.js",
-    "0x": "0x src/index.js"
+    "0x": "0x src/server.js"
   },
   "keywords": [],
   "author": "@coelhh0",
