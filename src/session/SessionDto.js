@@ -1,4 +1,4 @@
-class UserDTO {
+class SessionDTO {
   constructor(userData, cartData) {
     this.name = userData.name;
     this.email = userData.email;
@@ -6,4 +6,4 @@ class UserDTO {
   }
 }
 
-export default UserDTO;
+export default SessionDTO;

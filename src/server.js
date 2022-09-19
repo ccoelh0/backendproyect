@@ -2,21 +2,21 @@ import 'dotenv/config'
 import express from 'express'
 import http from 'http'
 import { Server } from 'socket.io';
-import { getAllMessage } from './containers/chat/ChatService.js'
+import { getAllMessage } from './chat/ChatService.js'
 import coockieParser from 'cookie-parser'
 import session from 'express-session'
-import passport from './service/session.js';
+import passport from './session/SessionService.js';
 import args from './utils/args.js';
 import cluster from 'cluster';
 import logger from './utils/logger.js';
 import os from 'os'
 
 //Routes
-import routerSession from './routes/session.js';
-import routesForViews from './routes/views.js'
-import routesForItems from './routes/items.js'
-import routesForCart from './routes/cart.js'
-import routerChat from './containers/chat/ChatRoute.js'
+import routerSession from './session/SessionRouter.js';
+import routesForViews from './utils/ViewRouter.js'
+import routesForItems from './item/ItemRouter.js'
+import routesForCart from './cart/CartRoute.js'
+import routerChat from './chat/ChatRouter.js'
 // import routerFork from './routes/fork.js';
 // import routerRandom from './routes/product-test.js'
 // import routerInfo from './routes/info.js';

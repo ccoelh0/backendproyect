@@ -1,5 +1,5 @@
-import Container from '../Container.js'
-import {chatSchema} from '../../models/ChatSchema.js'
+import Container from '../containers/Container.js'
+import {chatSchema} from './ChatSchema.js'
 
 let instance = null
 

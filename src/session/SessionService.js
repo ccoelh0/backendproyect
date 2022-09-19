@@ -1,4 +1,3 @@
-import { session } from '../containers/index.js'
 import bcrypt from 'bcrypt'
 import passport from 'passport'
 import localStrategy from 'passport-local'

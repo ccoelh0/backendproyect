@@ -1,5 +1,5 @@
 import express from 'express'
-import passport, {logout, newUserWasCreated, getUser, validateLogin} from '../service/session.js'
+import passport, {logout, newUserWasCreated, getUser, validateLogin} from './SessionService.js'
 import { upload } from '../utils/multer.js'
 
 const routerSession = express.Router()

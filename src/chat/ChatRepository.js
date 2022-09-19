@@ -1,5 +1,5 @@
 import ChatFactory from "./ChatFactory.js";
-import config from "../../utils/config.js";
+import config from "../utils/config.js";
 import ChatDTO from "./ChatDTO.js";
 
 class ChatRepository {

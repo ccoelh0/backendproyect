@@ -1,6 +1,5 @@
-import { chat } from '../index.js'
 import { schema, normalize } from 'normalizr'
-import logger from '../../utils/logger.js'
+import logger from '../utils/logger.js'
 import ChatRepository from './ChatRepository.js'
 
 const chatRepository = new ChatRepository()
