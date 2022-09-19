@@ -1,14 +1,15 @@
 import express from 'express'
-import { getItem, saveItem, updateItem, deleteItem } from '../item/ItemService.js'
+import ItemController from './ItemController.js'
 import { isAdmin } from '../utils/isAdmin.js'
 
 const router = express.Router()
+const controller = new ItemController()
 
-router.get('/', getItem)
-router.get('/:id', getItem)
-router.post('/', isAdmin, saveItem)
-router.put('/:id', isAdmin, updateItem)
-router.delete('/:id', isAdmin, deleteItem)
+router.get('/', controller.getItem)
+router.get('/:id', controller.getItem)
+router.post('/', isAdmin, controller.saveItem)
+router.put('/:id', isAdmin, controller.updateItem)
+router.delete('/:id', isAdmin, controller.deleteItem)
 
 const routerItems = router
 

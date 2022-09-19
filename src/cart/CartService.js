@@ -3,8 +3,10 @@ import { transporter, emailOptionsConfirmPurchase, sendWp, sendMsg } from '../ut
 import logger from '../utils/logger.js'
 import CartDTO from './CartDTO.js'
 import config from '../utils/config.js'
+import ItemController from '../item/ItemController.js'
 
 const cart = CartFactory.create(config.mongobd.persistence)
+const item = new ItemController()
 
 const createNewCart = async (newCart, res) => {
 	try {
@@ -50,9 +52,8 @@ const deleteCart = async (id, res) => {
 	}
 }
 
-const addItemsToCart = async (req, res) => {
-	const cartId = req.params.id
-	const itemData = await item.getById(req.params.idItem)
+const addItemsToCart = async (cartId, itemId, res) => {
+	const itemData = await item.getItem(itemId)
 	const cartData = await cart.getById(cartId)
 	cartData.items.push(itemData)
 
@@ -64,33 +65,30 @@ const addItemsToCart = async (req, res) => {
 	}
 }
 
-const deleteItemFromCart = async (req, res) => {
-	const id = req.params.id
-	const idItem = req.params.idItem
-	const cartSelected = await cart.getById(id)
-	const filter = cartSelected.items.filter(x => x._id.valueOf() !== idItem)
+const deleteItemFromCart = async (cartId, itemId, res) => {
+	const cartSelected = await cart.getById(cartId)
+	const filter = cartSelected.items.filter(x => x._id.valueOf() !== itemId)
 
 	try {
-		await cart.updateById(id, { items: filter })
-		return res.json({ data: `${idItem} eliminado` })
+		await cart.updateById(cartId, { items: filter })
+		return res.json({ data: `${itemId} eliminado` })
 	} catch (err) {
 		return res.status(400).send({ err })
 	}
 }
 
-const getUserPhone = async (req) => {
-	const email = req.params.email
+const getUserPhone = async (email) => {
 	const data = await session.getAll()
 	const res = await data
 	return res.find(dato => dato.email === email).phone
 }
 
-const buyCart = async (req, res) => {
-	const phoneBuyer = await getUserPhone(req.body.cart.email)
+const buyCart = async (cart, res) => {
+	const phoneBuyer = await getUserPhone(cart.email)
 	try {
-		await transporter.sendMail(emailOptionsConfirmPurchase(req.body.cart))
-		await sendWp(req.body.cart)
-		await sendMsg(req.body.cart, phoneBuyer)
+		await transporter.sendMail(emailOptionsConfirmPurchase(cart))
+		await sendWp(cart)
+		await sendMsg(cart, phoneBuyer)
 		return res.send({ purchaseFinished: true })
 	} catch (err) {
 		logger.error(err)

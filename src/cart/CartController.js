@@ -1,4 +1,5 @@
 import * as CartService from './CartService.js'
+import ItemController from '../item/ItemController.js';
 // import ItemService from '../item/ItemService.js';
 // import config from '../utils/config.js';
 
@@ -6,6 +7,7 @@ class CartController {
   constructor() {
     this.cartService = CartService;
     this.time = new Date();
+    this.itemController = new ItemController()
   }
 
   createNewCart = async (req, res) => {
@@ -46,10 +48,36 @@ class CartController {
     }
   }
 
-  // addItemsToCart = async (req, res) => {
-  //   const cartId = req.params.id
-  //   const itemData = this.item.get
-  // } 
+  deleteItemFromCart = async (req, res) => {
+    const cartId = req.params.id
+    const itemId = req.params.idItem
+
+    try {
+      return await this.cartService.deleteItemFromCart(cartId, itemId, res)
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
+
+  addItemsToCart = async (req, res) => {
+    const cartId = req.params.id
+    const itemId = req.params.idItem
+
+    try {
+      return await this.cartService.addItemsToCart(cartId, itemId, res)
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
+
+  buyCart = async (req, res) => {
+    const cart = req.body.cart
+    try {
+      return this.cartService.buyCart(cart, res)
+    } catch (err) {
+      throw new Error(err)
+    }
+  }
 }
 
 export default CartController;
