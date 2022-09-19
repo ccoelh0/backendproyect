@@ -6,15 +6,7 @@ import config from '../utils/config.js'
 
 const cart = CartFactory.create(config.mongobd.persistence)
 
-const time = new Date()
-
-const createNewCart = async (req, res) => {
-	const newCart = {
-		email: req.body.email,
-		timestamp: `${time.getDate()}/${time.getMonth() + 1}/${time.getFullYear()}`,
-		items: []
-	}
-
+const createNewCart = async (newCart, res) => {
 	try {
 		const created = await cart.save(newCart)
 		const newCartDTO = new CartDTO(created)
@@ -24,10 +16,10 @@ const createNewCart = async (req, res) => {
 	}
 }
 
-const getCart = async (req, res) => {
+const getCart = async (id, res) => {
 	try {
-		if (req.params.id) {
-			const data = await cart.getById(req.params.id)
+		if (id) {
+			const data = await cart.getById(id)
 			const cartDTO = new CartDTO(data)
 			return res.json({ data: cartDTO })
 		}
@@ -39,9 +31,7 @@ const getCart = async (req, res) => {
 	}
 }
 
-const getItemsFromCart = async (req, res) => {
-	const id = req.params.id
-
+const getItemsFromCart = async (id, res) => {
 	try {
 		const cartSelected = await cart.getById(id)
 		const itemsFromCartDTO = new CartDTO(cartSelected).items
@@ -51,9 +41,7 @@ const getItemsFromCart = async (req, res) => {
 	}
 }
 
-const deleteCart = async (req, res) => {
-	const id = req.params.id
-
+const deleteCart = async (id, res) => {
 	try {
 		await cart.deleteById(id)
 		return res.json({ data: `cart ${id} eliminada` })

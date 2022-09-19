@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import compression from 'compression'
 import os from 'os'
-import logger from '../utils/logger.js'
+import logger from './logger.js'
 
 //Implementar loggueo (con alguna librería vista en clase) que registre lo siguiente:
 // Ruta y método de todas las peticiones recibidas por el servidor (info)

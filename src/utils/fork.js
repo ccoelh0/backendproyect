@@ -1,6 +1,6 @@
 import express from 'express'
 import { fork } from 'child_process'
-import calculoPesado from '../utils/calculoPesado.js'
+import calculoPesado from './calculoPesado.js'
 
 const routerFork = express.Router()
 
