@@ -10,16 +10,11 @@ import args from './utils/args.js';
 import cluster from 'cluster';
 import logger from './utils/logger.js';
 import os from 'os'
-
-//Routes
 import routerSession from './session/SessionRouter.js';
 import routesForViews from './utils/ViewRouter.js'
 import routesForItems from './item/ItemRouter.js'
 import routesForCart from './cart/CartRoute.js'
 import routerChat from './chat/ChatRouter.js'
-// import routerFork from './routes/fork.js';
-// import routerRandom from './routes/product-test.js'
-// import routerInfo from './routes/info.js';
 
 const app = express()
 
@@ -33,7 +28,6 @@ app.use(session({
   saveUninitialized: true,
   resave: true,
   cookie: {maxAge:6000000}
-  // value: 0
 }));
 
 app.use(passport.initialize());
@@ -45,15 +39,11 @@ app.use('/api/items', routesForItems)
 app.use('/api/cart', routesForCart)
 app.use('/', routesForViews)
 app.use('/api/chat', routerChat)
-// app.use('/fork', routerFork)
-// app.use('/api/random', routerRandom)
-// app.use('/api', routerInfo)
 
 app.use((_, res) => {
   logger.warn('Recurso invalido');
   res.sendStatus(404);
 }) 
-
 
 const server = http.createServer(app)
 const io = new Server(server);
