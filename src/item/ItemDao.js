@@ -1,4 +1,4 @@
-import Container from '../containers/Container.js'
+import Container from '../containers/ContainerMongo.js'
 import { itemSchema } from './ItemSchema.js'
 
 let instance = null
