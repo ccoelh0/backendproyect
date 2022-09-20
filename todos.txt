@@ -1,3 +1,6 @@
 1. Revisar los errores y los status que se envian al cliente
 2. aplicar try and catch en todas las async
 3. Refactorizar sintaxis de las clases
+4. aplicar ts 
+5. crear midelware de validacion de user logueado
+6. crear permisos para los tipos de usuarios

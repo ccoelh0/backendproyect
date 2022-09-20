@@ -35,7 +35,7 @@ class ItemController {
 
   deleteItem = async (req, res) => {
     try {
-      return await this.itemService.deleteItem(req.body.id, res)
+      return await this.itemService.deleteItem(req.params.id, res)
     } catch (err) {
       throw new Error(err)
     }

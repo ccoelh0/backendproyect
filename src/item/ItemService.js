@@ -22,17 +22,17 @@ const getItem = async (id, res) => {
 
 const saveItem = async (newItem, res) => {
   try {
-    const res = await item.save(newItem)
+    await item.save(newItem)
     return res.json({ data: true })
   } catch (err) {
-    return res.status(400).send({ data: err })
+    return res.send({ data: err })
   }
 };
 
 const updateItem = async (id, update, res) => {
   try {
     await item.updateById(id, update)
-    return res.json({ data: true })
+    return res.send({ data: true })
   } catch (err) {
     return res.status(400).send({ err })
   }
