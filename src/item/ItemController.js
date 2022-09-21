@@ -14,7 +14,6 @@ class ItemController {
   }
 
   saveItem = async (req, res) => {
-    console.log(req.body)
     const newItem = req.body
     try {
       return await this.itemService.saveItem(newItem, res)
@@ -38,7 +37,7 @@ class ItemController {
     try {
       return await this.itemService.deleteItem(req.params.id, res)
     } catch (err) {
-      throw new Error(err)
+      return res.status(400).send(err)
     }
   }
 }

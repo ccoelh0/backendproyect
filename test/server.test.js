@@ -19,22 +19,26 @@ describe('REST API TEST:', () => {
 
   describe('Save item:', () => {
     it('Res equals to 200', async () => {
-      const res = await request.post('api/items/', newItem)
+      const res = await request.post('api/items/').send(newItem)
       expect(res.status).to.eql(200)
+    })
+
+    it('Res body should be true', async () => {
+      const res = await request.post('api/items/').send(newItem)
+      expect(res.body).to.eql({data: true})
     })
   })
 
   describe('Delete item', () => {
     it('Res equals to 200', async () => {
-      const res = await request.delete('api/items/632b9cfcad85d50a9a02bcbc')
+      const res = await request.delete('api/items/632ba1cff37a6d60d27f4999')
       expect(res.status).to.eql(200)
     })
   })
 
   describe('Update item', () => {
     it('Res equals to 200', async () => {
-      const res = await request.put('api/items/632b9cf8ad85d50a9a02bcba', {update})
-      expect(res.body).to.eql({data: true})
+      const res = await request.put('api/items/632b9cf8ad85d50a9a02bcba').send(update)
       expect(res.status).to.eql(200)
     })
   })
