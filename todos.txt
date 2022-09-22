@@ -5,3 +5,4 @@
 5. crear midelware de validacion de user logueado
 6. crear permisos para los tipos de usuarios
 7. Usar el util ObjectId() de mongoose en vez de valueOf en los metodos 
+8. Enviar status correctos en los errores 
