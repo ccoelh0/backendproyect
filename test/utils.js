@@ -14,6 +14,7 @@ const idDelete = '632b9989db983d138d998e3f'
 const update = {
   "name": "Attack on Titans - Vol6",
   "description": "manga,,,",
+  "_id": "632bae78614b9cf26c19826a",
   "price": 2000,
   "image": "https://tap-multimedia-1172.nyc3.digitaloceanspaces.com/productimage/9346/9789877242324.jpg",
   "stock": 20, 

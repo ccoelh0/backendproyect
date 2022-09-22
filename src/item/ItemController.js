@@ -6,36 +6,45 @@ class ItemController {
   }
 
   getItem = async (req, res) => {
+    const id = req.body.id || req.params.id
+  
     try {
-      return await this.itemService.getItem(req.body.id, res)
+      const data = await this.itemService.getItem(id)
+      return res.send(data)
     } catch (err) {
-      throw new Error(err)
+      return res.status(400).send(err.message)
     }
   }
 
   saveItem = async (req, res) => {
     const newItem = req.body
+    if (newItem === undefined) return res.status(400).send({ err: 'Item no definido' })
+
     try {
-      return await this.itemService.saveItem(newItem, res)
+      await this.itemService.saveItem(newItem)
+      return res.send('Producto guardado!')
     } catch (err) {
-      throw new Error(err)
+      return res.status(400).send(err.message)
     }
   }
 
   updateItem = async (req, res) => {
     const id = req.params.id
-    const update = req.body
+    const update = req.body || req.params
+    if (update === undefined) return res.status(400).send({ err: 'Item no definido' })
 
     try {
-      return await this.itemService.updateItem(id, update, res)
+      await this.itemService.updateItem(id, update)
+      return res.send({ data: 'Producto actualizado!' })
     } catch (err) {
-      throw new Error(err)
+      return res.status(400).send(err.message)
     }
   }
 
   deleteItem = async (req, res) => {
     try {
-      return await this.itemService.deleteItem(req.params.id, res)
+      await this.itemService.deleteItem(req.params.id)
+      return res.send({ data: 'Producto eliminado!' })
     } catch (err) {
       return res.status(400).send(err)
     }

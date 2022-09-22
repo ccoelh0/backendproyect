@@ -13,7 +13,11 @@ describe('REST API TEST:', () => {
     })
     it ('Res should be an array of items', async () => {
       const res = await request.get('api/items/')
-      expect(res.body.data).to.be.a('array')
+      expect(res.body).to.be.a('array')
+    })
+    it ('Res should be one item', async () => {
+      const res = await request.get('api/items/632bae78614b9cf26c19826a')
+      expect(res.body).to.be.a('object')
     })
   })
 
@@ -23,9 +27,14 @@ describe('REST API TEST:', () => {
       expect(res.status).to.eql(200)
     })
 
-    it('Res body should be true', async () => {
+    it('Res text should be a confirmation', async () => {
       const res = await request.post('api/items/').send(newItem)
-      expect(res.body).to.eql({data: true})
+      expect(res.text).to.eql('Producto guardado!')
+    })
+
+    it('Return 400 when is no item sent', async () => {
+      const res = await request.post('api/items/')
+      expect(res.status).to.eql(400)
     })
   })
 

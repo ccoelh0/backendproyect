@@ -9,26 +9,18 @@ class Container {
 		this.collection = mongoose.model(collectionName, schema);
 	}
 
-	async save(object) {
+	save = async (object) => {
 		const obj = new this.collection(object)
 		return await obj.save()
 	}
 
-	async getAll() {
-		return await this.collection.find()
-	}
+	getAll = async () => await this.collection.find()
+	
+	getById = async (id) => await this.collection.findOne({ _id: id })
 
-	async getById(id) {
-		return await this.collection.findOne({ _id: id })
-	}
+	deleteById = async (id) => await this.collection.findOneAndDelete({ _id: id })	
 
-	async deleteById(id) {
-		return await this.collection.findOneAndDelete({ _id: id })
-	}
-
-	async updateById(id, edit) {
-		return await this.collection.updateOne({ _id: id }, {$set: edit})
-	}
+	updateById = async (id, edit) => await this.collection.updateOne({ _id: id }, {$set: edit})
 }
 
 export default Container;
