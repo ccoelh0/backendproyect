@@ -15,19 +15,63 @@ import routesForViews from './utils/ViewRouter.js'
 import routesForItems from './item/ItemRouter.js'
 import routesForCart from './cart/CartRoute.js'
 import routerChat from './chat/ChatRouter.js'
+import { graphqlHTTP } from 'express-graphql'
+import { buildSchema } from 'graphql'
+import {
+  getAll,
+  getById,
+  filter,
+  modifyItem,
+  addItem
+} from './graphql/index.js'
 
 const app = express()
 
+const schemaCompilado = buildSchema(
+  `
+type Item {
+  id: ID!,
+  name: String,
+  price: Int
+}
+
+type Query {
+  getById(id: ID): Item
+  getAll: [Item]
+  filterByPrice(price: Int): [Item]
+}
+
+type Mutation {
+  modifyItem(id: ID!, name: String, price: Int): Item
+  addItem(name: String, price: Int): Item
+}
+`
+);
+
+const graphMiddleware = graphqlHTTP({
+  schema: schemaCompilado,
+  rootValue: {
+    getById: getById,
+    getAll: getAll,
+    modifyItem: modifyItem,
+    filter: filter,
+    addItem: addItem,
+  },
+  graphiql: true
+});
+
+app.use('/graphql', graphMiddleware);
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static('public')) 
+app.use(express.static('public'))
 app.use(coockieParser())
 
 app.use(session({
   secret: process.env.COOKIE_SECRET,
   saveUninitialized: true,
   resave: true,
-  cookie: {maxAge:6000000}
+  cookie: { maxAge: 6000000 }
 }));
 
 app.use(passport.initialize());
@@ -43,7 +87,7 @@ app.use('/api/chat', routerChat)
 app.use((_, res) => {
   logger.warn('Recurso invalido');
   res.sendStatus(404);
-}) 
+})
 
 const server = http.createServer(app)
 const io = new Server(server);
