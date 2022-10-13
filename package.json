@@ -7,10 +7,7 @@
   "scripts": {
     "dev": "nodemon src/server.js",
     "start": "node src/server.js",
-    "test": "node src/utils/test.js",
-    "test:server": "mocha test/server.test.js",
-    "test:axios": "node test/axios.test.js",
-    "test:http": "node test/http.test.js",
+    "test:server": "mocha test/server.test.js test/cart.test.js",
     "0x": "0x src/server.js"
   },
   "keywords": [],

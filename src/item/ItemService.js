@@ -1,23 +1,27 @@
-import ItemFactory from './ItemFactory.js'
-import ItemDTO from './ItemDto.js'
-import config from '../utils/config.js'
+import ItemFactory from "./ItemFactory.js";
+import ItemDTO from "./ItemDto.js";
+import config from "../utils/config.js";
 
-const item = ItemFactory.create(config.mongobd.persistence)
-
-const getItem = async (id) => {
-  if (id) {
-    const find = await item.getById(id)
-    return new ItemDTO(find)
-  } else {
-    const data = await item.getAll()
-    return data.map(x => new ItemDTO(x))
+class ItemService {
+  constructor() {
+    this.item = ItemFactory.create(config.mongobd.persistence);
   }
+
+  getItem = async (id) => {
+    if (id) {
+      const find = await this.item.getById(id);
+      return new ItemDTO(find);
+    } else {
+      const data = await item.getAll();
+      return data.map((x) => new ItemDTO(x));
+    }
+  };
+
+  saveItem = async (newItem) => await this.item.save(newItem);
+
+  updateItem = async (id, update) => await this.item.updateById(id, update);
+
+  deleteItem = async (id) => await this.item.deleteById(id);
 }
 
-const saveItem = async (newItem) => await item.save(newItem)
-
-const updateItem = async (id, update) => await item.updateById(id, update)
-
-const deleteItem = async (id) => await item.deleteById(id)
-
-export { getItem, saveItem, updateItem, deleteItem }
+export default ItemService;

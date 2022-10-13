@@ -13,6 +13,6 @@ router.post('/:id/items/:idItem', controller.addItemsToCart)
 router.delete('/:id/items/:idItem', controller.deleteItemFromCart)
 router.post('/buyCart/:id', controller.buyCart)
 
-const routerItems = router;
+const routerCart = router;
 
-export default routerItems
+export default routerCart
