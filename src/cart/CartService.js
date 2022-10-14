@@ -9,7 +9,7 @@ import logger from "../utils/logger.js";
 import CartDTO from "./CartDTO.js";
 import config from "../utils/config.js";
 import ItemController from "../item/ItemController.js";
-import ItemService from '../item/ItemService.js'
+import ItemService from "../item/ItemService.js";
 
 class CartService {
   constructor() {
@@ -17,74 +17,95 @@ class CartService {
     this.item = new ItemService();
   }
 
-  createNewCart = async (newCart, res) => {
-    try {
+  createNewCart = async (newCart) => {
+    const createCart = async () => {
       const created = await this.cart.save(newCart);
       const newCartDTO = new CartDTO(created);
-      return res.json({ data: newCartDTO });
+      return { data: newCartDTO };
+    };
+
+    try {
+      const userHasCart = await this.cart.getAll();
+      if (userHasCart.length > 0) {
+        const find = userHasCart.find((x) => x.email === newCart.email);
+        if (find !== undefined) {
+          return { data: new CartDTO(find) };
+        } else {
+          return createCart();
+        }
+      }
+      return createCart();
     } catch (err) {
-      return res.status(400).send(err);
+      return {err};
     }
   };
 
-  getCart = async (id, res) => {
+  getCart = async (id) => {
     try {
       if (id) {
         const data = await this.cart.getById(id);
         const cartDTO = new CartDTO(data);
-        return res.json({ data: cartDTO });
+        return { data: cartDTO };
       }
       const data = await this.cart.getAll();
       const cartsDTO = data.map((x) => new CartDTO(x));
-      return res.json({ data: cartsDTO });
+      return { data: cartsDTO };
     } catch (err) {
-      return res.status(400).send({ err });
+      return { err };
     }
   };
 
-  getItemsFromCart = async (id, res) => {
+  getItemsFromCart = async (id) => {
     try {
       const cartSelected = await this.cart.getById(id);
+      if (cartSelected.err !== undefined)
+        return { err: cartSelected.err }
       const itemsFromCartDTO = new CartDTO(cartSelected).items;
-      return res.json({ data: itemsFromCartDTO });
+      return {data: itemsFromCartDTO };
     } catch (err) {
-      return res.status(400).send(err);
+      return {err};
     }
   };
 
-  deleteCart = async (id, res) => {
+  deleteCart = async (id) => {
     try {
       const response = await this.cart.deleteById(id);
-      return res.send({ data: response._doc.email + " cart's is deleted" });
+      console.log(response)
+      return { data: response._doc.email + " cart's is deleted" };
     } catch (err) {
-      return res
-        .status(404)
-        .send({ err: "cart is not found or something happens" });
+      return { err: "cart is not found or something happens" };
     }
   };
 
-  addItemsToCart = async (cartId, itemId, res) => {
+  addItemsToCart = async (cartId, itemId) => {
     const itemData = await this.item.getItem(itemId);
     const cartData = await this.cart.getById(cartId);
+
+    if (itemData.err !== undefined || cartData.err !== undefined)
+      return {err: itemData.err || cartData.err};
+
     cartData.items.push(itemData);
 
     try {
       await this.cart.updateById(cartId, { items: cartData.items });
-      return res.json({ data: 'item add!' });
+      return { data: "item add!" };
     } catch (err) {
-      return res.status(400).send({ err });
+      return { err };
     }
   };
 
-  deleteItemFromCart = async (cartId, itemId, res) => {
+  deleteItemFromCart = async (cartId, itemId) => {
     const cartSelected = await this.cart.getById(cartId);
+
     const filter = cartSelected.items.filter((x) => x._id.valueOf() !== itemId);
+
+    console.log(filter)
 
     try {
       await this.cart.updateById(cartId, { items: filter });
-      return res.json({ data: `${itemId} eliminado` });
+      return { data: `${itemId} eliminado` };
     } catch (err) {
-      return res.status(400).send({ err });
+      return { err };
     }
   };
 
@@ -94,16 +115,16 @@ class CartService {
     return res.find((dato) => dato.email === email).phone;
   };
 
-  buyCart = async (cart, res) => {
+  buyCart = async (cart) => {
     const phoneBuyer = await getUserPhone(this.cart.email);
     try {
       await transporter.sendMail(emailOptionsConfirmPurchase(cart));
       await sendWp(cart);
       await sendMsg(cart, phoneBuyer);
-      return res.send({ purchaseFinished: true });
+      return { purchaseFinished: true };
     } catch (err) {
       logger.error(err);
-      return res.send({ purchaseFinished: false, err });
+      return { purchaseFinished: false, err };
     }
   };
 }

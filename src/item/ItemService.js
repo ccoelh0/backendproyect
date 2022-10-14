@@ -8,20 +8,43 @@ class ItemService {
   }
 
   getItem = async (id) => {
-    if (id) {
-      const find = await this.item.getById(id);
-      return new ItemDTO(find);
-    } else {
-      const data = await item.getAll();
-      return data.map((x) => new ItemDTO(x));
+    try {
+      if (id) {
+        const find = await this.item.getById(id);
+        if (find.err !== undefined) return find
+        return new ItemDTO(find);
+      } else {
+        const data = await item.getAll();
+        return data.map((x) => new ItemDTO(x));
+      }
+    } catch (err) {
+      return err;
     }
   };
 
-  saveItem = async (newItem) => await this.item.save(newItem);
+  saveItem = async (newItem) => {
+    try {
+      return await this.item.save(newItem);
+    } catch (err) {
+      return err;
+    }
+  };
 
-  updateItem = async (id, update) => await this.item.updateById(id, update);
+  updateItem = async (id, update) => {
+    try {
+      return await this.item.updateById(id, update);
+    } catch (err) {
+      return err;
+    }
+  };
 
-  deleteItem = async (id) => await this.item.deleteById(id);
+  deleteItem = async (id) => {
+    try {
+      return await this.item.deleteById(id)
+    } catch(err) {
+      return err
+    }
+  };
 }
 
 export default ItemService;

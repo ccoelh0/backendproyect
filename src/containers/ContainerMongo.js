@@ -5,7 +5,6 @@ mongoose
   .connect(`${config.mongobd.connectionAtlas}`)
   .catch((err) => console.log(err));
 
-// todo: aplicar try and catch
 class Container {
   constructor(collectionName, schema) {
     this.collection = mongoose.model(collectionName, schema);
@@ -13,19 +12,34 @@ class Container {
 
   save = async (object) => {
     const obj = new this.collection(object);
-    return await obj.save();
+    try {
+      return await obj.save();
+    } catch (err) {
+      return {err};
+    }
   };
 
-  getAll = async () => await this.collection.find();
+  getAll = async () => {
+    try {
+      return await this.collection.find();
+    } catch (err) {
+      return {err};
+    }
+  };
 
-  getById = async (id) => await this.collection.findOne({ _id: id });
+  getById = async (id) => {
+    try {
+      return await this.collection.findOne({ _id: id });
+    } catch (err) {
+      return {err};
+    }
+  };
 
   deleteById = async (id) => {
     try {
       return await this.collection.findOneAndDelete({ _id: id });
     } catch (err) {
-			console.log('container', err)
-      return err;
+      return {err};
     }
   };
 
@@ -33,7 +47,7 @@ class Container {
     try {
       return await this.collection.updateOne({ _id: id }, { $set: edit });
     } catch (err) {
-      return err;
+      return {err};
     }
   };
 }
