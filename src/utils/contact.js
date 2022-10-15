@@ -1,14 +1,12 @@
 import {createTransport} from 'nodemailer'
 import twilio from 'twilio';
 
-const password = "dxoocsplpxjfrjru"
-
 export const transporter = createTransport({
   service: 'gmail',
   port: 587, 
   auth: {
       user: process.env.NODEMAILER_EMAIL_ADMIN,
-      pass: password
+      pass: process.env.NODEMAILER_PASSWORD
   }
 });
 
@@ -38,7 +36,7 @@ export const emailOptionsConfirmPurchase = (body) => ({
     <h1>Nuevo pedido de ${body.email}</h1>
     <div>
       <h4>Informacion:</h4>
-      <ul>${body.items.map(x => `<li>${x.name}</li>`).join(' ')}</ul>
+      <ul>${body.items.map(x => `<li>${x}</li>`).join(' ')}</ul>
     </div>
   `,
 })
@@ -49,7 +47,7 @@ export const sendWp = (body) => {
   return client.messages.create({
     body: `
       Nuevo pedido de ${body.email}
-      Informacion: ${body.items.map(x => x.name).join(' ')}
+      Informacion: ${body.items.map(x => x).join(' ')}
       `,
     from: 'whatsapp:+14155238886',
     to: `whatsapp:${process.env.ADMIN_PHONE}`

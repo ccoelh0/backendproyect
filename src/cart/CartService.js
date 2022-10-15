@@ -2,26 +2,24 @@ import CartFactory from "./CartFactory.js";
 import {
   transporter,
   emailOptionsConfirmPurchase,
-  sendWp,
-  sendMsg,
 } from "../utils/contact.js";
 import logger from "../utils/logger.js";
 import CartDTO from "./CartDTO.js";
 import config from "../utils/config.js";
-import ItemController from "../item/ItemController.js";
 import ItemService from "../item/ItemService.js";
 
 class CartService {
   constructor() {
     this.cart = CartFactory.create(config.mongobd.persistence);
     this.item = new ItemService();
+    this.transporter = transporter
   }
 
   createNewCart = async (newCart) => {
     const createCart = async () => {
       const created = await this.cart.save(newCart);
       const newCartDTO = new CartDTO(created);
-      return { data: newCartDTO };
+      return { data: newCartDTO, status: 200 };
     };
 
     try {
@@ -29,14 +27,14 @@ class CartService {
       if (userHasCart.length > 0) {
         const find = userHasCart.find((x) => x.email === newCart.email);
         if (find !== undefined) {
-          return { data: new CartDTO(find) };
+          return { data: new CartDTO(find), status: 200 };
         } else {
           return createCart();
         }
       }
       return createCart();
     } catch (err) {
-      return {err};
+      return { err, status: 404 };
     }
   };
 
@@ -45,13 +43,13 @@ class CartService {
       if (id) {
         const data = await this.cart.getById(id);
         const cartDTO = new CartDTO(data);
-        return { data: cartDTO };
+        return { data: cartDTO, status: 200 };
       }
       const data = await this.cart.getAll();
       const cartsDTO = data.map((x) => new CartDTO(x));
-      return { data: cartsDTO };
+      return { data: cartsDTO, status: 200 };
     } catch (err) {
-      return { err };
+      return { err, status: 404 };
     }
   };
 
@@ -59,36 +57,38 @@ class CartService {
     try {
       const cartSelected = await this.cart.getById(id);
       if (cartSelected.err !== undefined)
-        return { err: cartSelected.err }
+        return { err: cartSelected.err, status: 404 };
+
       const itemsFromCartDTO = new CartDTO(cartSelected).items;
-      return {data: itemsFromCartDTO };
+      return { data: itemsFromCartDTO, status: 200 };
     } catch (err) {
-      return {err};
+      return { err, status: 400 };
     }
   };
 
   deleteCart = async (id) => {
     try {
       const response = await this.cart.deleteById(id);
-      console.log(response)
-      return { data: response._doc.email + " cart's is deleted" };
+      if (deleteCart === null) return { err: "cart is not found", status: 404 };
+      return { data: response._doc.email + " cart's is deleted", status: 200 };
     } catch (err) {
-      return { err: "cart is not found or something happens" };
+      return { err: "cart is not found or something happens", status: 404 };
     }
   };
 
   addItemsToCart = async (cartId, itemId) => {
     const itemData = await this.item.getItem(itemId);
+
     const cartData = await this.cart.getById(cartId);
 
     if (itemData.err !== undefined || cartData.err !== undefined)
-      return {err: itemData.err || cartData.err};
+      return { err: itemData.err || cartData.err, status: 404 };
 
-    cartData.items.push(itemData);
+    cartData.items.push(itemData.id);
 
     try {
       await this.cart.updateById(cartId, { items: cartData.items });
-      return { data: "item add!" };
+      return { data: "item add!", status: 200 };
     } catch (err) {
       return { err };
     }
@@ -97,13 +97,14 @@ class CartService {
   deleteItemFromCart = async (cartId, itemId) => {
     const cartSelected = await this.cart.getById(cartId);
 
-    const filter = cartSelected.items.filter((x) => x._id.valueOf() !== itemId);
+    if (cartSelected.items.length === 0)
+      return { data: "item is not in cart", status: 404 };
 
-    console.log(filter)
+    const filterCart = cartSelected.items.filter((x) => x !== itemId);
 
     try {
-      await this.cart.updateById(cartId, { items: filter });
-      return { data: `${itemId} eliminado` };
+      await this.cart.updateById(cartId, { items: filterCart });
+      return { data: "deleted!", status: 200 };
     } catch (err) {
       return { err };
     }
@@ -115,16 +116,19 @@ class CartService {
     return res.find((dato) => dato.email === email).phone;
   };
 
-  buyCart = async (cart) => {
-    const phoneBuyer = await getUserPhone(this.cart.email);
+  buyCart = async (idCart) => {
+    const cart = await this.cart.getById(idCart);
+
+    if (cart === null) return { err: "cart is null!", status: 404 };
+    if (cart.err) return {err: cart.err, status: 404,}
+    if (cart.items.length === 0) return { err: "cart is empty!", status: 404 };
+
     try {
-      await transporter.sendMail(emailOptionsConfirmPurchase(cart));
-      await sendWp(cart);
-      await sendMsg(cart, phoneBuyer);
-      return { purchaseFinished: true };
+      await this.transporter.sendMail(emailOptionsConfirmPurchase(cart));
+      await this.cart.deleteById(idCart)
+      return { data: "purchase finished!", status: 200 };
     } catch (err) {
-      logger.error(err);
-      return { purchaseFinished: false, err };
+      return { err: "purchase not finished", err, status: 500 };
     }
   };
 }

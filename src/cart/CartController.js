@@ -9,6 +9,9 @@ class CartController {
   }
 
   createNewCart = async (req, res) => {
+    if (req.body.email === undefined)
+      return res.status(400).send({ err: "email is undefined" });
+
     const newCart = {
       email: req.body.email,
       timestamp: `${this.time.getDate()}/${
@@ -18,10 +21,10 @@ class CartController {
     };
 
     try {
-      const cart = await this.cartService.createNewCart(newCart);
-      return res.send(cart);
+      const response = await this.cartService.createNewCart(newCart);
+      return res.status(response.status).send(response.data);
     } catch (err) {
-      return res.status(400).send(err);
+      return res.status(404).send(err);
     }
   };
 
@@ -30,7 +33,7 @@ class CartController {
       const cart = await this.cartService.getCart(req.params.id);
       if (cart.err !== undefined)
         return res.status(404).send({ err: "cart not found" });
-      return res.send(cart);
+      return res.status(cart.status).send(cart.data);
     } catch (err) {
       return res.status(400).send(err);
     }
@@ -39,8 +42,10 @@ class CartController {
   getItemsFromCart = async (req, res) => {
     try {
       const items = await this.cartService.getItemsFromCart(req.params.id);
+
       if (items.err !== undefined) return res.status(404).send(items.err);
-      return res.send(items);
+
+      return res.status(items.status).send(items.data);
     } catch (err) {
       return res.status(400).send(err);
     }
@@ -49,6 +54,9 @@ class CartController {
   deleteCart = async (req, res) => {
     try {
       const deleteCart = await this.cartService.deleteCart(req.params.id);
+      if (deleteCart.err !== undefined)
+        return res.status(deleteCart.status).send(deleteCart.err);
+      return res.status(deleteCart.status).send(deleteCart.data);
     } catch (err) {
       return res.status(400).send({ err });
     }
@@ -62,7 +70,8 @@ class CartController {
       return res.status(400).send({ err: cartId || itemId + "is undefined" });
 
     try {
-      return await this.cartService.deleteItemFromCart(cartId, itemId);
+      const deleted = await this.cartService.deleteItemFromCart(cartId, itemId);
+      return res.status(deleted.status).send(deleted.data);
     } catch (err) {
       return res.status(404).send({ err });
     }
@@ -77,19 +86,25 @@ class CartController {
 
     try {
       const items = await this.cartService.addItemsToCart(cartId, itemId);
-      if (items.err) return res.status(400).send(items)
-      return res.send(items);
+      if (items.err) return res.status(items.status).send(items.err);
+      return res.status(items.status).send(items.data);
     } catch (err) {
-      return res.status(400).send(err)
+      return res.status(400).send(err);
     }
   };
 
   buyCart = async (req, res) => {
-    const cart = req.body.cart;
+    const cart = req.params.idCart;
+
+    if (cart === undefined)
+      return res.status(404).send("id cart is undefined");
+
     try {
-      return this.cartService.buyCart(cart);
+      const response = await this.cartService.buyCart(cart);
+      if (response.err) return res.status(response.status).send(response.err);
+      return res.status(response.status).send(response.data);
     } catch (err) {
-      throw new Error(err);
+      return res.status(400).send({ err });
     }
   };
 }
