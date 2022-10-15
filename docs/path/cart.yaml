@@ -1,0 +1,10 @@
+path:
+  /api/cart:
+    get:
+      summary: Obtener la lista de carts
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/schemas/cart"

@@ -10,6 +10,7 @@ import logger from "./utils/logger.js";
 import os from "os";
 import routes from "./routes.js";
 
+
 const app = express();
 
 const Session = session({
@@ -31,6 +32,7 @@ app.use((_, res) => {
   logger.warn("Recurso invalido");
   res.sendStatus(404);
 });
+
 
 const server = http.createServer(app);
 // const io = new Server(server);
