@@ -1,8 +1,5 @@
 import CartFactory from "./CartFactory.js";
-import {
-  transporter,
-  emailOptionsConfirmPurchase,
-} from "../utils/contact.js";
+import { transporter, emailOptionsConfirmPurchase } from "../utils/contact.js";
 import logger from "../utils/logger.js";
 import CartDTO from "./CartDTO.js";
 import config from "../utils/config.js";
@@ -12,7 +9,7 @@ class CartService {
   constructor() {
     this.cart = CartFactory.create(config.mongobd.persistence);
     this.item = new ItemService();
-    this.transporter = transporter
+    this.transporter = transporter;
   }
 
   createNewCart = async (newCart) => {
@@ -120,12 +117,12 @@ class CartService {
     const cart = await this.cart.getById(idCart);
 
     if (cart === null) return { err: "cart is null!", status: 404 };
-    if (cart.err) return {err: cart.err, status: 404,}
+    if (cart.err) return { err: cart.err, status: 404 };
     if (cart.items.length === 0) return { err: "cart is empty!", status: 404 };
 
     try {
       await this.transporter.sendMail(emailOptionsConfirmPurchase(cart));
-      await this.cart.deleteById(idCart)
+      await this.cart.deleteById(idCart);
       return { data: "purchase finished!", status: 200 };
     } catch (err) {
       return { err: "purchase not finished", err, status: 500 };
