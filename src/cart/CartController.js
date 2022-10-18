@@ -9,9 +9,6 @@ class CartController {
   }
 
   createNewCart = async (req, res) => {
-    if (req.body.email === undefined)
-      return res.status(400).send({ err: "email is undefined" });
-
     const newCart = {
       email: req.body.email,
       timestamp: `${this.time.getDate()}/${
@@ -21,44 +18,46 @@ class CartController {
     };
 
     try {
-      const response = await this.cartService.createNewCart(newCart);
-      return res.status(response.status).send(response.data);
+      const { status, data, err } = await this.cartService.createNewCart(
+        newCart
+      );
+
+      return res.status(status).send(data || err);
     } catch (err) {
-      return res.status(404).send(err);
+      return res.status(500).send(err);
     }
   };
 
   getCart = async (req, res) => {
     try {
-      const cart = await this.cartService.getCart(req.params.id);
-      if (cart.err !== undefined)
-        return res.status(404).send({ err: "cart not found" });
-      return res.status(cart.status).send(cart.data);
+      const { status, err, data } = await this.cartService.getCart(
+        req.params.id
+      );
+      return res.status(status).send(data || err);
     } catch (err) {
-      return res.status(400).send(err);
+      return res.status(500).send(err);
     }
   };
 
   getItemsFromCart = async (req, res) => {
     try {
-      const items = await this.cartService.getItemsFromCart(req.params.id);
-
-      if (items.err !== undefined) return res.status(404).send(items.err);
-
-      return res.status(items.status).send(items.data);
+      const { status, data, err } = await this.cartService.getItemsFromCart(
+        req.params.id
+      );
+      return res.status(status).send(data || err);
     } catch (err) {
-      return res.status(400).send(err);
+      return res.status(500).send(err);
     }
   };
 
   deleteCart = async (req, res) => {
     try {
-      const deleteCart = await this.cartService.deleteCart(req.params.id);
-      if (deleteCart.err !== undefined)
-        return res.status(deleteCart.status).send(deleteCart.err);
-      return res.status(deleteCart.status).send(deleteCart.data);
+      const { status, data, err } = await this.cartService.deleteCart(
+        req.params.id
+      );
+      return res.status(status).send(data || err);
     } catch (err) {
-      return res.status(400).send({ err });
+      return res.status(500).send({ err });
     }
   };
 
@@ -66,14 +65,14 @@ class CartController {
     const cartId = req.params.id;
     const itemId = req.params.idItem;
 
-    if (cartId === undefined || itemId === undefined)
-      return res.status(400).send({ err: cartId || itemId + "is undefined" });
-
     try {
-      const deleted = await this.cartService.deleteItemFromCart(cartId, itemId);
-      return res.status(deleted.status).send(deleted.data);
+      const { status, data, err } = await this.cartService.deleteItemFromCart(
+        cartId,
+        itemId
+      );
+      return res.status(status).send(data || err);
     } catch (err) {
-      return res.status(404).send({ err });
+      return res.status(500).send({ err });
     }
   };
 
@@ -81,30 +80,24 @@ class CartController {
     const cartId = req.params.id;
     const itemId = req.params.idItem;
 
-    if (cartId === undefined || itemId === undefined)
-      return res.status(400).send({ err: cartId || itemId + " is undefined" });
-
     try {
-      const items = await this.cartService.addItemsToCart(cartId, itemId);
-      if (items.err) return res.status(items.status).send(items.err);
-      return res.status(items.status).send(items.data);
+      const { status, data, err } = await this.cartService.addItemsToCart(
+        cartId,
+        itemId
+      );
+      return res.status(status).send(data || err);
     } catch (err) {
-      return res.status(400).send(err);
+      return res.status(500).send(err);
     }
   };
 
   buyCart = async (req, res) => {
     const cart = req.params.idCart;
-
-    if (cart === undefined)
-      return res.status(404).send("id cart is undefined");
-
     try {
-      const response = await this.cartService.buyCart(cart);
-      if (response.err) return res.status(response.status).send(response.err);
-      return res.status(response.status).send(response.data);
+      const { status, err, data } = await this.cartService.buyCart(cart);
+      return res.status(status).send(data || err);
     } catch (err) {
-      return res.status(400).send({ err });
+      return res.status(500).send(err);
     }
   };
 }

@@ -1,54 +1,57 @@
-import * as ItemService from './ItemService.js'
+import ItemService from "./ItemService.js";
 
 class ItemController {
   constructor() {
-    this.itemService = ItemService;
+    this.itemService = new ItemService();
   }
 
   getItem = async (req, res) => {
-    const id = req.body.id || req.params.id
-  
+    const id = req.body.id || req.params.id;
+
     try {
-      const data = await this.itemService.getItem(id)
-      return res.send(data)
+      const { status, data, err } = await this.itemService.getItem(id);
+      return res.status(status).send(data || err);
     } catch (err) {
-      return res.status(400).send(err.message)
+      return res.status(500).send(err);
     }
-  }
+  };
 
   saveItem = async (req, res) => {
-    const newItem = req.body
-    if (newItem === undefined) return res.status(400).send({ err: 'Item no definido' })
+    const newItem = req.body;
 
     try {
-      await this.itemService.saveItem(newItem)
-      return res.send('Producto guardado!')
+      const { status, data, err } = await this.itemService.saveItem(newItem);
+      return res.status(status).send(data || err);
     } catch (err) {
-      return res.status(400).send(err.message)
+      return res.status(500).send(err);
     }
-  }
+  };
 
   updateItem = async (req, res) => {
-    const id = req.params.id
-    const update = req.body || req.params
-    if (update === undefined) return res.status(400).send({ err: 'Item no definido' })
+    const id = req.params.id;
+    const update = req.body || req.params;
 
     try {
-      await this.itemService.updateItem(id, update)
-      return res.send({ data: 'Producto actualizado!' })
+      const { status, err, data } = await this.itemService.updateItem(
+        id,
+        update
+      );
+      return res.status(status).send(data || err);
     } catch (err) {
-      return res.status(400).send(err.message)
+      return res.status(400).send(err.message);
     }
-  }
+  };
 
   deleteItem = async (req, res) => {
     try {
-      await this.itemService.deleteItem(req.params.id)
-      return res.send({ data: 'Producto eliminado!' })
+      const {status, data, err} = await this.itemService.deleteItem(
+        req.params.id
+      );
+      return res.status(status).send(err || data);
     } catch (err) {
-      return res.status(400).send(err)
+      return res.status(500).send(err);
     }
-  }
+  };
 }
 
 export default ItemController;

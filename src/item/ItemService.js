@@ -5,17 +5,20 @@ import config from "../utils/config.js";
 class ItemService {
   constructor() {
     this.item = ItemFactory.create(config.mongobd.persistence);
+    this.itemDTO = ItemDTO;
   }
 
   getItem = async (id) => {
     try {
       if (id) {
         const find = await this.item.getById(id);
-        if (find.err !== undefined) return find
-        return new ItemDTO(find);
+        if (find === null) return { err: "id not found", status: 400 };
+        if (find.err !== undefined) return { err: find.err, status: 400 };
+        return { data: new this.itemDTO(find), status: 200 };
       } else {
-        const data = await item.getAll();
-        return data.map((x) => new ItemDTO(x));
+        const findAll = await this.item.getAll();
+        if (findAll.err !== undefined) return { err: findAll.err, status: 400 };
+        return { data: findAll.map((x) => new this.itemDTO(x)), status: 200 };
       }
     } catch (err) {
       return err;
@@ -23,26 +26,41 @@ class ItemService {
   };
 
   saveItem = async (newItem) => {
+    if (newItem === undefined) return { err: "Item is undefined", status: 400 };
+
     try {
-      return await this.item.save(newItem);
+      const response = await this.item.save(newItem);
+      if (response.err) return { err: response.err, status: 400 };
+      return { data: response, status: 200 };
     } catch (err) {
-      return err;
+      return { err };
     }
   };
 
   updateItem = async (id, update) => {
+    if (id === undefined || update === undefined)
+      return { err: "id or update is undefined", status: 400 };
+
     try {
-      return await this.item.updateById(id, update);
+      const response = await this.item.updateById(id, update);
+      if (response === null) return { err: "id not found", status: 400 };
+      if (response.err) return { err: response.err, status: 400 };
+      return { data: `${id} is updated!`, status: 200 };
     } catch (err) {
       return err;
     }
   };
 
   deleteItem = async (id) => {
+    if (id === undefined) return { err: "id is undefined", status: 400 };
+
     try {
-      return await this.item.deleteById(id)
-    } catch(err) {
-      return err
+      const response = await this.item.deleteById(id);
+      if (response === null) return { err: "id not found", status: 400 };
+      if (response.err !== undefined) return { err: response.err, status: 400 };
+      return { data: `${id} is deleted!`, status: 200 };
+    } catch (err) {
+      return err;
     }
   };
 }
