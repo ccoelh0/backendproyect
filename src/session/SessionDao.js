@@ -1,10 +1,17 @@
-import Container from "../Container.js"
-import sessionSchema from "../../models/SessionSchema.js"
+import Container from "../containers/ContainerMongo.js";
+import sessionSchema from "./SessionSchema.js";
+
+let instance = null;
 
 class SessionDao extends Container {
-    constructor() {
-        super('user-sessions', sessionSchema)
-    }
+  constructor() {
+    super("users", sessionSchema);
+  }
+
+  static getInstance() {
+    if (!instance) return (instance = new SessionDao());
+    return instance;
+  }
 }
 
-export default SessionDao
+export default SessionDao;

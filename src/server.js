@@ -3,13 +3,12 @@ import express from "express";
 import http from "http";
 import coockieParser from "cookie-parser";
 import session from "express-session";
-import passport from "./session/SessionService.js";
+import passport from "./session/SessionMidelwares.js";
 import args from "./utils/args.js";
 import cluster from "cluster";
 import logger from "./utils/logger.js";
 import os from "os";
 import routes from "./routes.js";
-
 
 const app = express();
 
@@ -32,7 +31,6 @@ app.use((_, res) => {
   logger.warn("Recurso invalido");
   res.sendStatus(404);
 });
-
 
 const server = http.createServer(app);
 // const io = new Server(server);

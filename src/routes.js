@@ -8,7 +8,7 @@ import swaggerConfig from "../docs/swagger.config.js";
 const router = express.Router();
 const url = "/api";
 
-router.use(url + "/sessions", routerSession);
+router.use(url + "/session", routerSession);
 router.use(url + "/items", routesForItems);
 router.use(url + "/cart", routerCart);
 router.use(url + "/chat", routerChat);

@@ -1,12 +1,21 @@
-import express from 'express'
-import passport, {logout, newUserWasCreated, getUser, validateLogin} from './SessionService.js'
-import { upload } from '../utils/multer.js'
+import express from "express";
+import passport from "./SessionMidelwares.js";
+import SessionController from "./SessionController.js";
+import { upload } from "../utils/multer.js";
 
-const routerSession = express.Router()
+const routerSession = express.Router();
+const controller = new SessionController();
 
-routerSession.get('/user', getUser)
-routerSession.post('/createUser', upload.single('avatar'), passport.authenticate('createUser'), newUserWasCreated)
-routerSession.post('/validateLogin', passport.authenticate('validateLogin'), validateLogin)
-routerSession.get('/logout', logout)
+routerSession.get("/user", controller.getUser);
+routerSession.post(
+  "/createNewUser",
+  upload.single("avatar"),
+  passport.authenticate("createNewUser"),
+  controller.createNewUser
+);
 
-export default routerSession
+
+// routerSession.post('/validateLogin', passport.authenticate('validateLogin'), validateLogin)
+// routerSession.get('/logout', logout)
+
+export default routerSession;

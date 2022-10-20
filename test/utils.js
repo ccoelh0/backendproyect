@@ -21,6 +21,4 @@ const update = {
   "timestamp": "23/06/2022",
 }
 
-
-
 export { URL, newItem, idDelete, update }
