@@ -7,7 +7,7 @@ class SessionController {
 
   getUser = async (req, res) => {
     try {
-      const { status, err, data } = await this.sessionService.getUser(req);
+      const { status, err, data } = await this.sessionService.getUser(req.user);
       return res.status(status).send(data || err);
     } catch (err) {
       return res.status(500).send(err);
@@ -17,7 +17,29 @@ class SessionController {
   createNewUser = async (req, res) => {
     try {
       const { status, err, data } = await this.sessionService.createNewUser(
-        req
+        req.body
+      );
+      return res.status(status).send(data || err);
+    } catch (err) {
+      return res.status(500).send(err);
+    }
+  };
+
+  validate = async (req, res) => {
+    try {
+      const { status, err, data } = await this.sessionService.validate(
+        req.user
+      );
+      return res.status(status).send(data || err);
+    } catch (err) {
+      return res.status(500).send(err);
+    }
+  };
+
+  logout = async () => {
+    try {
+      const { status, err, data } = await this.sessionService.logout(
+        req.session
       );
       return res.status(status).send(data || err);
     } catch (err) {

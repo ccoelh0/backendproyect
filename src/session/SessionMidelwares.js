@@ -44,32 +44,24 @@ passport.use(
   )
 );
 
-// passport.use(
-//   "validateLogin",
-//   new LocalStrategy(async (email, password, callback) => {
-//     const userdb = await session.getAll();
-//     const user = userdb.find((u) => u.email === email);
-//     if (!user || !(await bcrypt.compare(password.toString(), user.password)))
-//       return callback(new Error("User or password incorrect"));
-//     callback(null, user);
-//   })
-// );
+passport.use(
+  "validateLogin",
+  new LocalStrategy(async (username, password, done) => {
+    const userInDB = await session.getAll();
+    const user = userInDB.find((u) => u.username === username);
 
-/*
-  Cando tengo que escribir una sesion, me pasan req.user y elijo
-  que guardar en la sesion, en este caso es el username.
-*/
+    if (!user || !(await bcrypt.compare(password.toString(), user.password)))
+      return done("User or password incorrect");
 
-passport.serializeUser((user, done) => done(null, user.username));
+    return done(null, user);
+  })
+);
 
-/*
-  Cuando tengo que leer una sesion, agarro lo que esta en la sesion
-  y decido como reconstruir req.user
-*/
+passport.serializeUser((user, done) => done(null, user));
 
 passport.deserializeUser(async (user, done) => {
   const userdb = await session.getAll();
-  const find = userdb.find((user) => user.username === username.username);
+  const find = userdb.find((x) => x.username === user.username);
   done(null, find);
 });
 

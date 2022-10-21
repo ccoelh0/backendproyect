@@ -4,24 +4,12 @@ import ItemController from "../item/ItemController.js";
 class CartController {
   constructor() {
     this.cartService = new CartService();
-    this.time = new Date();
     this.itemController = new ItemController();
   }
 
   createNewCart = async (req, res) => {
-    const newCart = {
-      email: req.body.email,
-      timestamp: `${this.time.getDate()}/${
-        this.time.getMonth() + 1
-      }/${this.time.getFullYear()}`,
-      items: [],
-    };
-
     try {
-      const { status, data, err } = await this.cartService.createNewCart(
-        newCart
-      );
-
+      const { status, data, err } = await this.cartService.createNewCart(req.body.username);
       return res.status(status).send(data || err);
     } catch (err) {
       return res.status(500).send(err);

@@ -10,11 +10,19 @@ class CartService {
     this.item = new ItemService();
     this.transporter = transporter;
     this.cartDTO = CartDTO;
+    this.time = new Date();
   }
 
-  createNewCart = async (newCart) => {
-    if (newCart.email === undefined)
-      return { err: "email is undefined", status: 400 };
+  createNewCart = async (username) => {
+    if (username === undefined) return { err: "email is undefined", status: 400 };
+
+    const newCart = {
+      username: username,
+      timestamp: `${this.time.getDate()}/${
+        this.time.getMonth() + 1
+      }/${this.time.getFullYear()}`,
+      items: [],
+    };
 
     const createCart = async () => {
       const created = await this.cart.save(newCart);
@@ -25,7 +33,7 @@ class CartService {
     try {
       const userHasCart = await this.cart.getAll();
       if (userHasCart.length > 0) {
-        const find = userHasCart.find((x) => x.email === newCart.email);
+        const find = userHasCart.find((x) => x.username === newCart.username);
         if (find !== undefined) {
           return { data: new this.cartDTO(find), status: 200 };
         } else {
@@ -49,7 +57,6 @@ class CartService {
       }
       const findAll = await this.cart.getAll();
       const cartsDTO = findAll.map((x) => new this.cartDTO(x));
-      console.log(cartsDTO);
       return { data: cartsDTO, status: 200 };
     } catch (err) {
       return err;
@@ -74,7 +81,7 @@ class CartService {
       const response = await this.cart.deleteById(id);
       if (response === null || response.err !== undefined)
         return { err: "cart is not found", status: 400 };
-      return { data: response._doc.email + " cart's is deleted", status: 200 };
+      return { data: id + " cart's is deleted", status: 200 };
     } catch (err) {
       return err;
     }

@@ -1,8 +1,8 @@
 class SessionDTO {
-  constructor(userData, cartData) {
-    this.name = userData.name;
-    this.email = userData.email;
-    this.cart = cartData._id;
+  constructor(data) {
+    this.name = data.name;
+    this.username = data.username;
+    this.cartId = data.cartId;
   }
 }
 

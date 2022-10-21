@@ -8,14 +8,16 @@ const controller = new SessionController();
 
 routerSession.get("/user", controller.getUser);
 routerSession.post(
-  "/createNewUser",
+  "/create",
   upload.single("avatar"),
   passport.authenticate("createNewUser"),
   controller.createNewUser
 );
-
-
-// routerSession.post('/validateLogin', passport.authenticate('validateLogin'), validateLogin)
-// routerSession.get('/logout', logout)
+routerSession.post(
+  "/validate",
+  passport.authenticate("validateLogin"),
+  controller.validate
+);
+routerSession.get('/logout', controller.logout)
 
 export default routerSession;
