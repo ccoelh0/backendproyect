@@ -34,6 +34,7 @@ passport.use(
           name,
           phone,
           avatar: req.file?.filename,
+          isAdmin: false
         };
         const saved = await session.save(userSession);
         return done(null, saved);

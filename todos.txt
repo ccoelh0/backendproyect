@@ -1,9 +1,5 @@
-1. Revisar los errores y los status que se envian al cliente
-2. aplicar try and catch en todas las async
-3. Refactorizar sintaxis de las clases
 4. aplicar ts 
 5. crear midelware de validacion de user logueado
 6. crear permisos para los tipos de usuarios
 7. Usar el util ObjectId() de mongoose en vez de valueOf en los metodos 
-8. Enviar status correctos en los errores 
 9. Guardar solamente el id del producto, no todo el producto

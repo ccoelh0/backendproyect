@@ -23,6 +23,10 @@ export const sessionSchema = new Schema({
     type: String,
     required: false,
   },
+  isAdmin: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 export default sessionSchema;

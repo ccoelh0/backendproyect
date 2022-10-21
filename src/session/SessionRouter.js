@@ -1,7 +1,8 @@
 import express from "express";
 import passport from "./SessionMidelwares.js";
 import SessionController from "./SessionController.js";
-import { upload } from "../utils/multer.js";
+import { upload } from "../utils/multer.js"
+import { isAdmin } from "../utils/isAdmin.js";
 
 const routerSession = express.Router();
 const controller = new SessionController();
