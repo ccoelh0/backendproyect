@@ -88,16 +88,16 @@ class CartService {
   };
 
   addItemsToCart = async (cartId, itemId) => {
-    const itemData = await this.item.getItem(itemId);
-    const cartData = await this.cart.getById(cartId);
-
     if (cartId === undefined || itemId === undefined)
       return { err: cartId || itemId + " is undefined", status: 400 };
 
+    const itemData = await this.item.getItem(itemId);
+    const cartData = await this.cart.getById(cartId);
+
     if (itemData.err !== undefined || cartData.err !== undefined)
       return { err: itemData.err || cartData.err, status: 400 };
-
-    cartData.items.push(itemData.id);
+    
+    cartData.items.push(itemData.data.id);
 
     try {
       await this.cart.updateById(cartId, { items: cartData.items });
