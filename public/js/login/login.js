@@ -1,42 +1,56 @@
-const rootIndex = '/index'
-const login = document.getElementById('form-login')
-const register = document.getElementById('form-register')
-const username = document.getElementById('username')
-const password = document.getElementById('password')
-const submitButton = document.getElementById('submitLogin')
-const registerButton = document.getElementById('buttonCreateNewUser')
-const alertSuccess = document.getElementById('alertInfo')
-const alertError = document.getElementById('alertInfoError')
-const maintitle = document.getElementById('main-title')
+const home = "/";
+const login = document.getElementById("login");
+const createUser = document.getElementById("create-user");
+const username = document.getElementById("username");
+const password = document.getElementById("password");
+const register = document.getElementById("register");
+const goToLogin = document.getElementById("go-to-login");
+const newUsername = document.getElementById("new-username");
+const newPassword = document.getElementById("new-password");
+const newPhone = document.getElementById("new-name");
+const newName = document.getElementById("new-phone");
 
-const onSubmit = async () => {
-  const data = await fetch('/api/sessions/validateLogin', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ username: username.value, password: password.value })
-  })
+const handleForms = (form) => {
+  if (form === "create-user") {
+    login.classList.add("d-none");
+    register.classList.remove("d-none");
+  }
 
-  return await data.json()
-}
+  if (form === "go-to-login") {
+    register.classList.add("d-none");
+    login.classList.remove("d-none");
+  }
+};
 
-const activeAlert = (text, alert) => {
-  alert.innerHTML = text
-  alert.classList.remove('display-none')
-  setTimeout(() => alert.classList.add('display-none'), 4000)
-}
+const submit = (e) => {
+  e.preventDefault();
 
-login.addEventListener('submit', (e) => {
-  e.preventDefault()
-  username.value.length !== 0 && password.value.length !== 0 &&
-    onSubmit().then(() => window.location = rootIndex).catch(() => activeAlert('Email o contrasena incorrecto', alertError))
-})
+  const data = {
+    username: username.value,
+    password: password.value,
+  };
 
-registerButton.addEventListener('click', e => {
-  e.preventDefault()
-  maintitle.innerHTML = 'Crear usuario'
-  register.classList.remove('display-none')
-  login.classList.add('display-none')
-})
+  axios
+    .post("/api/session/validate", data)
+    .then((res) => res.status === 200 && (window.location = home))
+    .catch((err) => console.log(err));
+};
+
+const createNewUser = () => {
+  const data = {
+    username: newUsername.value,
+    password: newPassword.value,
+    phone: newPhone.value,
+    name: newName.value,
+  };
+
+  axios
+    .post("/api/session/create", data)
+    .then((res) => handleForms("go-to-login"))
+    .catch((err) => console.log(err));
+};
+
+login.addEventListener("submit", (e) => submit(e));
+register.addEventListener("submit", (e) => createNewUser(e));
+createUser.addEventListener("click", () => handleForms("create-user"));
+goToLogin.addEventListener("click", () => handleForms("go-to-login"));

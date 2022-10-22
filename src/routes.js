@@ -4,10 +4,12 @@ import routesForItems from "./item/ItemRouter.js";
 import routerCart from "./cart/CartRoute.js";
 import routerChat from "./chat/ChatRouter.js";
 import swaggerConfig from "../docs/swagger.config.js";
+import routerViews from "./views/ViewsRouter.js";
 
 const router = express.Router();
 const url = "/api";
 
+router.use("/", routerViews);
 router.use(url + "/session", routerSession);
 router.use(url + "/items", routesForItems);
 router.use(url + "/cart", routerCart);

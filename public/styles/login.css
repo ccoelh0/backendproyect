@@ -1,52 +1,12 @@
 body {
-  background-image: url('../images/fondo.jpg');
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
-
-.form-container {
-  background-color: #000000e6;
-  width: 700px;
-  color: white;
-  padding: 30px 100px 20px;
-  border-radius: 1rem;
-  box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.75);
-  -webkit-box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.75);
-}
-
-form div input {
-  margin-bottom: 1rem;
-}
-
-input {
-  color: red;
-}
-
-#login input {
-  margin-bottom: 1rem;
-}
-
-.login-buttons {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 100vh;
+
 }
 
-.login-buttons button {
-  width: 100%;
-  margin-bottom: 1rem;
-  border-radius: 50px;
-}
-
-.login-links {
-  text-decoration: underline;
-  color: white;
-}
-
-.login-links:hover{
-  color: rgb(227, 227, 227);
-  cursor: pointer;
+body form {
+  width: 500px;
 }
