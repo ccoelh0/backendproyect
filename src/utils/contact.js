@@ -25,15 +25,15 @@ export const emailToConfirmLogin = (body) => ({
   `,
 });
 
-export const emailOptionsConfirmPurchase = (body) => ({
+export const emailOptionsConfirmPurchase = (username, items) => ({
   from: process.env.NODEMAILER_EMAIL_ADMIN,
   to: process.env.NODEMAILER_EMAIL_ADMIN,
-  subject: `Nuevo pedido de ${body.email}`,
+  subject: `Nuevo pedido de ${username}`,
   html: `
-    <h1>Nuevo pedido de ${body.email}</h1>
+    <h1>Nuevo pedido de ${username}</h1>
     <div>
       <h4>Informacion:</h4>
-      <ul>${body.items.map((x) => `<li>${x}</li>`).join(" ")}</ul>
+      <ul>${items.map((x) => `<li>Producto con codigo: ${x}</li>`).join(" ")}</ul>
     </div>
   `,
 });

@@ -1,6 +1,8 @@
 let itemsData;
+
 const containerItems = document.getElementById("container-items");
 const usercart = document.getElementById("your-cart");
+const finishPurchase = document.getElementById("finish-purchase");
 
 const showItems = (data) => {
   itemsData = data;
@@ -39,21 +41,34 @@ const renderCart = (availableItems) => {
       const info = userCart.map((id) =>
         availableItems.find((item) => item.id === id)
       );
-      const render = info.map((i) => 
-        `<li>
+      const render = info
+        .map(
+          (i) =>
+            `<li>
           ${i.name} - <button onclick='deleteItemFromCart("${i.id}")'>X</button>
         </li>`
-      ).join(" ");
+        )
+        .join(" ");
       return (usercart.innerHTML = render);
     })
     .catch((err) => console.log(err));
 };
 
 const deleteItemFromCart = (itemId) => {
-  axios.delete(`api/cart/${userData.cartId}/items/${itemId}`)
-    .then(res => renderCart(itemsData))
+  axios
+    .delete(`api/cart/${userData.cartId}/items/${itemId}`)
+    .then(() => renderCart(itemsData))
     .catch((err) => console.log(err));
-}
+};
+
+const onFinishPurchase = () => {
+  axios
+    .post(`api/cart/buy-cart/${userData.cartId}`)
+    .then(() => renderCart(itemsData) )
+    .catch((err) => console.log(err));
+};
+
+finishPurchase.addEventListener('click', () => onFinishPurchase())
 
 axios
   .get("/api/items/")

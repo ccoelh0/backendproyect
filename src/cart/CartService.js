@@ -135,15 +135,15 @@ class CartService {
   buyCart = async (idCart) => {
     if (idCart === undefined)
       return { err: "cart id is undefined", status: 400 };
-    const cart = await this.cart.getById(idCart);
 
-    if (cart === null) return { err: "cart is not found!", status: 400 };
-    if (cart.err) return { err: cart.err, status: 400 };
-    if (cart.items.length === 0) return { err: "cart is empty!", status: 404 };
+    const cart = await this.getCart(idCart)
+
+    if (cart.err) return { err: "cart is not found! " + cart.err, status: 400 };
+    if (cart.data.items.length === 0) return { err: "cart is empty!", status: 400 };
 
     try {
-      await this.transporter.sendMail(emailOptionsConfirmPurchase(cart));
-      await this.cart.deleteById(idCart);
+      await this.cart.updateById(idCart, { items: [] });
+      await this.transporter.sendMail(emailOptionsConfirmPurchase(cart.data.username, cart.data.items)); 
       return { data: "purchase finished!", status: 200 };
     } catch (err) {
       return { err: "purchase not finished", err, status: 500 };
