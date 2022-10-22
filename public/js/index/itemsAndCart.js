@@ -1,12 +1,21 @@
 let itemsData;
-
 const containerItems = document.getElementById("container-items");
 const usercart = document.getElementById("your-cart");
 const finishPurchase = document.getElementById("finish-purchase");
 
-const showItems = (data) => {
+const getItemsService = () => axios.get("/api/items/");
+const addToCartService = (itemId) => axios.post(`api/cart/${userData.cartId}/items/${itemId}`);
+const getCartService = () => axios.get(`api/cart/${userData.cartId}`);
+const deleteItemService = (itemId) => axios.delete(`api/cart/${userData.cartId}/items/${itemId}`)
+const finishPurchaseService = () => axios.post(`api/cart/buy-cart/${userData.cartId}`)
+ 
+const handOutData = (data) => {
   itemsData = data;
+  showItems(data);
+  renderCart(data);
+};
 
+const showItems = (data) => {
   const cards = data
     .map(
       (item) => `
@@ -26,54 +35,22 @@ const showItems = (data) => {
   return (containerItems.innerHTML = cards);
 };
 
-const addToCart = (itemId) => {
-  axios
-    .post(`api/cart/${userData.cartId}/items/${itemId}`)
-    .then(() => renderCart(itemsData))
-    .catch((err) => console.log(err));
-};
+const addToCart = (itemId) => addToCartService(itemId).then(() => renderCart(itemsData)).catch((err) => console.log(err));
 
 const renderCart = (availableItems) => {
-  axios
-    .get(`api/cart/${userData.cartId}`)
+  getCartService()
     .then((res) => {
-      const userCart = res.data.items; // ids
-      const info = userCart.map((id) =>
-        availableItems.find((item) => item.id === id)
-      );
-      const render = info
-        .map(
-          (i) =>
-            `<li>
-          ${i.name} - <button onclick='deleteItemFromCart("${i.id}")'>X</button>
-        </li>`
-        )
-        .join(" ");
+      const userCart = res.data.items; 
+      const info = userCart.map((id) => availableItems.find((item) => item.id === id));
+      const render = info.map((i) =>`<li> ${i.name} - <button onclick='deleteItemFromCart("${i.id}")'>X</button></li>`).join(" ");
       return (usercart.innerHTML = render);
     })
     .catch((err) => console.log(err));
 };
 
-const deleteItemFromCart = (itemId) => {
-  axios
-    .delete(`api/cart/${userData.cartId}/items/${itemId}`)
-    .then(() => renderCart(itemsData))
-    .catch((err) => console.log(err));
-};
+const deleteItemFromCart = (itemId) => deleteItemService(itemId).then(() => renderCart(itemsData)).catch((err) => console.log(err));
 
-const onFinishPurchase = () => {
-  axios
-    .post(`api/cart/buy-cart/${userData.cartId}`)
-    .then(() => renderCart(itemsData) )
-    .catch((err) => console.log(err));
-};
+const onFinishPurchase = () => finishPurchaseService().then(() => renderCart(itemsData)).catch((err) => console.log(err));
 
-finishPurchase.addEventListener('click', () => onFinishPurchase())
-
-axios
-  .get("/api/items/")
-  .then((res) => {
-    showItems(res.data);
-    renderCart(res.data);
-  })
-  .catch((err) => console.log(err));
+getItemsService().then((res) => handOutData(res.data)).catch((err) => console.log(err))
+finishPurchase.addEventListener("click", () => onFinishPurchase());

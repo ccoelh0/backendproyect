@@ -18,6 +18,7 @@ class SessionService {
       let dataToDTO = {
         name: user.name,
         username: user.username,
+        isAdmin: user.isAdmin
       };
 
       const cart = await this.cart.getCart();
