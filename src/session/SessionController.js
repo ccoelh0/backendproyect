@@ -36,7 +36,7 @@ class SessionController {
     }
   };
 
-  logout = async () => {
+  logout = async (req, res) => {
     try {
       const { status, err, data } = await this.sessionService.logout(
         req.session

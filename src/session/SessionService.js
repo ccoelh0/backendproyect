@@ -12,8 +12,34 @@ class SessionService {
   }
 
   getUser = async (user) => {
-    if (req.user === undefined) return { err: "user hasn't log", status: 400 };
-    return { data: req.user, status: 200 };
+    try {
+      if (user === undefined) return { err: "user hasn't log", status: 400 };
+
+      let dataToDTO = {
+        name: user.name,
+        username: user.username,
+      };
+
+      const cart = await this.cart.getCart();
+
+      if (cart.err) return { err: "An error has ocurred", status: 500 };
+
+      let userCart = cart.data.find((x) => x.username === user.username);
+
+      if (userCart === undefined) {
+        const newCart = await this.cart.createNewCart(user.username);
+        if (newCart.err) return { err: "An error has ocurred", status: 500 };
+        userCart = newCart.data.id;
+      } else {
+        userCart = userCart.id;
+      }
+
+      dataToDTO = { ...dataToDTO, cartId: userCart };
+      const dto = new this.sessionDTO(dataToDTO);
+      return { data: dto, status: 200 };
+    } catch (err) {
+      return { err, status: 500 };
+    }
   };
 
   createNewUser = async (body) => {
@@ -23,36 +49,18 @@ class SessionService {
       await transporter.sendMail(emailToConfirmLogin(username));
       return { data: `${username} was created`, status: 200 };
     } catch (err) {
-      return { err, status: 400 };
+      return { err, status: 500 };
     }
   };
 
   validate = async (user) => {
-    if (user === undefined)
-      return { err: "Username or password is incorrect", status: 400 };
-
-    let dataToDTO = {
-      name: user.name,
-      username: user.username,
-    };
-
-    const cart = await this.cart.getCart();
-
-    if (cart.err) return { err: "An error has ocurred", status: 500 };
-
-    let userCart = cart.data.find((x) => x.username === user.username);
-
-    if (userCart === undefined) {
-      const newCart = await this.cart.createNewCart(user.username);
-      if (newCart.err) return { err: "An error has ocurred", status: 500 };
-      userCart = newCart.data.id;
-    } else {
-      userCart = userCart.id;
+    try {
+      if (user === undefined)
+        return { err: "Username or password is incorrect", status: 400 };
+      return { data: `${user.username}'s login is valide`, status: 200 };
+    } catch (err) {
+      return { err, status: 500 };
     }
-
-    dataToDTO = { ...dataToDTO, cartId: userCart };
-    const dto = new this.sessionDTO(dataToDTO);
-    return { data: dto, status: 200 };
   };
 
   logout = async (session) => {
