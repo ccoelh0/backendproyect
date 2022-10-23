@@ -1,6 +1,6 @@
 import express from 'express'
 import ItemController from './ItemController.js'
-import { isAdmin } from '../utils/isAdmin.js'
+import isAdmin from '../utils/isAdmin.js'
 
 const router = express.Router()
 const controller = new ItemController()
