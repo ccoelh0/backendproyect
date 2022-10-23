@@ -8,7 +8,7 @@ const showItemsToDelete = (data) => {
   return (selectToDelete.innerHTML = render);
 };
 
-const onSelect = (value) => {
+const onChangeToDelete = (value) => {
   if (value !== 'default') {
     deleteButton.classList.add("btn-danger");
     deleteButton.classList.remove("btn-secondary");
@@ -31,7 +31,7 @@ const onDelete = () => {
   }
 }
 
-selectToDelete.addEventListener("change", (e) => onSelect(e.target.value));
+selectToDelete.addEventListener("change", (e) => onChangeToDelete(e.target.value));
 deleteButton.addEventListener("click", () => onDelete());
 
 getItems()
