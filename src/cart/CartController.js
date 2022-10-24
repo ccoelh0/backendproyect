@@ -9,7 +9,9 @@ class CartController {
 
   createNewCart = async (req, res) => {
     try {
-      const { status, data, err } = await this.cartService.createNewCart(req.body.username);
+      const { status, data, err } = await this.cartService.createNewCart(
+        req.body.username
+      );
       return res.status(status).send(data || err);
     } catch (err) {
       return res.status(500).send(err);
@@ -45,7 +47,7 @@ class CartController {
       );
       return res.status(status).send(data || err);
     } catch (err) {
-      return res.status(500).send({ err });
+      return res.status(500).send(err);
     }
   };
 
@@ -60,7 +62,7 @@ class CartController {
       );
       return res.status(status).send(data || err);
     } catch (err) {
-      return res.status(500).send({ err });
+      return res.status(500).send(err);
     }
   };
 

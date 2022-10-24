@@ -5,11 +5,11 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "BeraManga",
-      description: 'In progress'
+      title: "Eccomerce",
+      description: 'Documentacion de los endpoints del eccomerce'
     },
   },
-  apis: ['./docs/schema/**/*.yaml', './docs/path/**/*.yaml']
+  apis: ['./docs/**/*.yaml']
 }
 
 const specs = swaggerJsdoc(options)

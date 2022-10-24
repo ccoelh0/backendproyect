@@ -1,0 +1,68 @@
+components:
+  schemas:
+    Cart:
+      type: object
+      required:
+        - email
+        - timestamp
+        - items
+      properties:
+        email:
+          type: string
+          description: Email del propietario de la cart
+        timestamp:
+          type: string
+          description: Fecha de creacion de la cart
+        items:
+          type: Array
+          description: Array de id de items
+      example:
+        email: "example@gmail.com"
+        id: "asdasdasd"
+        items: "['abc', 'efg']"
+    Item from cart:
+      type: List
+      properties: 
+        items: 
+          type: array
+          description: un array con los ids de los items
+      example:
+        items: ['123', '123', '123']
+
+paths:
+  /api/cart/{cartId}:
+    get:
+      tags:
+        - Cart
+      sumary: obtener la cart de un usuario
+      description: Un endpoint para obtener la cart de un usuario segun su id
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+  /api/cart/:
+    post:
+      tags:
+        - Cart
+      sumary: Crear una nueva carta
+      description: Un endpoint para crearle una nueva cart a un usuario
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Cart"
+  /api/cart/{id}/items:
+    get:
+      tags:
+        - Cart
+      sumary: obtener los items de una cart en especifico
+      description: Un endpoint para obtener los items del a cart de un usuario segun su id
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item from cart"

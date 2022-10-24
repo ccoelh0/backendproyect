@@ -1,0 +1,38 @@
+components:
+  schemas:
+    Session:
+      type: object
+      required:
+        - username
+        - password
+        - name
+        - phone
+        - timestamp
+        - avatar
+        - isAdmin
+      properties:
+        username:
+          type: string
+          description: Email del del usuario, que se usa para entrar a la app
+        timestamp:
+          type: string
+          description: Fecha de creacion de la cuenta
+        password: 
+          type: string
+          description: Contrasena de la cuenta del usuario
+        phone: 
+          type: number
+          description: Telefono del usuario
+        avatar: 
+          type: buffer
+          description: Avatar del usuario
+        isAdmin: 
+          type: boolean
+          description: Booleano que determina el tipo de usuario
+      example:
+        username: 'example@gmail.com'
+        timestamp: '12/09/2022'
+        password: "abc123"
+        phone: 11111111
+        avatar: dfkjlsdjklsdjkl.jpeg
+        isAdmin: false

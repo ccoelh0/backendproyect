@@ -12,6 +12,6 @@ router.use("/", routerViews);
 router.use(url + "/session", routerSession);
 router.use(url + "/items", routesForItems);
 router.use(url + "/cart", routerCart);
-router.use(url + "-docs/", swaggerConfig.serve, swaggerConfig.setup);
+router.use(url + "/docs", swaggerConfig.serve, swaggerConfig.setup);
 
 export default router;

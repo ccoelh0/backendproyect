@@ -1,0 +1,37 @@
+components:
+  schemas:
+    Item:
+      type: object
+      required:
+        - name
+        - timestamp
+        - price
+        - description
+        - stock
+        - image
+      properties:
+        name:
+          type: string
+          description: Nombre del item
+        timestamp:
+          type: string
+          description: Fecha de creacion del item
+        description: 
+          type: string
+          description: Una breve descripcion del item
+        image: 
+          type: string
+          description: Link a la imagen
+        stock: 
+          type: number
+          description: Cantidad de stock del item
+        price: 
+          type: number
+          description: Precio del item
+      example:
+        nombre: Attack on Titan - Volumen 1
+        timestamp: '12/09/2022'
+        description: AOT es una manga acerca de... 
+        image: https://m.media-amazon.com/images/I/51QWSFImgvL.jpg
+        stoc: 20
+        price: 500

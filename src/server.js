@@ -4,7 +4,6 @@ import http from "http";
 import coockieParser from "cookie-parser";
 import session from "express-session";
 import passport from "./session/SessionMidelwares.js";
-import args from "./utils/args.js";
 import cluster from "cluster";
 import logger from "./utils/logger.js";
 import os from "os";
