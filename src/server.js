@@ -5,9 +5,9 @@ import coockieParser from "cookie-parser";
 import session from "express-session";
 import passport from "./session/SessionMidelwares.js";
 import cluster from "cluster";
-// import logger from "./utils/logger.js";
 import os from "os";
 import routes from "./routes.js";
+import handleError from "./utils/errorHandler.js";
 
 const app = express();
 
@@ -26,10 +26,7 @@ app.use(Session);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/", routes);
-app.use((_, res) => {
-  // logger.warn("Recurso invalido");
-  res.sendStatus(404);
-});
+app.use(handleError);
 
 const server = http.createServer(app);
 
