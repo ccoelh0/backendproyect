@@ -1,5 +1,5 @@
 4. aplicar ts 
 5. crear midelware de validacion de user logueado
-6. crear permisos para los tipos de usuarios
 7. Usar el util ObjectId() de mongoose en vez de valueOf en los metodos 
-9. Guardar solamente el id del producto, no todo el producto
+8. swagger
+9. handle error

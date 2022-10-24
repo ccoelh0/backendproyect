@@ -1,18 +1,12 @@
 import express from "express";
 import isAdmin from "../utils/isAdmin.js";
+import controller from "./ViewController.js";
 
 const router = express.Router();
-const root = { root: "." };
 
-router.get("/login", (_, res) => res.sendFile("/public/login.html", root));
-router.get("/", (req, res) => res.sendFile("/public/index.html", root));
-// router.get("/admin", isAdmin, (req, res) =>
-//   res.sendFile("/public/admin.html", root)
-// );
-
-router.get("/admin", (req, res) =>
-  res.sendFile("/public/admin.html", root)
-);
+router.get("/login", controller.returnLogin);
+router.get("/", controller.returnLogin);
+router.get("/admin", isAdmin, controller.returnLogin);
 
 const routerViews = router;
 
