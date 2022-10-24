@@ -1,6 +1,6 @@
 import CartFactory from "./CartFactory.js";
 import { transporter, emailOptionsConfirmPurchase } from "../utils/contact.js";
-import CartDTO from "./CartDTO.js";
+import CartDTO from "./CartDto.js";
 import config from "../config.js";
 import ItemService from "../item/ItemService.js";
 
