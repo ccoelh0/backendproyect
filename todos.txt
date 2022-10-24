@@ -3,3 +3,4 @@
 7. Usar el util ObjectId() de mongoose en vez de valueOf en los metodos 
 8. swagger
 9. handle error
+. variables  de entorno

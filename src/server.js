@@ -1,4 +1,4 @@
-import "dotenv/config";
+import "./config.js";
 import express from "express";
 import http from "http";
 import coockieParser from "cookie-parser";
@@ -33,23 +33,10 @@ app.use((_, res) => {
 });
 
 const server = http.createServer(app);
-// const io = new Server(server);
 
-// io.on('connection', async (socket) => {
-//   const data = await getAllMessage()
-//   socket.emit('data-chat', data)
+const port = process.env.PORT || 8090;
 
-//   socket.on('new-message', async data => {
-//     socket.emit('update-chat', await getAllMessage())
-//   })
-// })
-
-const port = args.port || process.env.PORT || 8090;
-
-if (
-  (args.mode === "cluster" || process.env.MODE === "CLUSTER") &&
-  cluster.isPrimary
-) {
+if (process.env.MODE === "CLUSTER" && cluster.isPrimary) {
   for (let i = 0; i <= os.cpus().length; i++) {
     cluster.fork();
   }

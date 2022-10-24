@@ -1,10 +1,10 @@
 import ItemFactory from "./ItemFactory.js";
 import ItemDTO from "./ItemDto.js";
-import config from "../utils/config.js";
+import config from "../config.js";
 
 class ItemService {
   constructor() {
-    this.item = ItemFactory.create(config.mongobd.persistence);
+    this.item = ItemFactory.create(config.db.persistence);
     this.itemDTO = ItemDTO;
   }
 

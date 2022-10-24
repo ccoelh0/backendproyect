@@ -1,12 +1,12 @@
 import CartFactory from "./CartFactory.js";
 import { transporter, emailOptionsConfirmPurchase } from "../utils/contact.js";
 import CartDTO from "./CartDTO.js";
-import config from "../utils/config.js";
+import config from "../config.js";
 import ItemService from "../item/ItemService.js";
 
 class CartService {
   constructor() {
-    this.cart = CartFactory.create(config.mongobd.persistence);
+    this.cart = CartFactory.create(config.db.persistence);
     this.item = new ItemService();
     this.transporter = transporter;
     this.cartDTO = CartDTO;

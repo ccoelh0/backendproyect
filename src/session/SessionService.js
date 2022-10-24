@@ -1,12 +1,12 @@
 import { transporter, emailToConfirmLogin } from "../utils/contact.js";
 import SessionFactory from "./SessionFactory.js";
-import config from "../utils/config.js";
+import config from "../config.js";
 import SessionDTO from "./SessionDto.js";
 import CartService from "../cart/CartService.js";
 
 class SessionService {
   constructor() {
-    this.session = SessionFactory.create(config.mongobd.persistence);
+    this.session = SessionFactory.create(config.db.persistence);
     this.sessionDTO = SessionDTO;
     this.cart = new CartService();
   }

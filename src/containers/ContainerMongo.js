@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import config from "../utils/config.js";
+import config from "../config.js";
 
 mongoose
-  .connect(`${config.mongobd.connectionAtlas}`)
+  .connect(`${config.db.connectionAtlas}`)
   .catch((err) => console.log(err));
 
 class Container {

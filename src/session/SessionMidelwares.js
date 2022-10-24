@@ -2,10 +2,10 @@ import bcrypt from "bcrypt";
 import passport from "passport";
 import localStrategy from "passport-local";
 import SessionFactory from "./SessionFactory.js";
-import config from "../utils/config.js";
+import config from "../config.js";
 
 const LocalStrategy = localStrategy.Strategy;
-const session = SessionFactory.create(config.mongobd.persistence);
+const session = SessionFactory.create(config.db.persistence);
 
 passport.use(
   "createNewUser",
