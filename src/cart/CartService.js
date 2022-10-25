@@ -149,10 +149,10 @@ class CartService {
       const { err } = await this.order.generateOrder(cart.data);
       if (err !== undefined)
         return { err: "purchase not finished", err, status: 500 };
-      await this.cart.updateById(idCart, { items: [] });
       await this.transporter.sendMail(
         emailOptionsConfirmPurchase(cart.data.username, cart.data.items)
       );
+      await this.cart.updateById(idCart, { items: [] });
       return { data: "purchase finished!", status: 200 };
     } catch (err) {
       return { err: "purchase not finished", err, status: 500 };
