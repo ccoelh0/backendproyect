@@ -10,21 +10,15 @@ import routes from "./routes.js";
 import handleError from "./utils/errorHandler.js";
 import { Server } from 'socket.io';
 import { initialize } from "./chat/ChatRouter.js";
+import config from "./config.js";
 
 const app = express();
-
-const Session = session({
-  secret: process.env.COOKIE_SECRET,
-  saveUninitialized: true,
-  resave: true,
-  cookie: { maxAge: 6000000 },
-});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(coockieParser());
-app.use(Session);
+app.use(session(config.session));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/", routes);
