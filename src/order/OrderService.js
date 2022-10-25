@@ -11,10 +11,13 @@ class OrderService {
 
   generateOrder = async (cart) => {
     try {
-      const ordersQuantity = await this.order.getAll();
+      const orders = await this.order.getAll();
 
-      if (ordersQuantity.err || ordersQuantity === null)
+      if (orders.err || orders === null)
         return { err: "something happens", status: 500 };
+
+      const orderNumber = orders.length + 1
+      
       if (
         cart.items === undefined ||
         cart.items.length === 0 ||
@@ -27,14 +30,15 @@ class OrderService {
         timestamp: `${this.time.getDate()}/${
           this.time.getMonth() + 1
         }/${this.time.getFullYear()}`,
-        orderNumber: ordersQuantity + 1,
         state: "Generada",
         username: cart.username,
+        orderNumber,
       };
 
       const response = await this.order.save(order);
-
+      
       if (response.err) return { err: response.err, status: 500 };
+      
       return { data: new OrderDTO(response), status: 200 };
     } catch (err) {
       return err;

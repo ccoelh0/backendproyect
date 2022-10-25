@@ -155,9 +155,10 @@ class CartService {
       return { err: "cart is empty!", status: 400 };
 
     try {
-      const { err } = await this.order.generateOrder(cart.data);
-      if (err !== undefined)
-        return { err: "purchase not finished", err, status: 500 };
+      const orderResponse = await this.order.generateOrder(cart.data);
+      console.log(orderResponse)
+      // if (err !== undefined)
+      //   return { err: "purchase not finished", err, status: 500 };
       await this.transporter.sendMail(
         emailOptionsConfirmPurchase(cart.data.username, cart.data.items)
       );
