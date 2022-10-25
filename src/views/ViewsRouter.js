@@ -7,6 +7,7 @@ const router = express.Router();
 router.get("/login", controller.returnLogin);
 router.get("/", controller.returnLogin);
 router.get("/admin", isAdmin, controller.returnLogin);
+router.get("/chat", controller.returnChat);
 
 const routerViews = router;
 

@@ -4,25 +4,14 @@ const { Schema } = pkg;
 
 export const chatSchema = new Schema({
   author: {
-    id: {
+    username: {
       type: String,
       required: true
     },
-    name: {
-      type: String,
+    isAdmin: {
+      type: Boolean,
       required: true
-    },
-    age: {
-      type: Number,
-      required: true
-    }, 
-    alias: {
-      type: String
-    },
-    avatar: {
-      type: String,
-      required: true
-    },
+    }
   },
   message: {
     type: String,

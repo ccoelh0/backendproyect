@@ -1,8 +1,9 @@
 import CartFactory from "./CartFactory.js";
 import { transporter, emailOptionsConfirmPurchase } from "../utils/contact.js";
-import CartDTO from "./CartDTO.js";
+import CartDTO from "./CartDto.js";
 import config from "../config.js";
 import ItemService from "../item/ItemService.js";
+import OrderService from "../order/OrderService.js";
 
 class CartService {
   constructor() {
@@ -11,10 +12,12 @@ class CartService {
     this.transporter = transporter;
     this.cartDTO = CartDTO;
     this.time = new Date();
+    this.order = new OrderService();
   }
 
   createNewCart = async (username) => {
-    if (username === undefined) return { err: "email is undefined", status: 400 };
+    if (username === undefined)
+      return { err: "email is undefined", status: 400 };
 
     const newCart = {
       username: username,
@@ -92,12 +95,21 @@ class CartService {
       return { err: cartId || itemId + " is undefined", status: 400 };
 
     const itemData = await this.item.getItem(itemId);
-    const cartData = await this.cart.getById(cartId);
+    let cartData = await this.cart.getById(cartId);
 
     if (itemData.err !== undefined || cartData.err !== undefined)
       return { err: itemData.err || cartData.err, status: 400 };
-    
-    cartData.items.push(itemData.data.id);
+
+    const find = cartData.items.find(x => x.id === itemId)
+
+    if (find) {
+      const items = cartData.items.filter(x => x.id !== find.id)
+      const newAmount = {id: find.id, amount: find.amount + 1}
+      items.push(newAmount)
+      cartData = {...cartData, items}
+    } else {
+      cartData.items.push({id: itemData.data.id, amount: 1});
+    }
 
     try {
       await this.cart.updateById(cartId, { items: cartData.items });
@@ -136,14 +148,21 @@ class CartService {
     if (idCart === undefined)
       return { err: "cart id is undefined", status: 400 };
 
-    const cart = await this.getCart(idCart)
+    const cart = await this.getCart(idCart);
 
     if (cart.err) return { err: "cart is not found! " + cart.err, status: 400 };
-    if (cart.data.items.length === 0) return { err: "cart is empty!", status: 400 };
+    if (cart.data.items.length === 0)
+      return { err: "cart is empty!", status: 400 };
 
     try {
+      const orderResponse = await this.order.generateOrder(cart.data);
+      console.log(orderResponse)
+      // if (err !== undefined)
+      //   return { err: "purchase not finished", err, status: 500 };
+      await this.transporter.sendMail(
+        emailOptionsConfirmPurchase(cart.data.username, cart.data.items)
+      );
       await this.cart.updateById(idCart, { items: [] });
-      await this.transporter.sendMail(emailOptionsConfirmPurchase(cart.data.username, cart.data.items)); 
       return { data: "purchase finished!", status: 200 };
     } catch (err) {
       return { err: "purchase not finished", err, status: 500 };
