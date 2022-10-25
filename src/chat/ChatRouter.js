@@ -7,7 +7,6 @@ const controller = new ChatController()
 
 router.get('/', controller.getMessages)
 router.post('/', controller.saveMessage)
-// router.post('/:username', isAdmin, controller.answer)
 
 const routerChat = router
 
