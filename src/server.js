@@ -8,6 +8,8 @@ import cluster from "cluster";
 import os from "os";
 import routes from "./routes.js";
 import handleError from "./utils/errorHandler.js";
+import { Server } from 'socket.io';
+import { initialize } from "./chat/ChatRouter.js";
 
 const app = express();
 
@@ -29,6 +31,9 @@ app.use("/", routes);
 app.use(handleError);
 
 const server = http.createServer(app);
+const io = new Server(server);
+
+initialize(io)
 
 const port = process.env.PORT || 8090;
 
