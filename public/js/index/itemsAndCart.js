@@ -41,8 +41,11 @@ const renderCart = (availableItems) => {
   getCartService()
     .then((res) => {
       const userCart = res.data.items; 
-      const info = userCart.map((id) => availableItems.find((item) => item.id === id));
-      const render = info.map((i) =>`<li> ${i.name} - <button onclick='deleteItemFromCart("${i.id}")'>X</button></li>`).join(" ");
+      const info = userCart.map((x) => {
+        const data = availableItems.find((item) => item.id === x.id)
+        return ({...data, amount: x.amount})
+      });
+      const render = info.map((x) =>`<li> ${x.name} - cantidad: ${x.amount} <button onclick='deleteItemFromCart("${x.id}")'>X</button></li>`).join(" ");
       return (usercart.innerHTML = render);
     })
     .catch((err) => console.log(err));

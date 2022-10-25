@@ -95,12 +95,21 @@ class CartService {
       return { err: cartId || itemId + " is undefined", status: 400 };
 
     const itemData = await this.item.getItem(itemId);
-    const cartData = await this.cart.getById(cartId);
+    let cartData = await this.cart.getById(cartId);
 
     if (itemData.err !== undefined || cartData.err !== undefined)
       return { err: itemData.err || cartData.err, status: 400 };
 
-    cartData.items.push(itemData.data.id);
+    const find = cartData.items.find(x => x.id === itemId)
+
+    if (find) {
+      const items = cartData.items.filter(x => x.id !== find.id)
+      const newAmount = {id: find.id, amount: find.amount + 1}
+      items.push(newAmount)
+      cartData = {...cartData, items}
+    } else {
+      cartData.items.push({id: itemData.data.id, amount: 1});
+    }
 
     try {
       await this.cart.updateById(cartId, { items: cartData.items });

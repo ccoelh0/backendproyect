@@ -5,7 +5,8 @@ import ChatController from './ChatController.js';
 const router = express.Router();
 const controller = new ChatController()
 
-router.get('/', controller.getMessages)
+router.get('/', controller.getAllMessages)
+router.get('/:email', controller.getMessagesByEmail)
 router.post('/', controller.saveMessage)
 
 const routerChat = router

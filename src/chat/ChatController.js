@@ -17,9 +17,20 @@ class ChatController {
     });
   };
 
-  getMessages = async (_, res) => {
+  getAllMessages = async (_, res) => {
     try {
       const { status, err, data } = await this.chatService.getMessages();
+      return res.status(status).send(data || err);
+    } catch (err) {
+      return res.status(500).send(err);
+    }
+  };
+
+  getMessagesByEmail = async (req, res) => {
+    try {
+      const { status, err, data } = await this.chatService.getMessages(
+        req.params.email
+      );
       return res.status(status).send(data || err);
     } catch (err) {
       return res.status(500).send(err);

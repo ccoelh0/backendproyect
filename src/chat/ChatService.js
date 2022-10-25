@@ -8,11 +8,17 @@ class ChatService {
     this.chatDTO = ChatDTO;
   }
 
-  getMessages = async () => {
+  getMessages = async (email) => {
     try {
       const response = await this.chat.getAll();
       if (response.err !== undefined) return { err: response.err, status: 400 };
-      return { data: response.map((x) => new this.chatDTO(x)), status: 200 };
+
+      if (email !== undefined) {
+        const userMessages = response.filter(x => x.author.username === email)
+        return { data: userMessages.map((x) => new this.chatDTO(x)), status: 200 };
+      } else {
+        return { data: response.map((x) => new this.chatDTO(x)), status: 200 };
+      }
     } catch (err) {
       return err;
     }
