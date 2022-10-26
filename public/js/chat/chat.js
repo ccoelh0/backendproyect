@@ -1,41 +1,84 @@
+let userInfo;
+let dataSockets;
 const chatContainer = document.getElementById("chat");
 const chatForm = document.getElementById("form-chat");
 const newMessage = document.getElementById("message");
+const selectorId = document.getElementById("selector-email");
 const socket = io();
 
-socket.on("data-chat", (data) => renderData(data));
-socket.on("update-chat", (data) => renderData(data));
-
 const renderData = (data) => {
-  const render = data
+  const renderChats = data
     .map((x) => {
       return `
       <div>
-        <div>${x.author.isAdmin ? "Admin" : x.author.username} | ${
-        x.message
-      }</div>
+        <div>
+          ${
+            x.message.responseId
+              ? `<span style="font-weight: bold">Respuesta a mensaje con id: ${x.message.responseId} </span> |`
+              : `<span>Mensaje con id: ${x.id} |</span>`
+          }
+          <span>${x.author.isAdmin ? "Admin" : x.author.username} | ${
+        x.message.content
+      }</span>
+      </div>
       </div>
     `;
     })
     .join(" ");
-  return (chatContainer.innerHTML = render);
+
+  chatContainer.innerHTML = renderChats;
+};
+
+const renderOption = (data) => {
+  if (userInfo.isAdmin) {
+    const render = data.map((x) => {
+      return !x.author.isAdmin && `<option value="${x.id}">${x.id} - ${x.author.username}}</option>`;
+    });
+
+    return (selectorId.innerHTML = render);
+  }
+
+  return selectorId.classList.add("d-none");
 };
 
 const onSubmit = (e) => {
   e.preventDefault();
 
-  const message = {
+  let message = {
     author: {
-      username: userData.username,
-      isAdmin: userData.isAdmin,
+      username: userInfo.username,
+      isAdmin: userInfo.isAdmin,
     },
-    message: newMessage.value,
+    message: {
+      content: newMessage.value,
+    },
   };
 
-  axios
-    .post("api/chat/", message)
+  let promise;
+
+  if (selectorId.value.length !== 0) {
+    promise = axios.post(`api/chat/${selectorId.value}`, message);
+  } else {
+    promise = axios.post(`api/chat/`, message);
+  }
+
+  promise
     .then(() => socket.emit("new-message", true))
     .catch((err) => console.log(err));
 };
 
 chatForm.addEventListener("submit", (e) => onSubmit(e));
+socket.on("data-chat", (data) => {
+  renderData(data);
+  dataSockets = data;
+});
+socket.on("update-chat", (data) => {
+  renderData(data);
+  dataSockets = data;
+});
+getSessionService()
+  .then((res) => {
+    userInfo = res.data;
+    renderOption(dataSockets);
+  })
+  .catch((err) => console.log(err));

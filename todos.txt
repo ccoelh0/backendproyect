@@ -2,35 +2,4 @@
 5. crear midelware de validacion de user logueado
 7. Usar el util ObjectId() de mongoose en vez de valueOf en los metodos 
 8. swagger
-9. handle error
-. variables  de entorno
 
-paths:
-  /users/{id}:
-    get:
-      tags:
-        - Users
-      summary: Gets a user by ID.
-      description: >
-        A detailed description of the operation.
-        Use markdown for rich text representation,
-        such as **bold**, *italic*, and [links](https://swagger.io).
-      operationId: getUserById
-      parameters:
-        - name: id
-          in: path
-          description: User ID
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-      externalDocs:
-        description: Learn more about user operations provided by this API.
-        url: http://api.example.com/docs/user-operations/
